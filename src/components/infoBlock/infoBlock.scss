@@ -4,6 +4,15 @@
   width: 1000px;
   background-color: $light-gray-v2;
   padding: 15px 50px;
+  display: flex;
+  justify-content: space-between;
+
+  svg {
+    &:hover {
+      fill: red;
+      cursor: pointer;
+    }
+  }
 
   .info-block-addNew {
     align-items: flex-end;
@@ -14,6 +23,7 @@
   }
 
   .info-block-content {
+    width: 950px;
     .info-block__number {
       width: 50px;
     }
@@ -34,9 +44,14 @@
 
     .info-block__sources {
       .info-block-source {
+        justify-content: space-between;
+        width: 100%;
         display: flex;
         padding: 15px 10px;
         background-color: $light-gray-v3;
+        & > div {
+          display: flex;
+        }
       }
     }
   }

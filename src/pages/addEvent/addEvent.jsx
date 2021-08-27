@@ -104,6 +104,29 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
     [state, onUpdateState],
   );
 
+  const handleOnRemoveSuffix = useCallback(
+    (curSuffix) => {
+      onUpdateState({
+        ...state,
+        QRs: state.QRs.filter((el) => el.id !== curSuffix),
+      });
+    },
+    [state, onUpdateState],
+  );
+
+  const handleOnRemoveResource = useCallback(
+    (curSuffix, curRes) => {
+      console.log(curRes, curSuffix);
+      const nextState = produce(state, (draftState) => {
+        console.log(curSuffix, state.QRs);
+        const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+        Qr.resources = Qr.resources.filter((el) => el.id !== curRes);
+      });
+      onUpdateState(nextState);
+    },
+    [state, onUpdateState],
+  );
+
   return (
     <div className={classes}>
       <Modal show={popup.showPopup}>
@@ -139,6 +162,8 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
               resources={el.resources}
               onCheck={(e) => handleOnCheck(el.id, e)}
               checked={el.team === "yes" ? true : false}
+              onDelete={() => handleOnRemoveSuffix(el.id)}
+              onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
             />
           ))}
         </MarginGroup>

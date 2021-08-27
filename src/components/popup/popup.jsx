@@ -22,7 +22,7 @@ export const Popup = React.memo(({ className, onAdd }) => {
   );
 
   const handleOnAdd = useCallback(() => {
-    onAdd(state);
+    onAdd({ ...state, id: Date.now() });
     setState({ url: "", people_count: "" });
   }, [state, onAdd]);
 

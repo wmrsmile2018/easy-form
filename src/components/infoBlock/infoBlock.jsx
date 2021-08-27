@@ -7,9 +7,21 @@ import { MarginGroup } from "../marginGroup/marginGroup";
 import { Button } from "../button";
 import { CheckBox } from "../checkBox";
 
+import { Delete } from "../../icons/delete";
+
 import "./infoBlock.scss";
 
-export const InfoBlock = ({ className, onChange, onClick, onCheck, resources, checked, value }) => {
+export const InfoBlock = ({
+  className,
+  onChange,
+  onClick,
+  onCheck,
+  resources,
+  checked,
+  value,
+  onDelete,
+  onDeleteResource,
+}) => {
   const classes = clsx("info-block", className);
   return (
     <div className={classes}>
@@ -39,14 +51,18 @@ export const InfoBlock = ({ className, onChange, onClick, onCheck, resources, ch
           <MarginGroup isColumn className="info-block__sources" gap={10}>
             {resources.map((el, i) => (
               <div key={key(el)} className="info-block-source">
-                <p className="info-block__number">{i + 1}</p>
-                <p className="info-block__url">{el.url}</p>
-                <p className="info-block__count">{el.people_count}</p>
+                <div>
+                  <p className="info-block__number">{i + 1}</p>
+                  <p className="info-block__url">{el.url}</p>
+                  <p className="info-block__count">{el.people_count}</p>
+                </div>
+                <Delete onClick={() => onDeleteResource(el.id)} />
               </div>
             ))}
           </MarginGroup>
         </div>
       </MarginGroup>
+      <Delete onClick={onDelete} />
     </div>
   );
 };
