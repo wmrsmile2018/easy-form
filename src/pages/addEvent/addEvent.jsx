@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import clsx from "clsx";
 import key from "weak-key";
 import produce from "immer";
@@ -9,6 +9,8 @@ import { Button } from "../../components/button";
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { Modal } from "../../components/modal";
 import { Popup } from "../../components/popup/popup";
+
+import { useOnClickOutside } from "../../utils/useHooks";
 
 import "./addEvent.scss";
 
@@ -23,12 +25,20 @@ const inputFields2 = [
 ];
 
 export const AddEvent = React.memo(({ className, onSend, state, onUpdateState }) => {
+  const ref = useRef(null);
+
   const [popup, setPopup] = useState({
     curSuffix: 0,
     showPopup: false,
   });
+  useOnClickOutside(ref, () => {
+    setPopup({
+      curSuffix: 0,
+      showPopup: false,
+    });
+  });
   const classes = clsx("add-event", className);
-  console.log(state);
+
   const handleOnAddSuffix = useCallback(() => {
     onUpdateState({
       ...state,
@@ -44,12 +54,12 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
     });
   }, [state, onUpdateState]);
 
-  const handleOnShowModal = useCallback((curSuffix) => {
+  const handleOnShowModal = (curSuffix) => {
     setPopup({
       curSuffix,
       showPopup: true,
     });
-  }, []);
+  };
 
   const handleOnHideModal = useCallback(
     (data) => {
@@ -68,31 +78,25 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
     [state, onUpdateState, popup],
   );
 
-  const handleOnChangeSuffix = useCallback(
-    (curSuffix, { target }) => {
-      const nextState = produce(state, (draftState) => {
-        console.log(curSuffix, state.QRs);
-        const Qr = draftState.QRs.find((el) => el.id === curSuffix);
-        Qr.suffix = target.value;
-      });
-      onUpdateState({
-        ...nextState,
-      });
-    },
-    [state, onUpdateState],
-  );
+  const handleOnChangeSuffix = (curSuffix, { target }) => {
+    const nextState = produce(state, (draftState) => {
+      console.log(curSuffix, state.QRs);
+      const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+      Qr.suffix = target.value;
+    });
+    onUpdateState({
+      ...nextState,
+    });
+  };
 
-  const handleOnCheck = useCallback(
-    (curSuffix, { target }) => {
-      const nextState = produce(state, (draftState) => {
-        console.log(curSuffix, state.QRs);
-        const Qr = draftState.QRs.find((el) => el.id === curSuffix);
-        Qr.team = target.checked ? "yes" : "no";
-      });
-      onUpdateState(nextState);
-    },
-    [state, onUpdateState],
-  );
+  const handleOnCheck = (curSuffix, { target }) => {
+    const nextState = produce(state, (draftState) => {
+      console.log(curSuffix, state.QRs);
+      const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+      Qr.team = target.checked ? "yes" : "no";
+    });
+    onUpdateState(nextState);
+  };
 
   const handleOnChange = useCallback(
     ({ target }) => {
@@ -104,33 +108,27 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
     [state, onUpdateState],
   );
 
-  const handleOnRemoveSuffix = useCallback(
-    (curSuffix) => {
-      onUpdateState({
-        ...state,
-        QRs: state.QRs.filter((el) => el.id !== curSuffix),
-      });
-    },
-    [state, onUpdateState],
-  );
+  const handleOnRemoveSuffix = (curSuffix) => {
+    onUpdateState({
+      ...state,
+      QRs: state.QRs.filter((el) => el.id !== curSuffix),
+    });
+  };
 
-  const handleOnRemoveResource = useCallback(
-    (curSuffix, curRes) => {
-      console.log(curRes, curSuffix);
-      const nextState = produce(state, (draftState) => {
-        console.log(curSuffix, state.QRs);
-        const Qr = draftState.QRs.find((el) => el.id === curSuffix);
-        Qr.resources = Qr.resources.filter((el) => el.id !== curRes);
-      });
-      onUpdateState(nextState);
-    },
-    [state, onUpdateState],
-  );
+  const handleOnRemoveResource = (curSuffix, curRes) => {
+    console.log(curRes, curSuffix);
+    const nextState = produce(state, (draftState) => {
+      console.log(curSuffix, state.QRs);
+      const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+      Qr.resources = Qr.resources.filter((el) => el.id !== curRes);
+    });
+    onUpdateState(nextState);
+  };
 
   return (
     <div className={classes}>
       <Modal show={popup.showPopup}>
-        <Popup onAdd={handleOnHideModal} />
+        <Popup popupRef={ref} onAdd={handleOnHideModal} />
       </Modal>
       <MarginGroup gap={30} isColumn>
         <MarginGroup gap={30} className="add-event__input-fields">

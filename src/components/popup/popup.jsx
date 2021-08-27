@@ -7,7 +7,7 @@ import { Input } from "../input";
 
 import "./popup.scss";
 
-export const Popup = React.memo(({ className, onAdd }) => {
+export const Popup = React.memo(({ className, onAdd, popupRef }) => {
   const [state, setState] = useState({
     url: "",
     people_count: "",
@@ -27,7 +27,7 @@ export const Popup = React.memo(({ className, onAdd }) => {
   }, [state, onAdd]);
 
   return (
-    <div className={classes}>
+    <div className={classes} ref={popupRef}>
       <h2>Popup</h2>
       <MarginGroup isColumn gap={20}>
         <Input

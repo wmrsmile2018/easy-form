@@ -18,9 +18,5 @@ export const AddEventController = React.memo(() => {
     axios.post(url, state);
   }, [state]);
 
-  return (
-    <div>
-      <AddEvent onUpdateState={setState} state={state} onSend={handleOnSubmit} />
-    </div>
-  );
+  return <AddEvent onUpdateState={setState} state={state} onSend={handleOnSubmit} />;
 });
