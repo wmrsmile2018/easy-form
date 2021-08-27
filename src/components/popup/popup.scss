@@ -1,0 +1,20 @@
+@import "../../styles.scss";
+
+.popup {
+  width: 300px;
+  height: fit-content;
+  padding: 15px 30px;
+  background-color: $light-gray-v2;
+
+  h2 {
+    margin: 0;
+    margin-bottom: 30px;
+  }
+
+  .popup__prompt {
+    margin-top: 5px;
+    margin-bottom: 20px;
+    font-size: 0.8rem;
+    color: #ff6464;
+  }
+}

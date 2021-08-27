@@ -1,0 +1,13 @@
+@import "../../styles.scss";
+
+.button {
+  color: white;
+  background-color: $light-green-v1;
+  border: 1px solid $light-green-v2;
+  box-sizing: border-box;
+  padding: 10px;
+
+  &:active {
+    background-color: green;
+  }
+}

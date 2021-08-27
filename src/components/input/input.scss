@@ -1,0 +1,16 @@
+.input {
+  display: flex;
+  flex-direction: column;
+
+  span {
+    margin-bottom: 8px;
+  }
+
+  input {
+    box-sizing: border-box;
+    border-radius: 3px;
+    background-color: #e8e8e8;
+    height: 35px;
+    padding: 10px;
+  }
+}

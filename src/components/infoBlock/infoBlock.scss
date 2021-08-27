@@ -1,0 +1,43 @@
+@import "../../styles.scss";
+
+.info-block {
+  width: 1000px;
+  background-color: $light-gray-v2;
+  padding: 15px 50px;
+
+  .info-block-addNew {
+    align-items: flex-end;
+
+    .button {
+      height: 38px;
+    }
+  }
+
+  .info-block-content {
+    .info-block__number {
+      width: 50px;
+    }
+    .info-block__url {
+      width: 400px;
+    }
+
+    .info-block-content-title {
+      display: flex;
+      margin-bottom: 15px;
+
+      .info-block__number,
+      .info-block__url,
+      .info-block__count {
+        font-weight: bold;
+      }
+    }
+
+    .info-block__sources {
+      .info-block-source {
+        display: flex;
+        padding: 15px 10px;
+        background-color: $light-gray-v3;
+      }
+    }
+  }
+}
