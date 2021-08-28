@@ -4,7 +4,7 @@ import DatePicker from "react-date-picker";
 
 import "./datePicker.scss";
 
-export const InputDate = ({ title, value, name, onChange, className, ...rest }) => {
+export const InputDate = ({ style, title, value, name, onChange, className, ...rest }) => {
   const classes = clsx("input-date", className);
 
   const handleOnChange = useCallback(
@@ -15,7 +15,7 @@ export const InputDate = ({ title, value, name, onChange, className, ...rest }) 
   );
 
   return (
-    <div className={classes}>
+    <div style={style} className={classes}>
       <p>{title}</p>
       <DatePicker value={value} onChange={handleOnChange} {...rest} format="dd-MM-yyyy" />
     </div>

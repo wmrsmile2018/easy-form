@@ -16,6 +16,7 @@ export const AddEventController = React.memo(() => {
 
   const handleOnSubmit = useCallback(() => {
     axios.post(url, state);
+    setState({ event: "", city: "", date: "", area: "", QRs: [] });
   }, [state]);
 
   return <AddEvent onUpdateState={setState} state={state} onSend={handleOnSubmit} />;

@@ -145,6 +145,7 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
         </MarginGroup>
         <MarginGroup gap={30} className="add-event__input-fields">
           <InputDate
+            style={popup.showPopup ? { zIndex: -1 } : { zIndex: 0 }}
             title="Введите дату мероприятия"
             onChange={handleOnDatePicked}
             format="dd-MM-yyyy"
