@@ -1,17 +1,25 @@
-.input {
+.input-date {
   display: flex;
   flex-direction: column;
   width: 100%;
 
-  span {
+  p {
     margin-bottom: 8px;
   }
 
-  input {
+  .react-date-picker {
     box-sizing: border-box;
     border-radius: 3px;
     background-color: #e8e8e8;
     height: 35px;
     padding: 10px;
+  }
+
+  .react-date-picker__wrapper {
+    border: none;
+  }
+
+  .react-date-picker__button {
+    padding: 0 6px;
   }
 }

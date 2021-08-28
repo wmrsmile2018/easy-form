@@ -9,35 +9,32 @@ import { Button } from "../../components/button";
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { Modal } from "../../components/modal";
 import { Popup } from "../../components/popup/popup";
+import { InputDate } from "../../components/datePicker/datePicker";
 
 import { useOnClickOutside } from "../../utils/useHooks";
 
 import "./addEvent.scss";
+import dayjs from "dayjs";
 
 const inputFields1 = [
   { name: "city", title: "Введите город" },
   { name: "event", title: "Введите название мероприятия" },
 ];
 
-const inputFields2 = [
-  { name: "date", title: "Введите дату мероприятия" },
-  { name: "area", title: "Введите место" },
-];
-
 export const AddEvent = React.memo(({ className, onSend, state, onUpdateState }) => {
   const ref = useRef(null);
-
+  const classes = clsx("add-event", className);
   const [popup, setPopup] = useState({
     curSuffix: 0,
     showPopup: false,
   });
+
   useOnClickOutside(ref, () => {
     setPopup({
       curSuffix: 0,
       showPopup: false,
     });
   });
-  const classes = clsx("add-event", className);
 
   const handleOnAddSuffix = useCallback(() => {
     onUpdateState({
@@ -116,7 +113,6 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
   };
 
   const handleOnRemoveResource = (curSuffix, curRes) => {
-    console.log(curRes, curSuffix);
     const nextState = produce(state, (draftState) => {
       console.log(curSuffix, state.QRs);
       const Qr = draftState.QRs.find((el) => el.id === curSuffix);
@@ -124,6 +120,17 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
     });
     onUpdateState(nextState);
   };
+
+  const handleOnDatePicked = useCallback(
+    (data) => {
+      onUpdateState({
+        ...state,
+        [data.name]: dayjs(data.value).format("DD-MM-YYYY"),
+        [`${data.name}_picker`]: data.value,
+      });
+    },
+    [state, onUpdateState],
+  );
 
   return (
     <div className={classes}>
@@ -137,10 +144,16 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
           ))}
         </MarginGroup>
         <MarginGroup gap={30} className="add-event__input-fields">
-          {inputFields2.map((el) => (
-            <Input key={key(el)} name={el.name} title={el.title} onChange={handleOnChange} />
-          ))}
+          <InputDate
+            title="Введите дату мероприятия"
+            onChange={handleOnDatePicked}
+            format="dd-MM-yyyy"
+            value={state.date_picker}
+            name={"date"}
+          />
+          <Input name={"area"} title={"Введите место"} onChange={handleOnChange} />
         </MarginGroup>
+
         <MarginGroup gap={20}>
           <Button className="add-event__add-suffix" onClick={handleOnAddSuffix}>
             Добавить суффикс на URL
