@@ -25,7 +25,7 @@ export const Popup = React.memo(({ className, onAdd, onEdit, popupRef, status, d
 
   const handleOnAdd = useCallback(() => {
     const { url, people_count } = state;
-    if (status === "add") onAdd({ url, people_count, id: Date.now() });
+    if (status === "add") onAdd({ url, people_count, id: Date.now().toString() });
     if (status === "edit") onEdit(state);
 
     if (isExist) {

@@ -7,14 +7,14 @@ import dayjs from "dayjs";
 import { Input } from "../../components/input";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Button } from "../../components/button";
-import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { Modal } from "../../components/modal";
 import { Popup } from "../../components/popup/popup";
 import { InputDate } from "../../components/datePicker/datePicker";
 
-import { useOnClickOutside, useDebounce } from "../../utils/useHooks";
+import { useOnClickOutside } from "../../utils/useHooks";
 
 import "./event.scss";
+import { InfoBlockWrapper } from "./infoBlockWrapper";
 
 const regex = /^[a-zA-Z]+$/;
 
@@ -26,8 +26,7 @@ const inputFields1 = [
 export const Event = React.memo(({ className, onSend, state, onUpdateState, status }) => {
   const ref = useRef(null);
   const classes = clsx("event", className);
-  const [suffix, setSuffix] = useState("");
-  const [isValid, setIsValid] = useState(false);
+  const [suffix, setSuffix] = useState({ id: "", value: "" });
   const [popup, setPopup] = useState({
     curSuffix: 0,
     showPopup: false,
@@ -35,14 +34,13 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
     isExist: false,
     state: {},
   });
-  const debouncedSearchTerm = useDebounce(suffix, 500);
+  // const debouncedSearchTerm = useDebounce(suffix, 500);
 
-  useEffect(() => {
-    console.log(debouncedSearchTerm);
-    if (debouncedSearchTerm) {
-      // ...
-    }
-  }, [debouncedSearchTerm]);
+  // useEffect(() => {
+  //   console.log(debouncedSearchTerm);
+  //   if (debouncedSearchTerm) {
+  //   }
+  // }, [debouncedSearchTerm]);
 
   useOnClickOutside(ref, () => {
     setPopup({
@@ -58,7 +56,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         ...state.QRs,
         {
           status,
-          id: Date.now(),
+          id: Date.now().toString(),
           "suffix": "",
           "team": "no",
           "resources": [],
@@ -107,12 +105,15 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   const handleOnChangeSuffix = (curSuffix, { target }) => {
     const isValid = regex.test(target.value);
 
-    if (isValid) {
+    if (target.value === "" || isValid) {
       const nextState = produce(state, (draftState) => {
         const Qr = draftState.QRs.find((el) => el.id === curSuffix);
         Qr.suffix = target.value;
       });
-      setSuffix(target.value);
+      setSuffix({
+        id: curSuffix,
+        value: target.value,
+      });
       onUpdateState({
         ...nextState,
       });
@@ -250,16 +251,18 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
         <MarginGroup gap={20} isColumn>
           {state.QRs.map((el) => (
-            <InfoBlock
-              isValid={isValid}
-              value={el.suffix}
+            <InfoBlockWrapper
+              id={el.id}
               key={el.id}
-              onChange={(e) => handleOnChangeSuffix(el.id, e)}
-              onClick={() => handleOnShowModal(el.id)}
+              qrs={state.QRs}
+              suffix={suffix}
+              value={el.suffix}
               resources={el.resources}
-              onCheck={(e) => handleOnCheck(el.id, e)}
               checked={el.team === "yes" ? true : false}
+              onClick={() => handleOnShowModal(el.id)}
+              onCheck={(e) => handleOnCheck(el.id, e)}
               onDelete={() => handleOnRemoveSuffix(el.id)}
+              onChange={(e) => handleOnChangeSuffix(el.id, e)}
               onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
               onEditResource={(curRes) => handleOnShowEditResource(el.id, curRes)}
             />
