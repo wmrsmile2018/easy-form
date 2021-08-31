@@ -1,6 +1,9 @@
 import React, { useEffect, useState, useMemo } from "react";
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { useDebounce } from "../../utils/useHooks";
+import axios from "axios";
+
+const url = process.env.REACT_APP_BASE_URL;
 
 export const InfoBlockWrapper = React.memo(({ qrs, id, suffix, ...rest }) => {
   const debouncedSearchTerm = useDebounce(suffix, 1000);
@@ -17,8 +20,8 @@ export const InfoBlockWrapper = React.memo(({ qrs, id, suffix, ...rest }) => {
     } else {
       setIsValid(true);
     }
-    // if (debouncedSearchTerm) {
-    // }
+
+    axios.get(`${url}/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`);
   }, [debouncedSearchTerm]);
   // // console.log(suffix, isValid);
 
