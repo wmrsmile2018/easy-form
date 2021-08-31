@@ -2,6 +2,7 @@ import React, { useState, useCallback, useRef, useEffect } from "react";
 import clsx from "clsx";
 import key from "weak-key";
 import produce from "immer";
+import dayjs from "dayjs";
 
 import { Input } from "../../components/input";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
@@ -14,7 +15,8 @@ import { InputDate } from "../../components/datePicker/datePicker";
 import { useOnClickOutside, useDebounce } from "../../utils/useHooks";
 
 import "./event.scss";
-import dayjs from "dayjs";
+
+const regex = /^[a-zA-Z]+$/;
 
 const inputFields1 = [
   { name: "city", title: "Введите город" },
@@ -25,7 +27,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   const ref = useRef(null);
   const classes = clsx("event", className);
   const [suffix, setSuffix] = useState("");
-  const [isValid, setIsValid] = useState(true);
+  const [isValid, setIsValid] = useState(false);
   const [popup, setPopup] = useState({
     curSuffix: 0,
     showPopup: false,
@@ -103,14 +105,18 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   );
 
   const handleOnChangeSuffix = (curSuffix, { target }) => {
-    const nextState = produce(state, (draftState) => {
-      const Qr = draftState.QRs.find((el) => el.id === curSuffix);
-      Qr.suffix = target.value;
-    });
-    setSuffix(target.value);
-    onUpdateState({
-      ...nextState,
-    });
+    const isValid = regex.test(target.value);
+
+    if (isValid) {
+      const nextState = produce(state, (draftState) => {
+        const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+        Qr.suffix = target.value;
+      });
+      setSuffix(target.value);
+      onUpdateState({
+        ...nextState,
+      });
+    }
   };
 
   const handleOnCheck = (curSuffix, { target }) => {
