@@ -39,3 +39,10 @@ button {
 .App {
   /* padding: 10px 20px; */
 }
+
+.invalid-info {
+  display: flex;
+  flex-wrap: wrap;
+  color: red;
+  font-size: 11px;
+}

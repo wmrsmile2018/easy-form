@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useCallback, useRef, useEffect } from "react";
 import clsx from "clsx";
 import key from "weak-key";
 import produce from "immer";
@@ -11,9 +11,9 @@ import { Modal } from "../../components/modal";
 import { Popup } from "../../components/popup/popup";
 import { InputDate } from "../../components/datePicker/datePicker";
 
-import { useOnClickOutside } from "../../utils/useHooks";
+import { useOnClickOutside, useDebounce } from "../../utils/useHooks";
 
-import "./addEvent.scss";
+import "./event.scss";
 import dayjs from "dayjs";
 
 const inputFields1 = [
@@ -21,13 +21,26 @@ const inputFields1 = [
   { name: "event", title: "Введите название мероприятия" },
 ];
 
-export const AddEvent = React.memo(({ className, onSend, state, onUpdateState }) => {
+export const Event = React.memo(({ className, onSend, state, onUpdateState, status }) => {
   const ref = useRef(null);
-  const classes = clsx("add-event", className);
+  const classes = clsx("event", className);
+  const [suffix, setSuffix] = useState("");
+  const [isValid, setIsValid] = useState(true);
   const [popup, setPopup] = useState({
     curSuffix: 0,
     showPopup: false,
+    status: "add",
+    isExist: false,
+    state: {},
   });
+  const debouncedSearchTerm = useDebounce(suffix, 500);
+
+  useEffect(() => {
+    console.log(debouncedSearchTerm);
+    if (debouncedSearchTerm) {
+      // ...
+    }
+  }, [debouncedSearchTerm]);
 
   useOnClickOutside(ref, () => {
     setPopup({
@@ -40,47 +53,61 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
     onUpdateState({
       ...state,
       QRs: [
+        ...state.QRs,
         {
+          status,
           id: Date.now(),
           "suffix": "",
           "team": "no",
           "resources": [],
         },
-        ...state.QRs,
       ],
     });
-  }, [state, onUpdateState]);
+  }, [state, onUpdateState, status]);
 
   const handleOnShowModal = (curSuffix) => {
     setPopup({
       curSuffix,
       showPopup: true,
+      status,
+      state: {},
     });
   };
 
   const handleOnHideModal = useCallback(
     (data) => {
-      const nextState = produce(state, (draftState) => {
-        const Qr = draftState.QRs.find((el) => el.id === popup.curSuffix);
-        Qr.resources = [data, ...Qr.resources];
-      });
+      const tmpAllRes = state.QRs.reduce((acc, cur) => {
+        const tmp = cur.resources.map((el) => el.url);
+        return [...acc, ...tmp];
+      }, []);
+      if (!tmpAllRes.find((el) => el === data.url)) {
+        const nextState = produce(state, (draftState) => {
+          const Qr = draftState.QRs.find((el) => el.id === popup.curSuffix);
+          Qr.resources = [...Qr.resources, data];
+        });
 
-      onUpdateState(nextState);
+        onUpdateState(nextState);
 
-      setPopup({
-        curSuffix: 0,
-        showPopup: false,
-      });
+        setPopup({
+          curSuffix: 0,
+          showPopup: false,
+        });
+      } else {
+        setPopup({
+          ...popup,
+          isExist: true,
+        });
+      }
     },
     [state, onUpdateState, popup],
   );
 
   const handleOnChangeSuffix = (curSuffix, { target }) => {
     const nextState = produce(state, (draftState) => {
-      console.log(curSuffix, state.QRs);
       const Qr = draftState.QRs.find((el) => el.id === curSuffix);
       Qr.suffix = target.value;
     });
+    setSuffix(target.value);
     onUpdateState({
       ...nextState,
     });
@@ -114,12 +141,56 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
 
   const handleOnRemoveResource = (curSuffix, curRes) => {
     const nextState = produce(state, (draftState) => {
-      console.log(curSuffix, state.QRs);
       const Qr = draftState.QRs.find((el) => el.id === curSuffix);
       Qr.resources = Qr.resources.filter((el) => el.id !== curRes);
     });
     onUpdateState(nextState);
   };
+
+  const handleOnShowEditResource = (curSuffix, curRes) => {
+    const Qr = state.QRs.find((el) => el.id === curSuffix);
+    const tmpResourse = Qr.resources.find((el) => el.id === curRes);
+    console.log(curSuffix);
+    setPopup({
+      ...popup,
+      curSuffix,
+      showPopup: true,
+      status: "edit",
+      state: tmpResourse,
+    });
+  };
+
+  const handleOnEditResource = useCallback(
+    (data) => {
+      const tmpAllRes = state.QRs.reduce((acc, cur) => {
+        const tmp = cur.resources.map((el) => el.url);
+        return [...acc, ...tmp];
+      }, []);
+      const curQr = state.QRs.find((el) => el.id === popup.curSuffix);
+      const curRes = curQr.resources.find((el) => el.id === data.id);
+
+      if (curRes.url === data.url || !tmpAllRes.find((el) => el === data.url)) {
+        const nextState = produce(state, (draftState) => {
+          const Qr = draftState.QRs.find((el) => el.id === popup.curSuffix);
+          const resource = Qr.resources.find((el) => el.id === data.id);
+          resource.url = data.url;
+          resource.people_count = data.people_count;
+        });
+
+        onUpdateState(nextState);
+        setPopup({
+          curSuffix: 0,
+          showPopup: false,
+        });
+      } else {
+        setPopup({
+          ...popup,
+          isExist: true,
+        });
+      }
+    },
+    [popup, state, onUpdateState],
+  );
 
   const handleOnDatePicked = useCallback(
     (data) => {
@@ -135,15 +206,22 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
   return (
     <div className={classes}>
       <Modal show={popup.showPopup}>
-        <Popup popupRef={ref} onAdd={handleOnHideModal} />
+        <Popup
+          popupRef={ref}
+          onAdd={handleOnHideModal}
+          onEdit={handleOnEditResource}
+          status={popup.status}
+          data={popup.state}
+          isExist={popup.isExist}
+        />
       </Modal>
       <MarginGroup gap={30} isColumn>
-        <MarginGroup gap={30} className="add-event__input-fields">
+        <MarginGroup gap={30} className="event__input-fields">
           {inputFields1.map((el) => (
             <Input key={key(el)} name={el.name} title={el.title} onChange={handleOnChange} />
           ))}
         </MarginGroup>
-        <MarginGroup gap={30} className="add-event__input-fields">
+        <MarginGroup gap={30} className="event__input-fields">
           <InputDate
             style={popup.showPopup ? { zIndex: -1 } : { zIndex: 0 }}
             title="Введите дату мероприятия"
@@ -156,10 +234,10 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
         </MarginGroup>
 
         <MarginGroup gap={20}>
-          <Button className="add-event__add-suffix" onClick={handleOnAddSuffix}>
+          <Button className="event__suffix" onClick={handleOnAddSuffix}>
             Добавить суффикс на URL
           </Button>
-          <Button className="add-event__send" onClick={onSend}>
+          <Button className="event__send" onClick={onSend}>
             Отправить
           </Button>
         </MarginGroup>
@@ -167,6 +245,7 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
         <MarginGroup gap={20} isColumn>
           {state.QRs.map((el) => (
             <InfoBlock
+              isValid={isValid}
               value={el.suffix}
               key={el.id}
               onChange={(e) => handleOnChangeSuffix(el.id, e)}
@@ -176,6 +255,7 @@ export const AddEvent = React.memo(({ className, onSend, state, onUpdateState })
               checked={el.team === "yes" ? true : false}
               onDelete={() => handleOnRemoveSuffix(el.id)}
               onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
+              onEditResource={(curRes) => handleOnShowEditResource(el.id, curRes)}
             />
           ))}
         </MarginGroup>

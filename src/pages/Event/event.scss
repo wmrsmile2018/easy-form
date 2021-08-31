@@ -1,14 +1,14 @@
-.add-event {
+.event {
   width: 100%;
   height: 100%;
 
-  .add-event__input-fields {
+  .event__input-fields {
     .input {
       width: 250px;
       min-width: 250px;
     }
   }
-  .add-event__add-suffix {
+  .event__suffix {
     width: 200px;
   }
   .input-date {

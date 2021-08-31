@@ -1,9 +1,12 @@
 import React, { useState, useCallback } from "react";
 import axios from "axios";
-
-import { AddEvent } from "./addEvent";
+import { Event } from "../Event";
 
 const url = process.env.REACT_APP_BASE_URL;
+
+const parametres = {
+  status: "add",
+};
 
 export const AddEventController = React.memo(() => {
   const [state, setState] = useState({
@@ -19,5 +22,5 @@ export const AddEventController = React.memo(() => {
     setState({ event: "", city: "", date: "", area: "", QRs: [] });
   }, [state]);
 
-  return <AddEvent onUpdateState={setState} state={state} onSend={handleOnSubmit} />;
+  return <Event onUpdateState={setState} state={state} onSend={handleOnSubmit} {...parametres} />;
 });

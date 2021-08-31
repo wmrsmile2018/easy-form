@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import clsx from "clsx";
 
 import { Button } from "../button";
@@ -7,10 +7,12 @@ import { Input } from "../input";
 
 import "./popup.scss";
 
-export const Popup = React.memo(({ className, onAdd, popupRef }) => {
+export const Popup = React.memo(({ className, onAdd, onEdit, popupRef, status, data, isExist }) => {
   const [state, setState] = useState({
     url: "",
     people_count: "",
+    status,
+    ...data,
   });
   const classes = clsx("popup", className);
 
@@ -22,9 +24,18 @@ export const Popup = React.memo(({ className, onAdd, popupRef }) => {
   );
 
   const handleOnAdd = useCallback(() => {
-    onAdd({ ...state, id: Date.now() });
-    setState({ url: "", people_count: "" });
-  }, [state, onAdd]);
+    const { url, people_count } = state;
+    if (status === "add") onAdd({ url, people_count, id: Date.now() });
+    if (status === "edit") onEdit(state);
+
+    if (isExist) {
+      setState({ url: "", people_count: "" });
+    }
+  }, [state, onAdd, onEdit, status, isExist]);
+
+  useEffect(() => {
+    setState({ ...state, ...data });
+  }, [data]);
 
   return (
     <div className={classes} ref={popupRef}>
@@ -45,8 +56,14 @@ export const Popup = React.memo(({ className, onAdd, popupRef }) => {
           value={state.people_count}
         />
       </MarginGroup>
-      <p className="popup__prompt">Оставь пустым если неограничено</p>
-      <Button onClick={handleOnAdd}> Добавить внешний ресурс </Button>
+      <MarginGroup isColumn gap={10} className="popup-warning">
+        <p className="popup__prompt">Оставь пустым если неограничено</p>
+        {isExist && <p className="popup__invalid">Данный внешний ресурс уже существует</p>}
+      </MarginGroup>
+      <Button onClick={handleOnAdd}>
+        {status === "edit" && "Изменить внешний ресурс"}
+        {status === "add" && "Добавить внешний ресурс"}
+      </Button>
     </div>
   );
 });

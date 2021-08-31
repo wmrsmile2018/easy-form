@@ -11,10 +11,12 @@
     margin-bottom: 30px;
   }
 
-  .popup__prompt {
-    margin-top: 5px;
+  .popup-warning {
     margin-bottom: 20px;
-    font-size: 0.8rem;
-    color: #ff6464;
+    margin-top: 5px;
+    & > p {
+      font-size: 0.8rem;
+      color: #ff6464;
+    }
   }
 }

@@ -7,7 +7,7 @@ import { MarginGroup } from "../marginGroup/marginGroup";
 import { Button } from "../button";
 import { CheckBox } from "../checkBox";
 
-import { Delete } from "../../icons/delete";
+import { Delete, Edit } from "../../icons/";
 
 import "./infoBlock.scss";
 
@@ -21,19 +21,29 @@ export const InfoBlock = ({
   value,
   onDelete,
   onDeleteResource,
+  isValid,
+  onEditResource,
 }) => {
   const classes = clsx("info-block", className);
   return (
     <div className={classes}>
       <MarginGroup isColumn gap={20}>
         <MarginGroup gap={30} className="info-block-addNew">
-          <Input
-            title="Введите хвост URL"
-            type="text"
-            name="suffix"
-            onChange={onChange}
-            value={value}
-          />
+          <MarginGroup gap={5} isColumn>
+            <Input
+              title="Введите хвост URL"
+              type="text"
+              name="suffix"
+              onChange={onChange}
+              value={value}
+            />
+            {!isValid && (
+              <p className="invalid-info">
+                {`Хвост "${value}"`}
+                <br /> уже существует в системе
+              </p>
+            )}
+          </MarginGroup>
           <Button onClick={onClick}>Добавить внешний ресурс</Button>
         </MarginGroup>
         <CheckBox
@@ -56,7 +66,10 @@ export const InfoBlock = ({
                   <p className="info-block__url">{el.url}</p>
                   <p className="info-block__count">{el.people_count}</p>
                 </div>
-                <Delete onClick={() => onDeleteResource(el.id)} />
+                <MarginGroup gap={20}>
+                  <Edit onClick={() => onEditResource(el.id)} />
+                  <Delete onClick={() => onDeleteResource(el.id)} />
+                </MarginGroup>
               </div>
             ))}
           </MarginGroup>

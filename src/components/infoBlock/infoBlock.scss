@@ -8,9 +8,16 @@
   justify-content: space-between;
 
   svg {
-    &:hover {
-      fill: red;
-      cursor: pointer;
+    cursor: pointer;
+    &.delete {
+      &:hover {
+        fill: red;
+      }
+    }
+    &.edit {
+      &:hover {
+        fill: blue;
+      }
     }
   }
 
