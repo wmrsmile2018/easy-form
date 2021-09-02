@@ -10,4 +10,11 @@
   &:active {
     background-color: green;
   }
+
+  &.disabled {
+    background-color: #e0e0e0;
+    color: #585858;
+    border: none;
+    cursor: not-allowed;
+  }
 }

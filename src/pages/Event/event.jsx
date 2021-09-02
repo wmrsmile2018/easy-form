@@ -15,6 +15,7 @@ import { useOnClickOutside } from "../../utils/useHooks";
 
 import "./event.scss";
 import { InfoBlockWrapper } from "./infoBlockWrapper";
+import { PopupWrapper } from "./popupWrapper";
 
 const regex = /^[a-zA-Z]+$/;
 
@@ -34,13 +35,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
     isExist: false,
     state: {},
   });
-  // const debouncedSearchTerm = useDebounce(suffix, 500);
-
-  // useEffect(() => {
-  //   console.log(debouncedSearchTerm);
-  //   if (debouncedSearchTerm) {
-  //   }
-  // }, [debouncedSearchTerm]);
 
   useOnClickOutside(ref, () => {
     setPopup({
@@ -209,17 +203,18 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
     },
     [state, onUpdateState],
   );
-
+  console.log(popup.state);
   return (
     <div className={classes}>
       <Modal show={popup.showPopup}>
-        <Popup
+        <PopupWrapper
           popupRef={ref}
           onAdd={handleOnHideModal}
           onEdit={handleOnEditResource}
           status={popup.status}
           data={popup.state}
           isExist={popup.isExist}
+          disabled={true}
         />
       </Modal>
       <MarginGroup gap={30} isColumn>
@@ -244,7 +239,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
           <Button className="event__suffix" onClick={handleOnAddSuffix}>
             Добавить суффикс на URL
           </Button>
-          <Button className="event__send" onClick={onSend}>
+          <Button className="event__send" onClick={onSend} disabled>
             Отправить
           </Button>
         </MarginGroup>

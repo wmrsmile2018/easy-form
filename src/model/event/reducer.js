@@ -2,14 +2,16 @@ import { takeEvery, call, put } from "redux-saga/effects";
 import { createSlice } from "@reduxjs/toolkit";
 import axios from "axios";
 
-import { sagaEventCallBegan, sagaEventCallSuccess, sagaEventCallFailed } from "./saga";
-import { act } from "react-dom/cjs/react-dom-test-utils.production.min";
+import { sagaEventCallBegan } from "./saga";
 
 const envBaseUrl = process.env.REACT_APP_BASE_URL;
 
 const initialState = {
-  isSuffixValid: false,
-  isUrlValid: false,
+  isSuffixExist: false,
+  isUrlExist: false,
+  events: [],
+  isCreated: false,
+  error: {},
 };
 
 const fetchApi = async ({ baseURL, url, method, data }) =>
@@ -32,14 +34,16 @@ const eventSlice = createSlice({
   initialState,
   reducers: {
     createEvent(state, action) {
-      console.log(action);
+      state.isCreated = action.payload.success;
     },
     checkSuffix(state, action) {
-      console.log("hello", action.payload);
+      state.isSuffixValid = action.payload.exist;
     },
-    checkUrl(state, action) {},
+    checkUrl(state, action) {
+      state.isUrlValid = action.payload.exist;
+    },
     fetchError(state, action) {
-      console.log("error");
+      state.error = action.payload;
     },
   },
 });
@@ -65,7 +69,7 @@ function* api(action) {
       payload: res.data,
     });
   } catch (error) {
-    yield put(fetchError("error"));
+    yield put(fetchError({ payload: error.response }));
   }
 }
 
