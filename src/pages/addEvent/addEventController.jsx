@@ -1,14 +1,18 @@
 import React, { useState, useCallback } from "react";
 import axios from "axios";
-import { Event } from "../Event";
+import { useDispatch } from "react-redux";
 
-const url = process.env.REACT_APP_BASE_URL;
+import { Event } from "../Event";
+import { sagaEventCallBegan } from "../../model/event/saga";
+import { createEvent } from "../../model/event/reducer";
 
 const parametres = {
   status: "add",
 };
 
 export const AddEventController = React.memo(() => {
+  const dispatch = useDispatch();
+
   const [state, setState] = useState({
     event: "",
     city: "",
@@ -18,7 +22,14 @@ export const AddEventController = React.memo(() => {
   });
 
   const handleOnSubmit = useCallback(() => {
-    axios.post(`${url}/addEvent`, state);
+    dispatch({
+      type: sagaEventCallBegan.type,
+      payload: state,
+      url: `/addEvent`,
+      method: "post",
+      onSuccess: createEvent.type,
+    });
+
     setState({ event: "", city: "", date: "", area: "", QRs: [] });
   }, [state]);
 

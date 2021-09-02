@@ -1,11 +1,15 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState } from "react";
+import { useDispatch } from "react-redux";
+
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { useDebounce } from "../../utils/useHooks";
-import axios from "axios";
+import { sagaEventCallBegan } from "../../model/event/saga";
+import { checkSuffix } from "../../model/event/reducer";
 
 const url = process.env.REACT_APP_BASE_URL;
 
 export const InfoBlockWrapper = React.memo(({ qrs, id, suffix, ...rest }) => {
+  const dispatch = useDispatch();
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
 
@@ -14,16 +18,20 @@ export const InfoBlockWrapper = React.memo(({ qrs, id, suffix, ...rest }) => {
       if (cur.suffix === suffix.value) return acc + 1;
       return acc;
     }, 0);
-    console.log(count, suffix.value);
+    // console.log(count, suffix.value);
     if (count > 1) {
       setIsValid(false);
     } else {
       setIsValid(true);
     }
 
-    axios.get(`${url}/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`);
+    dispatch({
+      type: sagaEventCallBegan.type,
+      url: `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`,
+      method: "get",
+      onSuccess: checkSuffix.type,
+    });
   }, [debouncedSearchTerm]);
-  // // console.log(suffix, isValid);
 
   return <InfoBlock isValid={isValid} {...rest} />;
 });
