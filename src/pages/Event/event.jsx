@@ -27,7 +27,7 @@ const inputFields1 = [
 export const Event = React.memo(({ className, onSend, state, onUpdateState, status }) => {
   const ref = useRef(null);
   const classes = clsx("event", className);
-  const [suffix, setSuffix] = useState({ id: "", value: "" });
+  // const [suffix, setSuffix] = useState({ id: "", value: "" });
   const [popup, setPopup] = useState({
     curSuffix: 0,
     showPopup: false,
@@ -104,10 +104,10 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         const Qr = draftState.QRs.find((el) => el.id === curSuffix);
         Qr.suffix = target.value;
       });
-      setSuffix({
-        id: curSuffix,
-        value: target.value,
-      });
+      // setSuffix({
+      //   id: curSuffix,
+      //   value: target.value,
+      // });
       onUpdateState({
         ...nextState,
       });
@@ -250,7 +250,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
               id={el.id}
               key={el.id}
               qrs={state.QRs}
-              suffix={suffix}
+              suffix={el.suffix}
               value={el.suffix}
               resources={el.resources}
               checked={el.team === "yes" ? true : false}

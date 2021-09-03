@@ -4,7 +4,12 @@ import axios from "axios";
 
 import { sagaEventCallBegan } from "./saga";
 
-const envBaseUrl = process.env.REACT_APP_BASE_URL;
+const envBaseUrl =
+  process.env.NODE_ENV === "development"
+    ? process.env.REACT_APP_LOCALHOST
+    : process.env.REACT_APP_BASE_URL;
+
+console.log(envBaseUrl);
 
 const initialState = {
   isSuffixExist: false,
@@ -37,10 +42,10 @@ const eventSlice = createSlice({
       state.isCreated = action.payload.success;
     },
     checkSuffix(state, action) {
-      state.isSuffixValid = action.payload.exist;
+      state.isSuffixExist = action.payload.exist;
     },
     checkUrl(state, action) {
-      state.isUrlValid = action.payload.exist;
+      state.isUrlExist = action.payload.exist;
     },
     fetchError(state, action) {
       state.error = action.payload;

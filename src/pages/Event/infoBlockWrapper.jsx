@@ -6,35 +6,46 @@ import { useDebounce } from "../../utils/useHooks";
 import { sagaEventCallBegan } from "../../model/event/saga";
 import { checkSuffix } from "../../model/event/reducer";
 
-export const InfoBlockWrapper = React.memo(({ qrs, id, suffix, ...rest }) => {
+const isDev = process.env.NODE_ENV === "development";
+const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
+
+export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
   const dispatch = useDispatch();
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
 
   const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
+  // console.log(isSuffixExist);
 
   useEffect(() => {
-    setIsValid(!isSuffixExist);
-  }, [isSuffixExist]);
+    if (isValid) {
+      setIsValid(!isSuffixExist);
+    } else {
+      setIsValid(false);
+    }
+  }, [isSuffixExist, isValid]);
 
   useEffect(() => {
     const count = qrs.reduce((acc, cur) => {
-      if (cur.suffix === suffix.value) return acc + 1;
+      if (cur.suffix === suffix) return acc + 1;
       return acc;
     }, 0);
     if (count > 1) {
       setIsValid(false);
-    } else {
+    } else if (isSuffixExist === false) {
       setIsValid(true);
     }
 
-    dispatch({
-      type: sagaEventCallBegan.type,
-      url: `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`,
-      method: "get",
-      onSuccess: checkSuffix.type,
-    });
-  }, [debouncedSearchTerm]);
+    if (debouncedSearchTerm) {
+      dispatch({
+        url,
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: checkSuffix.type,
+      });
+    }
+  }, [debouncedSearchTerm, isSuffixExist]);
 
+  console.log(isValid);
   return <InfoBlock isValid={isValid} {...rest} />;
-});
+};

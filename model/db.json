@@ -1,0 +1,138 @@
+{
+  "existSuffix": { "exist": true, "url": "pohod" },
+  "notExistSuffix": { "exist": false, "url": "pohod" },
+  "existUrl": { "exist": true },
+  "notExistUrl": { "exist": false },
+  "events": [
+    {
+      "id": "160",
+      "name": "?????",
+      "city": "??????",
+      "date": "Thu Sep 23 00:00:00 MSK 2021",
+      "area": "???",
+      "people_count": "0",
+      "deleted": "false",
+      "qrs": [
+        {
+          "id": "231",
+          "qr_suffix": "Pohod",
+          "event_id": "160",
+          "people_count": "0",
+          "qr_url": "http:localhost/Pohod",
+          "team": "false",
+          "deleted": "false",
+          "qrPath": {
+            "id": "137",
+            "qr_id": "231",
+            "path": "QRs/?????/Pohod.png",
+            "deleted": "false"
+          },
+          "resources": [
+            {
+              "id": "371",
+              "qr_id": "231",
+              "qr_suffix": "Pohod",
+              "infinity": "false",
+              "url": "https://telegram.me/Brazik123456789",
+              "people_count": "0",
+              "came_people_count": "0",
+              "deleted": "false"
+            }
+          ]
+        },
+        {
+          "id": "232",
+          "qr_suffix": "fcsd",
+          "event_id": "160",
+          "people_count": "0",
+          "qr_url": "http:localhost/fcsd",
+          "team": "false",
+          "deleted": "false",
+          "qrPath": {
+            "id": "138",
+            "qr_id": "232",
+            "path": "QRs/?????/fcsd.png",
+            "deleted": "false"
+          },
+          "resources": [
+            {
+              "id": "372",
+              "qr_id": "232",
+              "qr_suffix": "fcsd",
+              "infinity": "true",
+              "url": "wedw",
+              "people_count": "0",
+              "came_people_count": "0",
+              "deleted": "false"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "160",
+      "name": "?????",
+      "city": "??????",
+      "date": "Thu Sep 23 00:00:00 MSK 2021",
+      "area": "???",
+      "people_count": "0",
+      "deleted": "false",
+      "qrs": [
+        {
+          "id": "231",
+          "qr_suffix": "Pohod",
+          "event_id": "160",
+          "people_count": "0",
+          "qr_url": "http:localhost/Pohod",
+          "team": "false",
+          "deleted": "false",
+          "qrPath": {
+            "id": "137",
+            "qr_id": "231",
+            "path": "QRs/?????/Pohod.png",
+            "deleted": "false"
+          },
+          "resources": [
+            {
+              "id": "371",
+              "qr_id": "231",
+              "qr_suffix": "Pohod",
+              "infinity": "false",
+              "url": "https://telegram.me/Brazik123456789",
+              "people_count": "0",
+              "came_people_count": "0",
+              "deleted": "false"
+            }
+          ]
+        },
+        {
+          "id": "232",
+          "qr_suffix": "fcsd",
+          "event_id": "160",
+          "people_count": "0",
+          "qr_url": "http:localhost/fcsd",
+          "team": "false",
+          "deleted": "false",
+          "qrPath": {
+            "id": "138",
+            "qr_id": "232",
+            "path": "QRs/?????/fcsd.png",
+            "deleted": "false"
+          },
+          "resources": [
+            {
+              "id": "372",
+              "qr_id": "232",
+              "qr_suffix": "fcsd",
+              "infinity": "true",
+              "url": "wedw",
+              "people_count": "0",
+              "came_people_count": "0",
+              "deleted": "false"
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

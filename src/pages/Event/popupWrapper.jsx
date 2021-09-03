@@ -6,6 +6,9 @@ import { checkUrl } from "../../model/event/reducer";
 import { sagaEventCallBegan } from "../../model/event/saga";
 import { useDebounce } from "../../utils/useHooks";
 
+const isDev = process.env.NODE_ENV === "development";
+const url = isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
+
 export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) => {
   const dispatch = useDispatch();
   const [isValid, setValid] = useState(true);
@@ -38,12 +41,14 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   }, [data]);
 
   useEffect(() => {
-    dispatch({
-      type: sagaEventCallBegan.type,
-      url: `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`,
-      method: "get",
-      onSuccess: checkUrl.type,
-    });
+    if (debouncedSearchTerm) {
+      dispatch({
+        url,
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: checkUrl.type,
+      });
+    }
   }, [debouncedSearchTerm]);
 
   useEffect(() => {

@@ -11,7 +11,7 @@ const sagaMiddleware = createSagaMiddleware();
 const logger = createLogger({
   diff: true,
 });
-const middlewares = [sagaMiddleware, logger];
+const middlewares = [sagaMiddleware];
 const middleware = [...getDefaultMiddleware({ thunk: false }), ...middlewares];
 
 const configureAppStore = (preloadedState) =>
