@@ -203,7 +203,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
     },
     [state, onUpdateState],
   );
-  console.log(popup.state);
   return (
     <div className={classes}>
       <Modal show={popup.showPopup}>
@@ -214,7 +213,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
           status={popup.status}
           data={popup.state}
           isExist={popup.isExist}
-          disabled={true}
         />
       </Modal>
       <MarginGroup gap={30} isColumn>
@@ -239,7 +237,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
           <Button className="event__suffix" onClick={handleOnAddSuffix}>
             Добавить суффикс на URL
           </Button>
-          <Button className="event__send" onClick={onSend} disabled>
+          <Button className="event__send" onClick={onSend}>
             Отправить
           </Button>
         </MarginGroup>

@@ -53,10 +53,12 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
 
   useEffect(() => {
     setValid(!isUrlExist);
+    setActiveBtn(!isUrlExist);
   }, [isUrlExist]);
 
   useEffect(() => {
     setValid(!isExist);
+    setActiveBtn(!isExist);
   }, [isExist]);
 
   return (

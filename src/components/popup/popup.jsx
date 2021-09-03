@@ -8,7 +8,7 @@ import { Input } from "../input";
 import "./popup.scss";
 
 export const Popup = React.memo(
-  ({ state, onUpdateState, className, onAdd, isValid, popupRef, buttunLabel }) => {
+  ({ state, onUpdateState, className, onAdd, isValid, popupRef, buttunLabel, disabled }) => {
     const classes = clsx("popup", className);
 
     const handleOnChange = useCallback(
@@ -17,7 +17,7 @@ export const Popup = React.memo(
       },
       [state],
     );
-
+    console.log("disabled", disabled);
     return (
       <div className={classes} ref={popupRef}>
         <h2>Popup</h2>
@@ -41,7 +41,9 @@ export const Popup = React.memo(
           <p className="popup__prompt">Оставь пустым если неограничено</p>
           {!isValid && <p className="popup__invalid">Данный внешний ресурс уже существует</p>}
         </MarginGroup>
-        <Button onClick={onAdd}>{buttunLabel}</Button>
+        <Button onClick={onAdd} disabled={disabled}>
+          {buttunLabel}
+        </Button>
       </div>
     );
   },
