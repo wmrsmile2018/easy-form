@@ -26,6 +26,8 @@
     .row-cells {
       display: flex;
       gap: 30px;
+      text-decoration: none;
+
     }
 
     .row-buttons {
@@ -57,11 +59,20 @@
     }
     .events-table-content {
     }
+
+ 
     .row__cell {
       display: flex;
       justify-content: flex-start;
       width: 280px;
       border-right: 1px dotted black;
+color: #585858;
+    }
+
+    .row__index {
+      width: 40px;
+      display: flex;
+      justify-content: center;
     }
   }
 
