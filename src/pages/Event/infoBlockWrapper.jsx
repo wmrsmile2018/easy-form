@@ -11,7 +11,6 @@ const isDev = process.env.NODE_ENV === "development";
 // const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
 
 const getUrl = ({ suffix, id }) => {
-  console.log(suffix, id);
   return isDev ? "/existSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
 };
 

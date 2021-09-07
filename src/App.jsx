@@ -1,5 +1,5 @@
 import { AddEventController } from "./pages/addEvent/";
-import { Switch, Route, NavLink } from "react-router-dom";
+import { Switch, Route, NavLink,Redirect } from "react-router-dom";
 import { EventsController } from "./pages/Events";
 
 import "./App.css";
@@ -12,7 +12,7 @@ function App() {
   return (
     <div className="App">
       <div className="app-navigation">
-        <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/">
+        <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/admin/">
           Главная
         </NavLink>
         <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/basket">
@@ -22,7 +22,11 @@ function App() {
       <main id="main">
         <div className="app-content">
           <Switch>
+            <Route exact path="/">
+              <Redirect to="/admin" />
+            </Route>
             <Route exact path="/admin/" component={EventsController} />
+            <Route path='/admin/edit-event/:id'/>
             <Route path="/admin/add-event" component={AddEventController} />
             <Route path="*" component={ErrorComponent} />
           </Switch>

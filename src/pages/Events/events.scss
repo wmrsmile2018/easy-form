@@ -13,6 +13,12 @@
     border-bottom: 1px dotted black;
     align-items: center;
     display: flex;
+    color: #585858;
+    
+    &:hover {
+      background-color: #efefef;
+      cursor: pointer;
+    }
 
     &.outline {
       // background: #f3f3f3;
@@ -42,13 +48,19 @@
       border-bottom: 1px solid black;
       height: 40px;
       align-items: center;
+
+      .header__row-cell {
+        font-weight: bold;
+        font-size: 1rem;
+      }
+
     }
     .events-table-content {
     }
     .row__cell {
       display: flex;
       justify-content: flex-start;
-      width: 220px;
+      width: 280px;
       border-right: 1px dotted black;
     }
   }

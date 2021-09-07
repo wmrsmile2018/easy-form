@@ -2,6 +2,7 @@ import React from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import key from "weak-key";
+import { Link } from "react-router-dom";
 
 import { Button } from "../../components/button";
 import { Title } from "../../components/title";
@@ -144,10 +145,11 @@ const events = [
   },
 ];
 
-const Row = ({ className, name, city, index }) => {
+const Row = ({ className, name, city, index, id }) => {
+  console.log(id);
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
   return (
-    <div className={classes}>
+    <Link to={location => `${location.pathname}/edit-event/${id}`} className={classes}>
       <div className="row-cells">
         <span className="row__cell row__name">{name}</span>
         <span className="row__cell row__city">{city}</span>
@@ -157,7 +159,7 @@ const Row = ({ className, name, city, index }) => {
         <Button>Изменить</Button>
         <Button>Подробнее</Button>
       </div>
-    </div>
+    </Link>
   );
 };
 
@@ -169,12 +171,12 @@ export const Events = ({ className, addNew }) => {
       <Title>Список мероприятий</Title>
       <div className="events-table">
         <div className="events-table-header">
-          <span className="row__cell row__name header__row__name">Наименование мероприятия</span>
-          <span className="row__cell row__city header__row__city">Город</span>
+          <span className="row__cell row__name header__row-cell">Наименование мероприятия</span>
+          <span className="row__cell row__city header__row-cell">Город</span>
         </div>
         <div className="events-table-content">
           {events.map((el, i) => (
-            <Row key={key(el)} index={i} name={el.name} city={el.city} />
+            <Row id={el.id} key={key(el)} index={i} name={el.name} city={el.city} />
           ))}
         </div>
       </div>
