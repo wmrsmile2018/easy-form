@@ -2,12 +2,16 @@ import React, { useState, useEffect, useCallback, useMemo } from "react";
 import { useSelector, useDispatch } from "react-redux";
 
 import { Popup } from "../../components/popup/popup";
-import { checkUrl } from "../../model/event/reducer";
-import { sagaEventCallBegan } from "../../model/event/saga";
+import { checkUrl, fetchError } from "../../model/event/reducer";
+import { sagaEventCallBegan } from "../../model/saga";
 import { useDebounce } from "../../utils/useHooks";
 
 const isDev = process.env.NODE_ENV === "development";
-const url = isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
+// const url = isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
+
+const getUrl = (state) => {
+  return isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
+};
 
 export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) => {
   const dispatch = useDispatch();
@@ -43,10 +47,11 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   useEffect(() => {
     if (debouncedSearchTerm) {
       dispatch({
-        url,
+        url: getUrl(state),
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkUrl.type,
+        onError: fetchError.type,
       });
     }
   }, [debouncedSearchTerm]);

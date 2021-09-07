@@ -9,9 +9,11 @@ import { rootSaga } from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
 const logger = createLogger({
-  diff: true,
+  diff: false,
+  level: "log",
+  duration: true,
 });
-const middlewares = [sagaMiddleware];
+const middlewares = [sagaMiddleware, logger];
 const middleware = [...getDefaultMiddleware({ thunk: false }), ...middlewares];
 
 const configureAppStore = (preloadedState) =>

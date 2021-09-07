@@ -16,15 +16,16 @@ import { useOnClickOutside } from "../../utils/useHooks";
 import "./event.scss";
 import { InfoBlockWrapper } from "./infoBlockWrapper";
 import { PopupWrapper } from "./popupWrapper";
+import { Title } from "../../components/title";
 
-const regex = /^[a-zA-Z]+$/;
+const regex = /^[a-zA-Z\d]+$/;
 
 const inputFields1 = [
   { name: "city", title: "Введите город" },
   { name: "event", title: "Введите название мероприятия" },
 ];
 
-export const Event = React.memo(({ className, onSend, state, onUpdateState, status }) => {
+export const Event = React.memo(({ className, onSend, state, onUpdateState, status, title }) => {
   const ref = useRef(null);
   const classes = clsx("event", className);
   // const [suffix, setSuffix] = useState({ id: "", value: "" });
@@ -104,10 +105,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         const Qr = draftState.QRs.find((el) => el.id === curSuffix);
         Qr.suffix = target.value;
       });
-      // setSuffix({
-      //   id: curSuffix,
-      //   value: target.value,
-      // });
       onUpdateState({
         ...nextState,
       });
@@ -205,6 +202,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   );
   return (
     <div className={classes}>
+      <Title>{title}</Title>
       <Modal show={popup.showPopup}>
         <PopupWrapper
           popupRef={ref}

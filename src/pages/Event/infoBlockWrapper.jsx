@@ -3,11 +3,17 @@ import { useDispatch, useSelector } from "react-redux";
 
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { useDebounce } from "../../utils/useHooks";
-import { sagaEventCallBegan } from "../../model/event/saga";
-import { checkSuffix } from "../../model/event/reducer";
+import { sagaEventCallBegan } from "../../model/saga";
+import { checkSuffix, fetchError } from "../../model/event/reducer";
 
 const isDev = process.env.NODE_ENV === "development";
-const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
+
+// const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
+
+const getUrl = ({ suffix, id }) => {
+  console.log(suffix, id);
+  return isDev ? "/existSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+};
 
 export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
   const dispatch = useDispatch();
@@ -38,13 +44,14 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
 
     if (debouncedSearchTerm) {
       dispatch({
-        url,
+        url: getUrl({ id, suffix }),
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkSuffix.type,
+        onError: fetchError.type,
       });
     }
-  }, [debouncedSearchTerm, isSuffixExist]);
+  }, [debouncedSearchTerm, isSuffixExist, qrs]);
 
   console.log(isValid);
   return <InfoBlock isValid={isValid} {...rest} />;

@@ -3,7 +3,7 @@ import axios from "axios";
 import { useDispatch } from "react-redux";
 
 import { Event } from "../Event";
-import { sagaEventCallBegan } from "../../model/event/saga";
+import { sagaEventCallBegan } from "../../model/saga";
 import { createEvent } from "../../model/event/reducer";
 
 const parametres = {
@@ -33,5 +33,13 @@ export const AddEventController = React.memo(() => {
     setState({ event: "", city: "", date: "", area: "", QRs: [] });
   }, [state]);
 
-  return <Event onUpdateState={setState} state={state} onSend={handleOnSubmit} {...parametres} />;
+  return (
+    <Event
+      onUpdateState={setState}
+      state={state}
+      onSend={handleOnSubmit}
+      title="Новое мероприятие"
+      {...parametres}
+    />
+  );
 });

@@ -17,7 +17,6 @@ export const Popup = React.memo(
       },
       [state],
     );
-    console.log("disabled", disabled);
     return (
       <div className={classes} ref={popupRef}>
         <h2>Popup</h2>
