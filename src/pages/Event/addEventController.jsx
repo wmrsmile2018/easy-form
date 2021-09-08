@@ -1,8 +1,8 @@
-import React, { useState, useCallback } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useCallback, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 import { useHistory } from "react-router-dom";
 
-import { Event } from "../Event";
+import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
 import { createEvent } from "../../model/event/reducer";
 
@@ -36,7 +36,9 @@ export const AddEventController = React.memo(() => {
   }, [state]);
 
   useEffect(() => {
-    history.push("/admin");
+    if (isCreated) {
+      history.push("/admin");
+    }
   }, [isCreated]);
 
   return (

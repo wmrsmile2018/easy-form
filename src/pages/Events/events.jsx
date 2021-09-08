@@ -24,10 +24,24 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
         <span className="row__cell row__personal-count">{peopleCount}</span>
       </div>
       <div className="row-buttons">
-        <Button onClick={handleOnRemove}>Удалить</Button>
-        {status === "active" && <Button onClick={handleOnEdit}>Изменить</Button>}
-        {status === "active" && <Button onClick={handleOnShowQrs}>Показать Qr</Button>}
-        {status === "deleted" && <Button onClick={handleOnRestore}>Восстановить</Button>}
+        <Button data-id={id} onClick={handleOnRemove}>
+          Удалить
+        </Button>
+        {status === "active" && (
+          <Button data-id={id} onClick={handleOnEdit}>
+            Изменить
+          </Button>
+        )}
+        {status === "active" && (
+          <Button data-id={id} onClick={handleOnShowQrs}>
+            Показать Qr
+          </Button>
+        )}
+        {status === "deleted" && (
+          <Button data-id={id} onClick={handleOnRestore}>
+            Восстановить
+          </Button>
+        )}
       </div>
     </Link>
   );

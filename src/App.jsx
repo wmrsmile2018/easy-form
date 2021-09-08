@@ -1,9 +1,10 @@
-import { AddEventController } from "./pages/addEvent/";
 import { Switch, Route, NavLink, Redirect } from "react-router-dom";
+
 import { DeletedEventsController, EventsController } from "./pages/Events";
+import { DetailsController } from "./pages/details";
+import { AddEventController, EditEventController } from "./pages/Event";
 
 import "./App.css";
-import { DetailsController } from "./pages/details";
 
 const ErrorComponent = ({ status }) => {
   return <div className="error-component">Current page doesn't exist</div>;
@@ -30,8 +31,8 @@ function App() {
               <Redirect to="/admin" />
             </Route>
             <Route exact path="/admin" component={EventsController} />
-            <Route path="/admin/edit-event/:id" />
             <Route path="/admin/add-event" component={AddEventController} />
+            <Route path="/admin/edit-event/:id" component={EditEventController} />
             <Route path="/admin/basket" component={DeletedEventsController} />
             <Route path="/admin/details/:id" component={DetailsController} />
             <Route path="*" component={ErrorComponent} />

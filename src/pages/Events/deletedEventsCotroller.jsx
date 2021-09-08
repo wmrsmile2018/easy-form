@@ -4,14 +4,27 @@ import { useDispatch } from "react-redux";
 
 import { Events } from "./events";
 import { sagaEventCallBegan } from "../../model/saga";
-import { fetchError, getEvents } from "../../model/event/reducer";
+import {
+  deleteMarkedEvent,
+  fetchError,
+  getDeletedEvents,
+  getEvents,
+  restoreEvent,
+} from "../../model/event/reducer";
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
 
 const isDev = process.env.NODE_ENV === "development";
 
-const getUrl = () => {
-  return isDev ? "/events" : `/getAllDeletedEvents`;
+const getUrl = ({ type, id }) => {
+  switch (type) {
+    case getDeletedEvents.type:
+      return isDev ? "/events" : `/getAllDeletedEvents`;
+    case restoreEvent.type:
+      return isDev ? `/events/${id}` : `/restoreEvent?id=${id}`;
+    case deleteMarkedEvent.type:
+      return isDev ? `/events/${id}` : `/deleteMarkedEvent?id=${id}`;
+  }
 };
 
 const parametres = {
@@ -30,10 +43,10 @@ export const DeletedEventsController = () => {
 
   useEffect(() => {
     dispatch({
-      url: "/getAllDeletedEvents",
+      url: getUrl({ type: getDeletedEvents.type }),
       type: sagaEventCallBegan.type,
       method: "get",
-      onSuccess: getEvents.type,
+      onSuccess: getDeletedEvents.type,
       onError: fetchError.type,
     });
   }, [dispatch]);
@@ -42,17 +55,31 @@ export const DeletedEventsController = () => {
     <EventsContext.Provider
       value={{
         ...parametres,
-        handleOnEdit: (e) => {
-          e.preventDefault();
-        },
-        handleOnShowQrs: (e) => {
-          e.preventDefault();
-        },
+        handleOnEdit: (e) => {},
+        handleOnShowQrs: (e) => {},
         handleOnRestore: (e) => {
           e.preventDefault();
+          const id = e.target.dataset["id"];
+
+          dispatch({
+            url: getUrl({ type: restoreEvent.type, id }),
+            type: sagaEventCallBegan.type,
+            method: "put",
+            onSuccess: restoreEvent.type,
+            onError: fetchError.type,
+          });
         },
         handleOnRemove: (e) => {
           e.preventDefault();
+          const id = e.target.dataset["id"];
+
+          dispatch({
+            url: getUrl({ type: deleteMarkedEvent.type, id }),
+            type: sagaEventCallBegan.type,
+            method: "delete",
+            onSuccess: deleteMarkedEvent.type,
+            onError: fetchError.type,
+          });
         },
       }}
     >

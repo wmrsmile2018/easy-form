@@ -4,14 +4,19 @@ import { useDispatch } from "react-redux";
 
 import { Events } from "./events";
 import { sagaEventCallBegan } from "../../model/saga";
-import { fetchError, getEvents } from "../../model/event/reducer";
+import { deleteActiveEvent, fetchError, getEvents } from "../../model/event/reducer";
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
 
 const isDev = process.env.NODE_ENV === "development";
 
-const getUrl = () => {
-  return isDev ? "/events" : `/getAllNotDeletedEvents`;
+const getUrl = ({ type, id }) => {
+  switch (type) {
+    case getEvents.type:
+      return isDev ? "/events" : `/getAllNotDeletedEvents`;
+    case deleteActiveEvent.type:
+      return isDev ? `/events/${id}` : `/deleteActiveEvent?id=${id}`;
+  }
 };
 
 const parametres = {
@@ -30,7 +35,7 @@ export const EventsController = () => {
 
   useEffect(() => {
     dispatch({
-      url: "/getAllNotDeletedEvents",
+      url: getUrl({ type: getEvents.type }),
       type: sagaEventCallBegan.type,
       method: "get",
       onSuccess: getEvents.type,
@@ -44,15 +49,24 @@ export const EventsController = () => {
         ...parametres,
         handleOnEdit: (e) => {
           e.preventDefault();
+          const id = e.target.dataset["id"];
+          history.push(`/admin/edit-event/${id}`);
         },
         handleOnShowQrs: (e) => {
           e.preventDefault();
+          const id = e.target.dataset["id"];
         },
-        handleOnRestore: (e) => {
-          e.preventDefault();
-        },
+        handleOnRestore: () => {},
         handleOnRemove: (e) => {
           e.preventDefault();
+          const id = e.target.dataset["id"];
+          dispatch({
+            url: getUrl({ type: deleteActiveEvent.type, id }),
+            type: sagaEventCallBegan.type,
+            method: "delete",
+            onSuccess: deleteActiveEvent.type,
+            onError: fetchError.type,
+          });
         },
       }}
     >

@@ -6,6 +6,10 @@ const initialState = {
   events: [],
   deletedEvents: [],
   isCreated: false,
+  event: {},
+  isDeletedActive: {},
+  isDeletedMarked: {},
+  isRestored: {},
   error: {},
 };
 
@@ -23,23 +27,37 @@ const eventSlice = createSlice({
       state.isUrlExist = action.payload.exist;
     },
     getEvents(state, action) {
-      state.events = action.payload
+      state.events = action.payload;
     },
     getDeletedEvents(state, action) {
-      state.deletedEvents = action.payload
+      state.deletedEvents = action.payload;
     },
     getQRs(state, action) {
-      state.QRs = action.payload
+      state.QRs = action.payload;
     },
+    deleteActiveEvent(state, action) {},
+    deleteMarkedEvent(state, action) {},
+    restoreEvent(state, action) {},
+    getInfoById(state, action) {},
+
     fetchError(state, action) {
       state.error = action.payload;
     },
-
   },
 });
 
 export default eventSlice.reducer;
 
-export const { createEvent, checkSuffix, checkUrl, fetchError, getEvents
-  ,getDeletedEvents,
-  getQRs } = eventSlice.actions;
+export const {
+  createEvent,
+  checkSuffix,
+  checkUrl,
+  fetchError,
+  getEvents,
+  getDeletedEvents,
+  getQRs,
+  deleteActiveEvent,
+  deleteMarkedEvent,
+  restoreEvent,
+  getInfoById,
+} = eventSlice.actions;

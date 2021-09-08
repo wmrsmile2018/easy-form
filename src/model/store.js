@@ -9,7 +9,7 @@ import { rootSaga } from "./saga";
 
 const sagaMiddleware = createSagaMiddleware();
 const logger = createLogger({
-  diff: false,
+  diff: true,
   level: "log",
   duration: true,
 });
