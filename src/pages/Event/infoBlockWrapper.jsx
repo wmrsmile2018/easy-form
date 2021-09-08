@@ -43,7 +43,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
 
     if (debouncedSearchTerm) {
       dispatch({
-        url: getUrl({ id, suffix }),
+        url: `/searchSuffixInDB?id=${id}&&suffix=${suffix}`,
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkSuffix.type,

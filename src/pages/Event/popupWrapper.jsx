@@ -47,7 +47,7 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   useEffect(() => {
     if (debouncedSearchTerm) {
       dispatch({
-        url: getUrl(state),
+        url: `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`,
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkUrl.type,
