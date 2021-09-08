@@ -1,6 +1,6 @@
 import React, { useState, useCallback } from "react";
-import axios from "axios";
 import { useDispatch } from "react-redux";
+import { useHistory } from "react-router-dom";
 
 import { Event } from "../Event";
 import { sagaEventCallBegan } from "../../model/saga";
@@ -12,6 +12,8 @@ const parametres = {
 
 export const AddEventController = React.memo(() => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const isCreated = useSelector((state) => state.event.isCreated);
 
   const [state, setState] = useState({
     event: "",
@@ -32,6 +34,10 @@ export const AddEventController = React.memo(() => {
 
     setState({ event: "", city: "", date: "", area: "", QRs: [] });
   }, [state]);
+
+  useEffect(() => {
+    history.push("/admin");
+  }, [isCreated]);
 
   return (
     <Event
