@@ -14,7 +14,7 @@
     align-items: center;
     display: flex;
     color: #585858;
-    
+
     &:hover {
       background-color: #efefef;
       cursor: pointer;
@@ -27,11 +27,12 @@
       display: flex;
       gap: 30px;
       text-decoration: none;
-
     }
 
     .row-buttons {
       display: flex;
+      justify-content: center;
+      width: 100%;
       gap: 15px;
 
       button {
@@ -55,22 +56,26 @@
         font-weight: bold;
         font-size: 1rem;
       }
-
     }
     .events-table-content {
     }
 
- 
     .row__cell {
       display: flex;
       justify-content: flex-start;
-      width: 280px;
+      width: 200px;
+      min-width: 200px;
       border-right: 1px dotted black;
-color: #585858;
+      color: #585858;
     }
-
+    .row__operations {
+      width: 100%;
+      display: flex;
+      justify-content: center;
+    }
     .row__index {
       width: 40px;
+      min-width: 40px;
       display: flex;
       justify-content: center;
     }

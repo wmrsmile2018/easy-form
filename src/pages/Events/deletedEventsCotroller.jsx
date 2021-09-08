@@ -11,14 +11,14 @@ import { EventsContext } from "./eventsContex";
 const isDev = process.env.NODE_ENV === "development";
 
 const getUrl = () => {
-  return isDev ? "/events" : `/getAllNotDeletedEvents`;
+  return isDev ? "/events" : `/getAllDeletedEvents`;
 };
 
 const parametres = {
-  status: "active",
+  status: "deleted",
 };
 
-export const EventsController = () => {
+export const DeletedEventsController = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 

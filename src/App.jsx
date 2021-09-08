@@ -1,6 +1,6 @@
 import { AddEventController } from "./pages/addEvent/";
-import { Switch, Route, NavLink,Redirect } from "react-router-dom";
-import { EventsController } from "./pages/Events";
+import { Switch, Route, NavLink, Redirect } from "react-router-dom";
+import { DeletedEventsController, EventsController } from "./pages/Events";
 
 import "./App.css";
 import { DetailsController } from "./pages/details";
@@ -30,8 +30,9 @@ function App() {
               <Redirect to="/admin" />
             </Route>
             <Route exact path="/admin" component={EventsController} />
-            <Route path='/admin/edit-event/:id'/>
+            <Route path="/admin/edit-event/:id" />
             <Route path="/admin/add-event" component={AddEventController} />
+            <Route path="/admin/basket" component={DeletedEventsController} />
             <Route path="/admin/details/:id" component={DetailsController} />
             <Route path="*" component={ErrorComponent} />
           </Switch>
