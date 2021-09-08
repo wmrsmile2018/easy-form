@@ -11,38 +11,25 @@ import { useEvents } from "./eventsContex";
 import "./events.scss";
 
 const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
-  const history = useHistory();
-  const location = useLocation();
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
-
-  const { status, handleOnEdit, handleOnShowQrs, handleOnRestore } = useEvents();
-
-  const handleOnRemove = (e) => {};
-  // const handleOnDetails = () => {
-  //   history.push(`${location.pathname}/details/${id}`);
-  // };
-
-  // const handleOnEdit = () => {
-  //   history.push(`${location.pathname}/edit/${id}`);
-  // };
-
+  const { status, handleOnEdit, handleOnShowQrs, handleOnRestore, handleOnRemove } = useEvents();
   return (
-    <div className={classes}>
-      <Link to={{ pathname: `/admin/edit-event/${id}` }} className="row-cells">
+    <Link to={{ pathname: `/admin/details/${id}` }} className={classes}>
+      <div className="row-cells">
         <span className="row__cell row__index">{index + 1}</span>
         <span className="row__cell row__name">{name}</span>
         <span className="row__cell row__city">{city}</span>
         <span className="row__cell row__date">{date}</span>
         <span className="row__cell row__area">{area}</span>
         <span className="row__cell row__personal-count">{peopleCount}</span>
-      </Link>
+      </div>
       <div className="row-buttons">
         <Button onClick={handleOnRemove}>Удалить</Button>
         {status === "active" && <Button onClick={handleOnEdit}>Изменить</Button>}
         {status === "active" && <Button onClick={handleOnShowQrs}>Показать Qr</Button>}
         {status === "deleted" && <Button onClick={handleOnRestore}>Восстановить</Button>}
       </div>
-    </div>
+    </Link>
   );
 };
 

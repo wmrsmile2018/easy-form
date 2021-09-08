@@ -30,7 +30,7 @@ export const EventsController = () => {
 
   useEffect(() => {
     dispatch({
-      url: getUrl(),
+      url: "/getAllNotDeletedEvents",
       type: sagaEventCallBegan.type,
       method: "get",
       onSuccess: getEvents.type,
@@ -42,9 +42,18 @@ export const EventsController = () => {
     <EventsContext.Provider
       value={{
         ...parametres,
-        handleOnEdit: () => {},
-        handleOnShowQrs: () => {},
-        handleOnRestore: () => {},
+        handleOnEdit: (e) => {
+          e.preventDefault();
+        },
+        handleOnShowQrs: (e) => {
+          e.preventDefault();
+        },
+        handleOnRestore: (e) => {
+          e.preventDefault();
+        },
+        handleOnRemove: (e) => {
+          e.preventDefault();
+        },
       }}
     >
       <Events events={events} addNew={handleOnAddNew} />
