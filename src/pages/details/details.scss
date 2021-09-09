@@ -1,0 +1,132 @@
+.details {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+
+  .details-header {
+    & > p {
+      font-weight: bold;
+      span {
+        margin-left: 5px;
+        font-weight: normal;
+      }
+    }
+  }
+
+  .details-table {
+    display: flex;
+    flex-direction: column;
+    .row__cell {
+      display: flex;
+      height: fit-content;
+      justify-content: flex-start;
+      width: 250px;
+      border-right: 1px dotted black;
+    }
+    .row__index {
+      display: flex;
+      width: 30px;
+      justify-content: center;
+    }
+    .row__qr-path {
+      margin: 10px 0;
+      border: none;
+    }
+    .details-table-header {
+      display: flex;
+      // justify-content: space-between;
+      height: 50px;
+      border-bottom: 1px solid black;
+      gap: 30px;
+
+      .row__cell {
+        height: 40px;
+        font-weight: bold;
+        font-size: 1rem;
+        display: flex;
+        align-items: center;
+      }
+    }
+    .details-table-content {
+      display: flex;
+      flex-direction: column;
+      .row {
+        display: flex;
+        // align-items: center;
+        flex-direction: column;
+        justify-content: space-between;
+
+        border-bottom: 1px dotted black;
+
+        .row-cells__wrapper {
+          min-height: 50px;
+          display: flex;
+          align-items: center;
+          &:hover {
+            background-color: #efefef;
+            cursor: pointer;
+          }
+        }
+
+        .row-cells {
+          // height: 100%;
+          gap: 30px;
+          display: flex;
+          align-items: center;
+          // justify-content: space-between;
+        }
+
+        .row-resources {
+          // height: 0px;
+          overflow: hidden;
+          opacity: 0;
+          width: 100%;
+          background-color: #d0e1ff;
+          transition: all 0.3s linear;
+          border: 1px solid black;
+
+          .row__cell {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+          }
+          .row__index {
+            width: 30px;
+            min-width: 30px;
+          }
+
+          .resources-header {
+            display: flex;
+            gap: 30px;
+            height: 51px;
+            align-items: center;
+            font-weight: bold;
+            font-size: 1rem;
+            border-bottom: 1px solid black;
+            justify-content: space-between;
+
+            .row__team {
+              border: none;
+            }
+          }
+
+          .row-cells {
+            display: flex;
+            height: 50px;
+            border-bottom: 1px dotted black;
+            align-items: center;
+          }
+        }
+
+        &.showDetails {
+          .row-resources {
+            // height: 100px;
+            height: fit-content;
+            opacity: 1;
+          }
+        }
+      }
+      // justify-content: space-between;
+    }
+  }
+}
