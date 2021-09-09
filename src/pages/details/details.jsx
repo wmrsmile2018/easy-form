@@ -48,7 +48,6 @@ const Row = React.memo(
             <span className="row__cell row__team">{team ? "Да" : "Нет"}</span>
             <span className="row__cell row__people-count">{peopleCount}</span>
             <span className="row__cell row__rsrc-count">{rsrcCount}</span>
-            <span className="row__cell row__rsrc-count">{rsrcCount}</span>
             <img className="row__cell row__qr-path" src={qrPath.path} alt="qr code" />
           </div>
         </div>
@@ -95,6 +94,7 @@ export const Details = React.memo(({ className, event }) => {
             <span className="row__cell header__row-cell row__rsrc-count">
               Количество внешних ресурсов
             </span>
+            <span className="row__cell header__row-cell row__qr-path">Qr код</span>
           </div>
           <div className="details-table-content">
             {qrs.map((el, i) => (
