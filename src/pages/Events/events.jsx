@@ -12,18 +12,37 @@ import "./events.scss";
 
 const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
-  const { status, handleOnEdit, handleOnShowQrs, handleOnRestore, handleOnRemove } = useEvents();
+  const {
+    status,
+    handleOnEdit,
+    handleOnShowQrs,
+    handleOnRestore,
+    handleOnRemove,
+    handleOnDetails,
+  } = useEvents();
   return (
-    <Link to={{ pathname: `/admin/details/${id}` }} className={classes}>
-      <div className="row-cells">
-        <span className="row__cell row__index">{index + 1}</span>
-        <span className="row__cell row__name">{name}</span>
-        <span className="row__cell row__city">{city}</span>
-        <span className="row__cell row__date">{date}</span>
-        <span className="row__cell row__area">{area}</span>
-        <span className="row__cell row__personal-count">{peopleCount}</span>
+    <div onClick={handleOnDetails} className={classes} data-id={id}>
+      <div className="row-cells" data-id={id}>
+        <span data-id={id} className="row__cell row__index">
+          {index + 1}
+        </span>
+        <span data-id={id} className="row__cell row__name">
+          {name}
+        </span>
+        <span data-id={id} className="row__cell row__city">
+          {city}
+        </span>
+        <span data-id={id} className="row__cell row__date">
+          {date}
+        </span>
+        <span data-id={id} className="row__cell row__area">
+          {area}
+        </span>
+        <span data-id={id} className="row__cell row__personal-c ount">
+          {peopleCount}
+        </span>
       </div>
-      <div className="row-buttons">
+      <div className="row-buttons" data-id={id}>
         <Button data-id={id} onClick={handleOnRemove}>
           Удалить
         </Button>
@@ -43,7 +62,7 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
           </Button>
         )}
       </div>
-    </Link>
+    </div>
   );
 };
 

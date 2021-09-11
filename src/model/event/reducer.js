@@ -1,4 +1,5 @@
 import { createSlice } from "@reduxjs/toolkit";
+import { sagaEventCallBegan, sagaEventCallFail, sagaEventCallSuccess } from "../saga";
 
 const initialState = {
   isSuffixExist: false,
@@ -6,11 +7,19 @@ const initialState = {
   events: [],
   deletedEvents: [],
   isCreated: false,
-  event: {},
+  event: {
+    "name": "",
+    "city": "",
+    "date": "",
+    "area": "",
+    "peopleCount": "",
+    "qrs": [],
+  },
   isDeletedActive: {},
   isDeletedMarked: {},
   isRestored: {},
   error: {},
+  status: false,
 };
 
 const eventSlice = createSlice({
@@ -35,14 +44,31 @@ const eventSlice = createSlice({
     getQRs(state, action) {
       state.QRs = action.payload;
     },
-    deleteActiveEvent(state, action) {},
-    deleteMarkedEvent(state, action) {},
+    deleteActiveEvent(state) {
+      state.isDeletedActive = action.payload;
+    },
+    deleteMarkedEvent(state, action) {
+      state.isDeletedMarked = action.payload;
+    },
     restoreEvent(state, action) {},
-    getInfoById(state, action) {},
+    getInfoById(state, action) {
+      state.event = action.payload;
+    },
 
     fetchError(state, action) {
       state.error = action.payload;
     },
+  },
+  extraReducers: (builder) => {
+    builder.addCase(sagaEventCallBegan, (state, action) => {
+      state.status = false;
+    });
+    builder.addCase(sagaEventCallSuccess, (state, action) => {
+      state.status = true;
+    });
+    builder.addCase(sagaEventCallFail, (state, action) => {
+      state.status = false;
+    });
   },
 });
 

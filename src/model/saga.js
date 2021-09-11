@@ -9,6 +9,8 @@ const envBaseUrl =
     : process.env.REACT_APP_BASE_URL;
 
 export const sagaEventCallBegan = createAction("saga/eventCallBegan");
+export const sagaEventCallSuccess = createAction("saga/eventCallSuccess");
+export const sagaEventCallFail = createAction("saga/eventCallFail");
 
 const fetchApi = async ({ baseURL, url, method, data }) =>
   await axios.request({
@@ -41,11 +43,13 @@ function* requestExecutor(action) {
       type: onSuccess,
       payload: res.data,
     });
+    yield put({ type: sagaEventCallSuccess.type });
   } catch (error) {
     yield put({
       type: onError,
       payload: error.response,
     });
+    yield put({ type: sagaEventCallFail.type });
   }
 }
 

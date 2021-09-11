@@ -60,6 +60,7 @@ const Row = React.memo(
 );
 
 export const Details = React.memo(({ className, event }) => {
+  console.log(event);
   const { name, city, date, area, peopleCount, qrs } = event;
   const classes = clsx("details", className);
   return (

@@ -35,7 +35,7 @@ export const DeletedEventsController = () => {
   const dispatch = useDispatch();
   const history = useHistory();
 
-  const events = useSelector((state) => state.event.events);
+  const events = useSelector((state) => state.event.deletedEvents);
 
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
@@ -68,6 +68,9 @@ export const DeletedEventsController = () => {
             onSuccess: restoreEvent.type,
             onError: fetchError.type,
           });
+        },
+        handleOnDetails: () => {
+          location.pathname;
         },
         handleOnRemove: (e) => {
           e.preventDefault();
