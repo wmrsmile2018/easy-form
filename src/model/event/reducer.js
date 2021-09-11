@@ -50,23 +50,24 @@ const eventSlice = createSlice({
     deleteMarkedEvent(state, action) {
       state.isDeletedMarked = action.payload;
     },
-    restoreEvent(state, action) {},
+    restoreEvent(state, action) {
+      state.isRestored = action.payload;
+    },
     getInfoById(state, action) {
       state.event = action.payload;
     },
-
     fetchError(state, action) {
       state.error = action.payload;
     },
   },
   extraReducers: (builder) => {
-    builder.addCase(sagaEventCallBegan, (state, action) => {
+    builder.addCase(sagaEventCallBegan, (state) => {
       state.status = false;
     });
-    builder.addCase(sagaEventCallSuccess, (state, action) => {
+    builder.addCase(sagaEventCallSuccess, (state) => {
       state.status = true;
     });
-    builder.addCase(sagaEventCallFail, (state, action) => {
+    builder.addCase(sagaEventCallFail, (state) => {
       state.status = false;
     });
   },
