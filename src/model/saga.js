@@ -45,6 +45,7 @@ function* requestExecutor(action) {
     });
     yield put({ type: sagaEventCallSuccess.type });
   } catch (error) {
+    console.log(error);
     yield put({
       type: onError,
       payload: error.response,

@@ -9,8 +9,15 @@ import { useDebounce } from "../../utils/useHooks";
 const isDev = process.env.NODE_ENV === "development";
 // const url = isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
 
-const getUrl = (state) => {
-  return isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
+// const getUrl = (state) => {
+//   return isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
+// };
+
+const getUrl = ({ type, state: { id, url } }) => {
+  switch (type) {
+    case checkUrl.type:
+      return isDev ? "/notExistUrl" : `/searchUrlInDB?id=${id}&&suffix=${url}`;
+  }
 };
 
 export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) => {
@@ -32,7 +39,10 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
 
   const handleOnAdd = useCallback(() => {
     const { url, people_count } = state;
-    if (status === "add") onAdd({ url, people_count, id: Date.now().toString() });
+    if (status === "add") {
+      onAdd({ url, people_count, id: Date.now().toString() });
+      setState({ url: "", people_count: "" });
+    }
     if (status === "edit") onEdit(state);
 
     if (isExist) {
@@ -47,7 +57,7 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   useEffect(() => {
     if (debouncedSearchTerm) {
       dispatch({
-        url: `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`,
+        url: getUrl({ type: checkUrl.type, state }),
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkUrl.type,

@@ -10,8 +10,15 @@ const isDev = process.env.NODE_ENV === "development";
 
 // const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
 
-const getUrl = ({ suffix, id }) => {
-  return isDev ? "/existSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+// const getUrl = ({ suffix, state: {id, suffix} }) => {
+//   return isDev ? "/existSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+// };
+
+const getUrl = ({ type, state: { id, suffix } }) => {
+  switch (type) {
+    case checkSuffix.type:
+      return isDev ? "/notExistSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+  }
 };
 
 export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
@@ -43,7 +50,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
 
     if (debouncedSearchTerm) {
       dispatch({
-        url: `/searchSuffixInDB?id=${id}&&suffix=${suffix}`,
+        url: getUrl({ type: checkSuffix.type, state: { id, suffix } }),
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkSuffix.type,
@@ -52,6 +59,5 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
     }
   }, [debouncedSearchTerm, isSuffixExist, qrs]);
 
-  console.log(isValid);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
