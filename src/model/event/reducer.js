@@ -64,12 +64,18 @@ const eventSlice = createSlice({
   extraReducers: (builder) => {
     builder.addCase(sagaEventCallBegan, (state) => {
       state.status = false;
+      state.isCreated = false;
+      state.isSuffixExist = false;
+      state.isUrlExist = false;
     });
     builder.addCase(sagaEventCallSuccess, (state) => {
       state.status = true;
     });
     builder.addCase(sagaEventCallFail, (state) => {
       state.status = false;
+      state.isCreated = false;
+      state.isSuffixExist = false;
+      state.isUrlExist = false;
     });
   },
 });

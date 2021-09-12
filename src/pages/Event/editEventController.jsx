@@ -36,7 +36,10 @@ export const EditEventController = React.memo(() => {
     dispatch({
       url: getUrl({ type: editEvent.type }),
       type: sagaEventCallBegan.type,
-      payload: state,
+      payload: {
+        ...state,
+        date_picker: "",
+      },
       method: "put",
       onSuccess: editEvent.type,
     });
