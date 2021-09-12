@@ -55,17 +55,17 @@ export const EventsController = () => {
     if (!isEmpty(event) && id) {
       history.push(`${location.pathname}/details/${id}`);
     }
-  }, [status, id]);
+  }, [event, id]);
 
-  // useEffect(() => {
-  //   dispatch({
-  //     url: getUrl({ type: getEvents.type }),
-  //     type: sagaEventCallBegan.type,
-  //     method: "get",
-  //     onSuccess: getEvents.type,
-  //     onError: fetchError.type,
-  //   });
-  // }, [dispatch]);
+  useEffect(() => {
+    dispatch({
+      url: getUrl({ type: getEvents.type }),
+      type: sagaEventCallBegan.type,
+      method: "get",
+      onSuccess: getEvents.type,
+      onError: fetchError.type,
+    });
+  }, [dispatch]);
 
   return (
     <EventsContext.Provider

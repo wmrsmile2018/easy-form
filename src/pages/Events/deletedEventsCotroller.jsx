@@ -54,6 +54,16 @@ export const DeletedEventsController = () => {
     }
   }, [dispatch, isDeletedMarked]);
 
+  useEffect(() => {
+    dispatch({
+      url: getUrl({ type: getDeletedEvents.type }),
+      type: sagaEventCallBegan.type,
+      method: "get",
+      onSuccess: getDeletedEvents.type,
+      onError: fetchError.type,
+    });
+  }, [dispatch]);
+
   return (
     <EventsContext.Provider
       value={{
