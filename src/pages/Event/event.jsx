@@ -200,6 +200,8 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
     },
     [state, onUpdateState],
   );
+
+  console.log(state);
   return (
     <div className={classes}>
       <Title>{title}</Title>
@@ -216,7 +218,13 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
       <MarginGroup gap={30} isColumn>
         <MarginGroup gap={30} className="event__input-fields">
           {inputFields1.map((el) => (
-            <Input key={key(el)} name={el.name} title={el.title} onChange={handleOnChange} />
+            <Input
+              key={key(el)}
+              name={el.name}
+              title={el.title}
+              onChange={handleOnChange}
+              value={state[el.name]}
+            />
           ))}
         </MarginGroup>
         <MarginGroup gap={30} className="event__input-fields">
@@ -228,7 +236,12 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
             value={state.date_picker}
             name={"date"}
           />
-          <Input name={"area"} title={"Введите место"} onChange={handleOnChange} />
+          <Input
+            name={"area"}
+            title={"Введите место"}
+            onChange={handleOnChange}
+            value={state.area}
+          />
         </MarginGroup>
 
         <MarginGroup gap={20}>
