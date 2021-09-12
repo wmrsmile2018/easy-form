@@ -15,9 +15,9 @@ const initialState = {
     "peopleCount": "",
     "qrs": [],
   },
-  isDeletedActive: {},
-  isDeletedMarked: {},
-  isRestored: {},
+  isDeletedActive: true,
+  isDeletedMarked: true,
+  isRestored: false,
   error: {},
   status: false,
 };
@@ -46,13 +46,13 @@ const eventSlice = createSlice({
       state.QRs = action.payload;
     },
     deleteActiveEvent(state) {
-      state.isDeletedActive = action.payload;
+      state.isDeletedActive = action.payload.success;
     },
     deleteMarkedEvent(state, action) {
-      state.isDeletedMarked = action.payload;
+      state.isDeletedMarked = action.payload.success;
     },
     restoreEvent(state, action) {
-      state.isRestored = action.payload;
+      state.isRestored = action.payload.success;
     },
     getInfoById(state, action) {
       state.event = action.payload;
@@ -67,6 +67,9 @@ const eventSlice = createSlice({
       state.isCreated = false;
       state.isSuffixExist = false;
       state.isUrlExist = false;
+      state.isDeletedActive = false;
+      state.isDeletedMarked = false;
+      state.isRestored = false;
     });
     builder.addCase(sagaEventCallSuccess, (state) => {
       state.status = true;
@@ -76,6 +79,9 @@ const eventSlice = createSlice({
       state.isCreated = false;
       state.isSuffixExist = false;
       state.isUrlExist = false;
+      state.isDeletedActive = false;
+      state.isDeletedMarked = false;
+      state.isRestored = false;
     });
   },
 });

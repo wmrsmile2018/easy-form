@@ -36,20 +36,23 @@ export const DeletedEventsController = () => {
   const history = useHistory();
 
   const events = useSelector((state) => state.event.deletedEvents);
+  const isDeletedMarked = useSelector((state) => state.event.isDeletedMarked);
 
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
 
   useEffect(() => {
-    dispatch({
-      url: getUrl({ type: getDeletedEvents.type }),
-      type: sagaEventCallBegan.type,
-      method: "get",
-      onSuccess: getDeletedEvents.type,
-      onError: fetchError.type,
-    });
-  }, [dispatch]);
+    if (isDeletedMarked) {
+      dispatch({
+        url: getUrl({ type: getDeletedEvents.type }),
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: getDeletedEvents.type,
+        onError: fetchError.type,
+      });
+    }
+  }, [dispatch, isDeletedMarked]);
 
   return (
     <EventsContext.Provider
