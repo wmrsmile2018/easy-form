@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { isEmpty } from "lodash";
 
 import { Events } from "./events";
 import { sagaEventCallBegan } from "../../model/saga";
@@ -31,14 +32,14 @@ export const EventsController = () => {
   const location = useLocation();
   const [id, setId] = useState("");
   const events = useSelector((state) => state.event.events);
-  const status = useSelector((state) => state.event.event);
+  const event = useSelector((state) => state.event.event);
 
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
 
   useEffect(() => {
-    if (status && id) {
+    if (!isEmpty(event) && id) {
       history.push(`${location.pathname}/details/${id}`);
     }
   }, [status, id]);
@@ -58,12 +59,12 @@ export const EventsController = () => {
       value={{
         ...parametres,
         handleOnEdit: (e) => {
-          e.preventDefault();
+          e.stopPropagation();
           const tmpId = e.target.dataset["id"];
           history.push(`/admin/edit-event/${tmpId}`);
         },
         handleOnShowQrs: (e) => {
-          e.preventDefault();
+          e.stopPropagation();
         },
         handleOnRestore: () => {},
         handleOnDetails: (e) => {
@@ -78,7 +79,7 @@ export const EventsController = () => {
           });
         },
         handleOnRemove: (e) => {
-          e.preventDefault();
+          e.stopPropagation();
           const tmpId = e.target.dataset["id"];
           dispatch({
             url: getUrl({ type: deleteActiveEvent.type, tmpId }),

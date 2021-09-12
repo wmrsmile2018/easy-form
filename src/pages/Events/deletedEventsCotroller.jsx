@@ -58,7 +58,7 @@ export const DeletedEventsController = () => {
         handleOnEdit: (e) => {},
         handleOnShowQrs: (e) => {},
         handleOnRestore: (e) => {
-          e.preventDefault();
+          e.stopPropagation();
           const id = e.target.dataset["id"];
 
           dispatch({
@@ -69,11 +69,9 @@ export const DeletedEventsController = () => {
             onError: fetchError.type,
           });
         },
-        handleOnDetails: () => {
-          location.pathname;
-        },
+        handleOnDetails: () => {},
         handleOnRemove: (e) => {
-          e.preventDefault();
+          e.stopPropagation();
           const id = e.target.dataset["id"];
 
           dispatch({

@@ -27,8 +27,6 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
   const [isValid, setIsValid] = useState(true);
 
   const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
-  // console.log(isSuffixExist);
-
   useEffect(() => {
     if (isValid) {
       setIsValid(!isSuffixExist);
