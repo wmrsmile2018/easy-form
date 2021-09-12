@@ -33,6 +33,7 @@ export const AddEventController = React.memo(() => {
   });
 
   const handleOnSubmit = useCallback(() => {
+    console.log(state);
     dispatch({
       type: sagaEventCallBegan.type,
       payload: state,
@@ -46,10 +47,10 @@ export const AddEventController = React.memo(() => {
 
   useEffect(() => {
     if (isCreated) {
-      history.push("/admin");
+      // history.push("/admin");
     }
   }, [isCreated]);
-
+  // console.log(state);
   return (
     <Event
       onUpdateState={setState}
