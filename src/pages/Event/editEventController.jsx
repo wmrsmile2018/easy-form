@@ -10,7 +10,7 @@ const parametres = {
   status: "edit",
 };
 
-const isDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 const getUrl = ({ type }) => {
   switch (type) {

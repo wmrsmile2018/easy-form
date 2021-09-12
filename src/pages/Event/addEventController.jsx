@@ -10,7 +10,7 @@ const parametres = {
   status: "add",
 };
 
-const isDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 const getUrl = ({ type }) => {
   switch (type) {
@@ -33,7 +33,7 @@ export const AddEventController = React.memo(() => {
   });
 
   const handleOnSubmit = useCallback(() => {
-    // console.log(state);
+    console.log(state);
     delete state["date_picker"];
     dispatch({
       type: sagaEventCallBegan.type,
@@ -47,7 +47,8 @@ export const AddEventController = React.memo(() => {
   }, [state]);
 
   useEffect(() => {
-    if (isCreated.success) {
+    console.log(isCreated);
+    if (isCreated) {
       history.push("/admin");
     }
   }, [isCreated]);

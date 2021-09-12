@@ -14,7 +14,7 @@ import {
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
 
-const isDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 const getUrl = ({ type, id }) => {
   switch (type) {

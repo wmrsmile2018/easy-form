@@ -6,9 +6,7 @@ const initialState = {
   isUrlExist: false,
   events: [],
   deletedEvents: [],
-  isCreated: {
-    success: false,
-  },
+  isCreated: false,
   event: {
     "name": "",
     "city": "",
@@ -29,7 +27,7 @@ const eventSlice = createSlice({
   initialState,
   reducers: {
     createEvent(state, action) {
-      state.isCreated = action.payload;
+      state.isCreated = action.payload.success;
     },
     editEvent(state, action) {},
     checkSuffix(state, action) {
