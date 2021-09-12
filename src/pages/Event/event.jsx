@@ -113,7 +113,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
   const handleOnCheck = (curSuffix, { target }) => {
     const nextState = produce(state, (draftState) => {
-      console.log(curSuffix, state.QRs);
       const Qr = draftState.QRs.find((el) => el.id === curSuffix);
       Qr.team = target.checked ? "yes" : "no";
     });
@@ -148,7 +147,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   const handleOnShowEditResource = (curSuffix, curRes) => {
     const Qr = state.QRs.find((el) => el.id === curSuffix);
     const tmpResourse = Qr.resources.find((el) => el.id === curRes);
-    console.log(curSuffix);
     setPopup({
       ...popup,
       curSuffix,
@@ -201,7 +199,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
     [state, onUpdateState],
   );
 
-  console.log(state);
   return (
     <div className={classes}>
       <Title>{title}</Title>

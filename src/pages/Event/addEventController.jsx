@@ -48,12 +48,10 @@ export const AddEventController = React.memo(() => {
   }, [state]);
 
   useEffect(() => {
-    console.log(isCreated);
     if (isCreated) {
       history.push("/admin");
     }
   }, [isCreated]);
-  // console.log(state);
   return (
     <Event
       onUpdateState={setState}
