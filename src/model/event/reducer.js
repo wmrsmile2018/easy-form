@@ -45,7 +45,7 @@ const eventSlice = createSlice({
     getQRs(state, action) {
       state.QRs = action.payload;
     },
-    deleteActiveEvent(state) {
+    deleteActiveEvent(state, action) {
       state.isDeletedActive = action.payload.success;
     },
     deleteMarkedEvent(state, action) {
@@ -76,12 +76,6 @@ const eventSlice = createSlice({
     });
     builder.addCase(sagaEventCallFail, (state) => {
       state.status = false;
-      state.isCreated = false;
-      state.isSuffixExist = false;
-      state.isUrlExist = false;
-      state.isDeletedActive = false;
-      state.isDeletedMarked = false;
-      state.isRestored = false;
     });
   },
 });
