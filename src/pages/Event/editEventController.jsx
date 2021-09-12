@@ -4,10 +4,19 @@ import { useHistory } from "react-router-dom";
 
 import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
-import { createEvent } from "../../model/event/reducer";
+import { createEvent, editEvent } from "../../model/event/reducer";
 
 const parametres = {
   status: "edit",
+};
+
+const isDev = process.env.NODE_ENV !== "development";
+
+const getUrl = ({ type }) => {
+  switch (type) {
+    case editEvent.type:
+      return isDev ? "/events" : `/editEvent`;
+  }
 };
 
 export const EditEventController = React.memo(() => {
@@ -25,11 +34,11 @@ export const EditEventController = React.memo(() => {
 
   const handleOnSubmit = useCallback(() => {
     dispatch({
-      url: `/addEvent`,
+      url: getUrl({ type: editEvent.type }),
       type: sagaEventCallBegan.type,
       payload: state,
-      method: "post",
-      onSuccess: createEvent.type,
+      method: "put",
+      onSuccess: editEvent.type,
     });
 
     setState({ event: "", city: "", date: "", area: "", QRs: [] });

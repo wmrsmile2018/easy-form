@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import key from "weak-key";
 
 import "./details.scss";
+
 import { Title } from "../../components/title";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 

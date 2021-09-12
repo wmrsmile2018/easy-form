@@ -29,6 +29,7 @@ const eventSlice = createSlice({
     createEvent(state, action) {
       state.isCreated = action.payload.success;
     },
+    editEvent(state, action) {},
     checkSuffix(state, action) {
       state.isSuffixExist = action.payload.exist;
     },
@@ -87,4 +88,5 @@ export const {
   deleteMarkedEvent,
   restoreEvent,
   getInfoById,
+  editEvent,
 } = eventSlice.actions;
