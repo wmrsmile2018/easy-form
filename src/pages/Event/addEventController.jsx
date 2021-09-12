@@ -33,11 +33,12 @@ export const AddEventController = React.memo(() => {
   });
 
   const handleOnSubmit = useCallback(() => {
-    console.log(state);
-    delete state["date_picker"];
     dispatch({
       type: sagaEventCallBegan.type,
-      payload: state,
+      payload: {
+        ...state,
+        date_picker: "",
+      },
       url: getUrl({ type: createEvent.type }),
       method: "post",
       onSuccess: createEvent.type,
