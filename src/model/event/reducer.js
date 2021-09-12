@@ -2,12 +2,8 @@ import { createSlice } from "@reduxjs/toolkit";
 import { sagaEventCallBegan, sagaEventCallFail, sagaEventCallSuccess } from "../saga";
 
 const initialState = {
-  isSuffixExist: {
-    exist: false,
-  },
-  isUrlExist: {
-    exist: false,
-  },
+  isSuffixExist: false,
+  isUrlExist: false,
   events: [],
   deletedEvents: [],
   isCreated: {
@@ -37,10 +33,10 @@ const eventSlice = createSlice({
     },
     editEvent(state, action) {},
     checkSuffix(state, action) {
-      state.isSuffixExist = action.payload;
+      state.isSuffixExist = action.payload.exist;
     },
     checkUrl(state, action) {
-      state.isUrlExist = action.payload;
+      state.isUrlExist = action.payload.exist;
     },
     getEvents(state, action) {
       state.events = action.payload;

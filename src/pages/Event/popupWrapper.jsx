@@ -67,8 +67,8 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   }, [debouncedSearchTerm]);
 
   useEffect(() => {
-    setValid(!isUrlExist.exist);
-    setActiveBtn(!isUrlExist.exist);
+    setValid(!isUrlExist);
+    setActiveBtn(!isUrlExist);
   }, [isUrlExist]);
 
   useEffect(() => {
