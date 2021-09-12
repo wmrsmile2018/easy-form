@@ -10,6 +10,15 @@ const parametres = {
   status: "add",
 };
 
+const isDev = process.env.NODE_ENV === "development";
+
+const getUrl = ({ type }) => {
+  switch (type) {
+    case createEvent.type:
+      return isDev ? "/events" : `/addEvent`;
+  }
+};
+
 export const AddEventController = React.memo(() => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -27,7 +36,7 @@ export const AddEventController = React.memo(() => {
     dispatch({
       type: sagaEventCallBegan.type,
       payload: state,
-      url: `/addEvent`,
+      url: getUrl({ type: createEvent.type }),
       method: "post",
       onSuccess: createEvent.type,
     });
