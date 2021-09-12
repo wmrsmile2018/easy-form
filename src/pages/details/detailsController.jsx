@@ -21,15 +21,18 @@ export const DetailsController = ({ className }) => {
   const event = useSelector((state) => state.event.event);
 
   useEffect(() => {
-    const id = location.pathname.split("/")[3];
-    dispatch({
-      url: getUrl({ type: getInfoById.type, id }),
-      type: sagaEventCallBegan.type,
-      method: "get",
-      onSuccess: getInfoById.type,
-      onError: fetchError.type,
-    });
-  }, [dispatch, location]);
-
+    if (!event.name) {
+      const id = location.pathname.split("/")[3];
+      console.log();
+      dispatch({
+        url: getUrl({ type: getInfoById.type, id }),
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: getInfoById.type,
+        onError: fetchError.type,
+      });
+    }
+  }, [dispatch, location, event]);
+  console.log(event);
   return <Details className={className} event={event} />;
 };
