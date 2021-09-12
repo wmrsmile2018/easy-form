@@ -61,7 +61,7 @@ const Row = React.memo(
 );
 
 export const Details = React.memo(({ className, event }) => {
-  const { name, city, date, area, peopleCount, qrs } = event;
+  const { name, city, date, area, people_count, qrs } = event;
   const classes = clsx("details", className);
   return (
     <div className={classes}>
@@ -82,7 +82,7 @@ export const Details = React.memo(({ className, event }) => {
             Место:<span>{area}</span>
           </p>
           <p>
-            Пришло людей:<span>{peopleCount}</span>
+            Пришло людей:<span>{people_count}</span>
           </p>
         </MarginGroup>
 

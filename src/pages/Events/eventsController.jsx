@@ -18,7 +18,7 @@ const getUrl = ({ type, id }) => {
     case deleteActiveEvent.type:
       return isDev ? `/events/${id}` : `/deleteActiveEvent?id=${id}`;
     case getInfoById.type:
-      return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
+      return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
   }
 };
 
