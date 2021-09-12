@@ -71,7 +71,7 @@ export const EventsController = () => {
           const tmpId = e.target.dataset["id"];
           setId(tmpId);
           dispatch({
-            url: getUrl({ type: getInfoById.type, tmpId }),
+            url: getUrl({ type: getInfoById.type, id: tmpId }),
             type: sagaEventCallBegan.type,
             method: "get",
             onSuccess: getInfoById.type,
@@ -82,7 +82,7 @@ export const EventsController = () => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
           dispatch({
-            url: getUrl({ type: deleteActiveEvent.type, tmpId }),
+            url: getUrl({ type: deleteActiveEvent.type, id: tmpId }),
             type: sagaEventCallBegan.type,
             method: "delete",
             onSuccess: deleteActiveEvent.type,
