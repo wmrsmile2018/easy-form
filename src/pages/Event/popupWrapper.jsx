@@ -6,7 +6,7 @@ import { checkUrl, fetchError } from "../../model/event/reducer";
 import { sagaEventCallBegan } from "../../model/saga";
 import { useDebounce } from "../../utils/useHooks";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV !== "development";
 // const url = isDev ? "/existUrl" : `/searchUrlInDB?id=${state.id}&&suffix=${state.url}`;
 
 // const getUrl = (state) => {
