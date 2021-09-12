@@ -8,7 +8,6 @@ import {
   deleteMarkedEvent,
   fetchError,
   getDeletedEvents,
-  getEvents,
   restoreEvent,
 } from "../../model/event/reducer";
 import { useSelector } from "react-redux";
@@ -37,13 +36,14 @@ export const DeletedEventsController = () => {
 
   const events = useSelector((state) => state.event.deletedEvents);
   const isDeletedMarked = useSelector((state) => state.event.isDeletedMarked);
+  const isRestored = useSelector((state) => state.event.isRestored);
 
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
 
   useEffect(() => {
-    if (isDeletedMarked) {
+    if (isDeletedMarked || isRestored) {
       dispatch({
         url: getUrl({ type: getDeletedEvents.type }),
         type: sagaEventCallBegan.type,
@@ -52,7 +52,7 @@ export const DeletedEventsController = () => {
         onError: fetchError.type,
       });
     }
-  }, [dispatch, isDeletedMarked]);
+  }, [dispatch, isDeletedMarked, isRestored]);
 
   useEffect(() => {
     dispatch({
