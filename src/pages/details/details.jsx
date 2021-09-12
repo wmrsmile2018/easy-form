@@ -26,7 +26,9 @@ const Resources = React.memo(({ className, resources }) => {
           <div className="row-cells" key={key(el)}>
             <span className="row__cell row__index">{i + 1}</span>
             <span className="row__cell row__url">{el.url}</span>
-            <span className="row__cell row__scheduled">{el.people_count}</span>
+            <span className="row__cell row__scheduled">
+              {el.people_count ? el.people_count : "Бесконечное"}
+            </span>
             <span className="row__cell row__team">{el.came_people_count}</span>
           </div>
         ))}
