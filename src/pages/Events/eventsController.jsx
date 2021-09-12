@@ -33,10 +33,23 @@ export const EventsController = () => {
   const [id, setId] = useState("");
   const events = useSelector((state) => state.event.events);
   const event = useSelector((state) => state.event.event);
+  const isDeletedActive = useSelector((state) => state.event.isDeletedActive);
 
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
+
+  useEffect(() => {
+    if (isDeletedActive) {
+      dispatch({
+        url: getUrl({ type: getEvents.type }),
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: getEvents.type,
+        onError: fetchError.type,
+      });
+    }
+  }, [isDeletedActive, dispatch]);
 
   useEffect(() => {
     if (!isEmpty(event) && id) {
@@ -44,15 +57,15 @@ export const EventsController = () => {
     }
   }, [status, id]);
 
-  useEffect(() => {
-    dispatch({
-      url: getUrl({ type: getEvents.type }),
-      type: sagaEventCallBegan.type,
-      method: "get",
-      onSuccess: getEvents.type,
-      onError: fetchError.type,
-    });
-  }, [dispatch]);
+  // useEffect(() => {
+  //   dispatch({
+  //     url: getUrl({ type: getEvents.type }),
+  //     type: sagaEventCallBegan.type,
+  //     method: "get",
+  //     onSuccess: getEvents.type,
+  //     onError: fetchError.type,
+  //   });
+  // }, [dispatch]);
 
   return (
     <EventsContext.Provider
