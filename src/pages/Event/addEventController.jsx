@@ -33,7 +33,8 @@ export const AddEventController = React.memo(() => {
   });
 
   const handleOnSubmit = useCallback(() => {
-    console.log(state);
+    // console.log(state);
+    delete state["date_picker"];
     dispatch({
       type: sagaEventCallBegan.type,
       payload: state,
@@ -46,8 +47,8 @@ export const AddEventController = React.memo(() => {
   }, [state]);
 
   useEffect(() => {
-    if (isCreated) {
-      // history.push("/admin");
+    if (isCreated.success) {
+      history.push("/admin");
     }
   }, [isCreated]);
   // console.log(state);
