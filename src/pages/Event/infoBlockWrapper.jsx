@@ -41,6 +41,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
     }, 0);
     if (count > 1) {
       setIsValid(false);
+      console.log("hello");
     } else if (isSuffixExist[suffix] === false) {
       console.log(isSuffixExist, suffix);
       setIsValid(true);
@@ -60,5 +61,6 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
       });
     }
   }, [debouncedSearchTerm]);
+  console.log(isValid);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
