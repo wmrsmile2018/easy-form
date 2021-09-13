@@ -33,6 +33,5 @@ export const DetailsController = ({ className }) => {
       });
     }
   }, [dispatch, location, event]);
-  console.log(event);
   return <Details className={className} event={event} />;
 };

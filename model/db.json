@@ -58,39 +58,7 @@
         }
       ]
     },
-    {
-      "event": "21312",
-      "city": "asdasd",
-      "date": "08-09-2021",
-      "area": "sadasd",
-      "qrs": [
-        {
-          "status": "add",
-          "id": "1631448370722",
-          "suffix": "",
-          "team": "no",
-          "resources": [
-            {
-              "url": "bbvvv",
-              "people_count": "xzxc",
-              "id": "1631448403438"
-            },
-            {
-              "url": "vcxvxcvxczxc",
-              "people_count": "cxvxcv",
-              "id": "1631448478939"
-            },
-            {
-              "url": "dsada",
-              "people_count": "asdasdasd",
-              "id": "1631449348056"
-            }
-          ]
-        }
-      ],
-      "date_picker": "2021-09-07T21:00:00.000Z",
-      "id": "i3fnhU9"
-    },
+
     {
       "event": "",
       "city": "",

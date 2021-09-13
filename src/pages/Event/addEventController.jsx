@@ -25,11 +25,11 @@ export const AddEventController = React.memo(() => {
   const isCreated = useSelector((state) => state.event.isCreated);
 
   const [state, setState] = useState({
-    event: "",
+    name: "",
     city: "",
     date: "",
     area: "",
-    QRs: [],
+    qrs: [],
   });
 
   const handleOnSubmit = useCallback(() => {
@@ -44,7 +44,7 @@ export const AddEventController = React.memo(() => {
       onSuccess: createEvent.type,
     });
 
-    setState({ event: "", city: "", date: "", area: "", QRs: [] });
+    setState({ name: "", city: "", date: "", area: "", qrs: [] });
   }, [state]);
 
   useEffect(() => {
@@ -52,6 +52,7 @@ export const AddEventController = React.memo(() => {
       history.push("/admin");
     }
   }, [isCreated]);
+
   return (
     <Event
       onUpdateState={setState}
