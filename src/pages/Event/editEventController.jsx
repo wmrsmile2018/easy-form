@@ -76,7 +76,6 @@ export const EditEventController = React.memo(() => {
       history.push("/admin");
     }
   }, [isCreated]);
-  console.log(state);
   return (
     <Event
       onUpdateState={setState}
