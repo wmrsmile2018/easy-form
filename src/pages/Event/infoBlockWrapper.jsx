@@ -46,8 +46,9 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
     }
 
     if (debouncedSearchTerm) {
+      const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
       dispatch({
-        url: getUrl({ type: checkSuffix.type, state: { id: status === "edit" ? id : "", suffix } }),
+        url: getUrl({ type: checkSuffix.type, state: { id: tmpId, suffix } }),
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkSuffix.type,

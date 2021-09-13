@@ -40,7 +40,7 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   const handleOnAdd = useCallback(() => {
     const { url, people_count } = state;
     if (status === "add") {
-      onAdd({ url, people_count, id: Date.now().toString() });
+      onAdd({ url, people_count, id: `tmpId-${Date.now().toString()}` });
       setState({ url: "", people_count: "" });
     }
     if (status === "edit") onEdit(state);
@@ -55,9 +55,11 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   }, [data]);
 
   useEffect(() => {
+    const { url, people_count, id } = state;
+    const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
     if (debouncedSearchTerm) {
       dispatch({
-        url: getUrl({ type: checkUrl.type, state }),
+        url: getUrl({ type: checkUrl.type, state: { url, people_count, id: tmpId } }),
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: checkUrl.type,
