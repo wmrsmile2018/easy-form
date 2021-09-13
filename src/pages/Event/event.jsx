@@ -52,7 +52,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         {
           status,
           id: Date.now().toString(),
-          "suffix": "",
+          "qr_suffix": "",
           "team": "no",
           "resources": [],
         },
@@ -99,11 +99,11 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
   const handleOnChangeSuffix = (curSuffix, { target }) => {
     const isValid = regex.test(target.value);
-    console.log(isValid, target.value, regex);
+    // console.log(isValid, target.value, regex);
     if (target.value === "" || isValid) {
       const nextState = produce(state, (draftState) => {
         const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-        Qr.suffix = target.value;
+        Qr.qr_suffix = target.value;
       });
       onUpdateState({
         ...nextState,
