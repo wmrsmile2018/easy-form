@@ -31,6 +31,7 @@ export const EventsController = () => {
   const history = useHistory();
   const location = useLocation();
   const [id, setId] = useState("");
+  const [path, setPath] = useState("");
   const events = useSelector((state) => state.event.events);
   const event = useSelector((state) => state.event.event);
   const isDeletedActive = useSelector((state) => state.event.isDeletedActive);
@@ -53,7 +54,14 @@ export const EventsController = () => {
 
   useEffect(() => {
     if (!isEmpty(event) && id) {
-      history.push(`${location.pathname}/details/${id}`);
+      switch (path) {
+        case "details":
+          history.push(`${location.pathname}/details/${id}`);
+        case "edit":
+          history.push(`/admin/edit-event/${id}`);
+        default:
+          break;
+      }
     }
   }, [event, id]);
 
@@ -74,7 +82,15 @@ export const EventsController = () => {
         handleOnEdit: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
-          history.push(`/admin/edit-event/${tmpId}`);
+          setPath("edit");
+          setId(tmpId);
+          dispatch({
+            url: getUrl({ type: getInfoById.type, id: tmpId }),
+            type: sagaEventCallBegan.type,
+            method: "get",
+            onSuccess: getInfoById.type,
+            onError: fetchError.type,
+          });
         },
         handleOnShowQrs: (e) => {
           e.stopPropagation();
@@ -82,6 +98,7 @@ export const EventsController = () => {
         handleOnRestore: () => {},
         handleOnDetails: (e) => {
           const tmpId = e.target.dataset["id"];
+          setPath("details");
           setId(tmpId);
           dispatch({
             url: getUrl({ type: getInfoById.type, id: tmpId }),

@@ -22,7 +22,7 @@ const regex = /^[a-zA-Z\d]+$/;
 
 const inputFields1 = [
   { name: "city", title: "Введите город" },
-  { name: "event", title: "Введите название мероприятия" },
+  { name: "name", title: "Введите название мероприятия" },
 ];
 
 export const Event = React.memo(({ className, onSend, state, onUpdateState, status, title }) => {
@@ -47,8 +47,8 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   const handleOnAddSuffix = useCallback(() => {
     onUpdateState({
       ...state,
-      QRs: [
-        ...state.QRs,
+      qrs: [
+        ...state.qrs,
         {
           status,
           id: Date.now().toString(),
@@ -71,13 +71,13 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
   const handleOnHideModal = useCallback(
     (data) => {
-      const tmpAllRes = state.QRs.reduce((acc, cur) => {
+      const tmpAllRes = state.qrs.reduce((acc, cur) => {
         const tmp = cur.resources.map((el) => el.url);
         return [...acc, ...tmp];
       }, []);
       if (!tmpAllRes.find((el) => el === data.url)) {
         const nextState = produce(state, (draftState) => {
-          const Qr = draftState.QRs.find((el) => el.id === popup.curSuffix);
+          const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
           Qr.resources = [...Qr.resources, data];
         });
 
@@ -102,7 +102,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
     if (target.value === "" || isValid) {
       const nextState = produce(state, (draftState) => {
-        const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+        const Qr = draftState.qrs.find((el) => el.id === curSuffix);
         Qr.suffix = target.value;
       });
       onUpdateState({
@@ -113,7 +113,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
   const handleOnCheck = (curSuffix, { target }) => {
     const nextState = produce(state, (draftState) => {
-      const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+      const Qr = draftState.qrs.find((el) => el.id === curSuffix);
       Qr.team = target.checked ? "yes" : "no";
     });
     onUpdateState(nextState);
@@ -132,20 +132,20 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
   const handleOnRemoveSuffix = (curSuffix) => {
     onUpdateState({
       ...state,
-      QRs: state.QRs.filter((el) => el.id !== curSuffix),
+      qrs: state.qrs.filter((el) => el.id !== curSuffix),
     });
   };
 
   const handleOnRemoveResource = (curSuffix, curRes) => {
     const nextState = produce(state, (draftState) => {
-      const Qr = draftState.QRs.find((el) => el.id === curSuffix);
+      const Qr = draftState.qrs.find((el) => el.id === curSuffix);
       Qr.resources = Qr.resources.filter((el) => el.id !== curRes);
     });
     onUpdateState(nextState);
   };
 
   const handleOnShowEditResource = (curSuffix, curRes) => {
-    const Qr = state.QRs.find((el) => el.id === curSuffix);
+    const Qr = state.qrs.find((el) => el.id === curSuffix);
     const tmpResourse = Qr.resources.find((el) => el.id === curRes);
     setPopup({
       ...popup,
@@ -158,16 +158,16 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
   const handleOnEditResource = useCallback(
     (data) => {
-      const tmpAllRes = state.QRs.reduce((acc, cur) => {
+      const tmpAllRes = state.qrs.reduce((acc, cur) => {
         const tmp = cur.resources.map((el) => el.url);
         return [...acc, ...tmp];
       }, []);
-      const curQr = state.QRs.find((el) => el.id === popup.curSuffix);
+      const curQr = state.qrs.find((el) => el.id === popup.curSuffix);
       const curRes = curQr.resources.find((el) => el.id === data.id);
 
       if (curRes.url === data.url || !tmpAllRes.find((el) => el === data.url)) {
         const nextState = produce(state, (draftState) => {
-          const Qr = draftState.QRs.find((el) => el.id === popup.curSuffix);
+          const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
           const resource = Qr.resources.find((el) => el.id === data.id);
           resource.url = data.url;
           resource.people_count = data.people_count;
@@ -251,13 +251,13 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         </MarginGroup>
 
         <MarginGroup gap={20} isColumn>
-          {state.QRs.map((el) => (
+          {state.qrs.map((el) => (
             <InfoBlockWrapper
               id={el.id}
               key={el.id}
-              qrs={state.QRs}
-              suffix={el.suffix}
-              value={el.suffix}
+              qrs={state.qrs}
+              suffix={el.qr_suffix}
+              value={el.qr_suffix}
               resources={el.resources}
               checked={el.team === "yes" ? true : false}
               onClick={() => handleOnShowModal(el.id)}
