@@ -33,7 +33,7 @@ export const InfoBlock = ({
             <Input
               title="Введите хвост URL"
               type="text"
-              name="suffix"
+              name="qr_suffix"
               onChange={onChange}
               value={value}
             />
