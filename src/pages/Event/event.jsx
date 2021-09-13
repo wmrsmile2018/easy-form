@@ -108,6 +108,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
       onUpdateState({
         ...nextState,
       });
+      console.log("i am here", target.value === "" || isValid);
     }
   };
 
