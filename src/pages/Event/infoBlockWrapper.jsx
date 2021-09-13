@@ -40,10 +40,12 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
       return acc;
     }, 0);
     if (count > 1) {
+      console.log("hello");
       setIsValid(false);
     } else if (isSuffixExist[suffix] === false) {
       setIsValid(true);
     }
+    console.log(qrs);
   }, [isSuffixExist, suffix, qrs]);
 
   useEffect(() => {
