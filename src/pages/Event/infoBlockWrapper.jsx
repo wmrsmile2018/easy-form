@@ -44,7 +44,9 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
     } else if (isSuffixExist[suffix] === false) {
       setIsValid(true);
     }
+  }, [isSuffixExist, suffix, qrs]);
 
+  useEffect(() => {
     if (debouncedSearchTerm) {
       // console.log(suffix);
       const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
@@ -56,7 +58,6 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
         onError: fetchError.type,
       });
     }
-  }, [debouncedSearchTerm, isSuffixExist[suffix], qrs]);
-
+  }, [debouncedSearchTerm]);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
