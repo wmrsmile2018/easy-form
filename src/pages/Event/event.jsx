@@ -51,7 +51,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         ...state.qrs,
         {
           status,
-          id: Date.now().toString(),
+          id: `tmpId-${Date.now().toString()}`,
           "qr_suffix": "",
           "team": "no",
           "resources": [],
