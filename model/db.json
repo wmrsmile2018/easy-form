@@ -58,7 +58,6 @@
         }
       ]
     },
-
     {
       "event": "",
       "city": "",
@@ -178,6 +177,15 @@
       "area": "asdasd",
       "qrs": [],
       "id": "2G4lR_y"
+    },
+    {
+      "name": "asdsad",
+      "city": "sadsad",
+      "date": "23-09-2021",
+      "area": "asdasd",
+      "qrs": [],
+      "date_picker": "",
+      "id": "dpzHIjt"
     }
   ],
   "existSuffix": {

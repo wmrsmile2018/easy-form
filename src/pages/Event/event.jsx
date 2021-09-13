@@ -252,6 +252,7 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
         <MarginGroup gap={20} isColumn>
           {state.qrs.map((el) => (
             <InfoBlockWrapper
+              status={status}
               id={el.id}
               key={el.id}
               qrs={state.qrs}
