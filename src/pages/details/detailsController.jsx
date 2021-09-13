@@ -23,7 +23,6 @@ export const DetailsController = ({ className }) => {
   useEffect(() => {
     if (!event.name) {
       const id = location.pathname.split("/")[3];
-      console.log();
       dispatch({
         url: getUrl({ type: getInfoById.type, id }),
         type: sagaEventCallBegan.type,

@@ -41,12 +41,12 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
     const { url, people_count } = state;
     if (status === "add") {
       onAdd({ url, people_count, id: `tmpId-${Date.now().toString()}` });
-      setState({ url: "", people_count: "" });
+      setState({ url: "", people_count: "", id: "" });
     }
     if (status === "edit") onEdit(state);
 
     if (isExist) {
-      setState({ url: "", people_count: "" });
+      setState({ url: "", people_count: "", id: "" });
     }
   }, [state, onAdd, onEdit, status, isExist]);
 

@@ -17,7 +17,7 @@ const isDev = process.env.NODE_ENV !== "development";
 const getUrl = ({ type, state: { id, suffix } }) => {
   switch (type) {
     case checkSuffix.type:
-      return isDev ? "/notExistSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+      return isDev ? "/existSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
   }
 };
 
@@ -41,11 +41,12 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
     }, 0);
     if (count > 1) {
       setIsValid(false);
-    } else if (isSuffixExist === false) {
+    } else if (isSuffixExist[suffix] === false) {
       setIsValid(true);
     }
 
     if (debouncedSearchTerm) {
+      // console.log(suffix);
       const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
       dispatch({
         url: getUrl({ type: checkSuffix.type, state: { id: tmpId, suffix } }),
