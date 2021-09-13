@@ -57,8 +57,10 @@ export const EventsController = () => {
       switch (path) {
         case "details":
           history.push(`${location.pathname}/details/${id}`);
+          break;
         case "edit":
           history.push(`/admin/edit-event/${id}`);
+          break;
         default:
           break;
       }
@@ -92,11 +94,10 @@ export const EventsController = () => {
             onError: fetchError.type,
           });
         },
-        handleOnShowQrs: (e) => {
-          e.stopPropagation();
-        },
+        handleOnShowQrs: (e) => {},
         handleOnRestore: () => {},
         handleOnDetails: (e) => {
+          e.stopPropagation();
           const tmpId = e.target.dataset["id"];
           setPath("details");
           setId(tmpId);
