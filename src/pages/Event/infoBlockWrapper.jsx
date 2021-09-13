@@ -20,6 +20,7 @@ const getUrl = ({ type, state: { id, suffix } }) => {
       return isDev ? "/notExistSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
   }
 };
+let tmpSuffix = null;
 
 export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
   const dispatch = useDispatch();
@@ -47,6 +48,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
     }
 
     if (debouncedSearchTerm) {
+      console.log(qrs, isSuffixExist, debouncedSearchTerm);
       dispatch({
         url: getUrl({ type: checkSuffix.type, state: { id, suffix } }),
         type: sagaEventCallBegan.type,
@@ -57,5 +59,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
     }
   }, [debouncedSearchTerm, isSuffixExist, qrs]);
 
+  console.log(tmpSuffix === suffix);
+  tmpSuffix = suffix;
   return <InfoBlock isValid={isValid} {...rest} />;
 };

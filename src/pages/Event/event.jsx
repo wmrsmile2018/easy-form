@@ -99,7 +99,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
 
   const handleOnChangeSuffix = (curSuffix, { target }) => {
     const isValid = regex.test(target.value);
-    // console.log(isValid, target.value, regex);
     if (target.value === "" || isValid) {
       const nextState = produce(state, (draftState) => {
         const Qr = draftState.qrs.find((el) => el.id === curSuffix);
@@ -108,7 +107,6 @@ export const Event = React.memo(({ className, onSend, state, onUpdateState, stat
       onUpdateState({
         ...nextState,
       });
-      console.log("i am here", target.value === "" || isValid);
     }
   };
 
