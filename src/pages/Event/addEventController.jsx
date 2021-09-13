@@ -5,6 +5,7 @@ import { useHistory } from "react-router-dom";
 import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
 import { createEvent } from "../../model/event/reducer";
+import dayjs from "dayjs";
 
 const parametres = {
   status: "add",
@@ -32,6 +33,7 @@ export const AddEventController = React.memo(() => {
     qrs: [],
   });
 
+  window.dayjs = dayjs;
   const handleOnSubmit = useCallback(() => {
     dispatch({
       type: sagaEventCallBegan.type,
