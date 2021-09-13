@@ -36,9 +36,10 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
 
   useEffect(() => {
     const count = qrs.reduce((acc, cur) => {
-      if (cur.suffix === suffix) return acc + 1;
+      if (cur.qr_suffix === suffix) return acc + 1;
       return acc;
     }, 0);
+    console.log(count);
     if (count > 1) {
       console.log("hello");
       setIsValid(false);
