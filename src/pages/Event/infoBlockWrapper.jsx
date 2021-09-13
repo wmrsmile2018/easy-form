@@ -28,7 +28,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
   useEffect(() => {
     if (isValid) {
-      setIsValid(!isSuffixExist);
+      setIsValid(!isSuffixExist[suffix]);
     } else {
       setIsValid(false);
     }
@@ -41,9 +41,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
     }, 0);
     if (count > 1) {
       setIsValid(false);
-      console.log("hello");
     } else if (isSuffixExist[suffix] === false) {
-      console.log(isSuffixExist, suffix);
       setIsValid(true);
     }
   }, [isSuffixExist, suffix, qrs]);
@@ -61,6 +59,5 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
       });
     }
   }, [debouncedSearchTerm]);
-  console.log(isValid);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
