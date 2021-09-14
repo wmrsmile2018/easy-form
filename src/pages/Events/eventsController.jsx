@@ -94,7 +94,6 @@ export const EventsController = () => {
             onError: fetchError.type,
           });
         },
-        handleOnShowQrs: (e) => {},
         handleOnRestore: () => {},
         handleOnDetails: (e) => {
           e.stopPropagation();

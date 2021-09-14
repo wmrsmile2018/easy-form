@@ -12,14 +12,7 @@ import "./events.scss";
 
 const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
-  const {
-    status,
-    handleOnEdit,
-    handleOnShowQrs,
-    handleOnRestore,
-    handleOnRemove,
-    handleOnDetails,
-  } = useEvents();
+  const { status, handleOnEdit, handleOnRestore, handleOnRemove, handleOnDetails } = useEvents();
   return (
     <div onClick={handleOnDetails} className={classes} data-id={id}>
       <div className="row-cells" data-id={id}>

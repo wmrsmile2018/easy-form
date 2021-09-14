@@ -81,7 +81,6 @@ export const DeletedEventsController = () => {
       value={{
         ...parametres,
         handleOnEdit: (e) => {},
-        handleOnShowQrs: (e) => {},
         handleOnRestore: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];

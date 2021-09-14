@@ -59,8 +59,8 @@ const Row = React.memo(
             <span className="row__cell row__people-count">{peopleCount}</span>
             <span className="row__cell row__rsrc-count">{rsrcCount}</span>
             <MarginGroup className="row-qr-path row__cell" isColumn gap={20}>
-              <img className="row__qr-path" src={qrPath.path} alt="qr code" />
-              <Button onClick={() => handleOnClick({ href: qrPath.path, name: "qr-code" })}>
+              <img className="row__qr-path" src={qrPath} alt="qr code" />
+              <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code" })}>
                 Скачать Qr код1
               </Button>
             </MarginGroup>
