@@ -167,12 +167,7 @@
         "team": true,
         "teamForFront": true,
         "deleted": "false",
-        "qrPath": {
-          "id": "141",
-          "qr_id": "236",
-          "path": "https://via.placeholder.com/140x100",
-          "deleted": "false"
-        },
+        "qrPath": "https://via.placeholder.com/140x100",
         "resources": [
           {
             "id": "374",
@@ -205,12 +200,7 @@
         "team": false,
         "teamForFront": false,
         "deleted": "false",
-        "qrPath": {
-          "id": "142",
-          "qr_id": "237",
-          "path": "qrs/Поход/bitcevskiy.png",
-          "deleted": "false"
-        },
+        "qrPath": "qrs/Поход/bitcevskiy.png",
         "resources": [
           {
             "id": "376",
