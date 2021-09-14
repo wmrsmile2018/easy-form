@@ -153,7 +153,8 @@
   "event": {
     "name": "asadad",
     "city": "asdadadad",
-    "date": "sdsadasd",
+    "date": "2021-09-16 00:00:00.0",
+    "unixtime": 1631221200,
     "area": "asdasdasdad",
     "peopleCount": "sdgsfafsaf",
     "qrs": [

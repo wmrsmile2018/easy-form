@@ -51,11 +51,7 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
             Изменить
           </Button>
         )}
-        {status === "active" && (
-          <Button data-id={id} onClick={handleOnShowQrs}>
-            Показать Qr
-          </Button>
-        )}
+
         {status === "deleted" && (
           <Button data-id={id} onClick={handleOnRestore}>
             Восстановить
