@@ -69,6 +69,6 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
         onError: fetchError.type,
       });
     }
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, isValid]);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
