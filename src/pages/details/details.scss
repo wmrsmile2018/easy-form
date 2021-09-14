@@ -19,16 +19,18 @@
     flex-direction: column;
 
     .row__cell {
-      display: flex;
-      height: fit-content;
-      justify-content: flex-start;
+      overflow: hidden;
+      display: inline-block;
+      text-overflow: ellipsis;
       width: 250px;
+      min-width: 250px;
       border-right: 1px dotted black;
     }
     .row__index {
       display: flex;
       width: 30px;
       justify-content: center;
+      min-width: 30px;
     }
     .row__qr-path {
       margin: 10px 0;
@@ -89,8 +91,7 @@
 
           .row__cell {
             width: 100%;
-            display: flex;
-            justify-content: center;
+            text-align: center;
           }
           .row__index {
             width: 30px;
