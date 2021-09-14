@@ -7,6 +7,7 @@ const initialState = {
   events: [],
   deletedEvents: [],
   isCreated: false,
+  isUpdated: false,
   event: {
     "name": "",
     "city": "",
@@ -29,7 +30,9 @@ const eventSlice = createSlice({
     createEvent(state, action) {
       state.isCreated = action.payload.success;
     },
-    editEvent(state, action) {},
+    editEvent(state, action) {
+      state.isUpdated = action.payload.success;
+    },
     checkSuffix(state, action) {
       state.isSuffixExist = {
         ...state.isSuffixExist,
@@ -68,6 +71,7 @@ const eventSlice = createSlice({
     builder.addCase(sagaEventCallBegan, (state) => {
       state.status = false;
       state.isCreated = false;
+      state.isUpdated = false;
       // state.isSuffixExist = false;
       // state.isUrlExist = false;
       state.isDeletedActive = false;

@@ -18,7 +18,7 @@ import { InfoBlockWrapper } from "./infoBlockWrapper";
 import { PopupWrapper } from "./popupWrapper";
 import { Title } from "../../components/title";
 
-const regex = /^[a-zA-Z\d]+$/;
+const regex = /^[a-zA-Z\d$&+,:;=?@#|'<>.^*()%!-]+$/;
 
 const inputFields1 = [
   { name: "city", title: "Введите город" },
