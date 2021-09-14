@@ -53,13 +53,12 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
     if (count > 1) {
       setIsValid(false);
     } else if (count <= 1) {
-      setIsValid(true);
+      const cond = isSuffixExist[suffix] ? false : true;
+      console.log("hello2");
+      setIsValid(cond);
     } else if (!isSuffixExist[suffix]) {
       console.log("hello1");
       setIsValid(true);
-    } else if (isSuffixExist[suffix]) {
-      console.log("hello2");
-      setIsValid(false);
     }
   }, [isSuffixExist, suffix, count]);
 
