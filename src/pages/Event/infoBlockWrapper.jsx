@@ -37,31 +37,27 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   );
 
   useEffect(() => {
-    console.log(isValid, isSuffixExist, suffix);
     if (isValid) {
       setIsValid(!isSuffixExist[suffix]);
     } else {
       setIsValid(false);
     }
-  }, [isSuffixExist, isValid]);
+  }, [isSuffixExist, isValid, suffix]);
 
   useEffect(() => {
-    console.log(count);
     if (count > 1) {
-      console.log("hello");
       setIsValid(false);
     } else if (count <= 1) {
       setIsValid(true);
     } else if (isSuffixExist[suffix] === false) {
-      console.log(isSuffixExist);
       setIsValid(true);
+    } else {
+      setIsValid(false);
     }
-    console.log(qrs);
-  }, [isSuffixExist, suffix, qrs, count]);
+  }, [isSuffixExist, suffix, count]);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
-      // console.log(suffix);
       const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
       dispatch({
         url: getUrl({ type: checkSuffix.type, state: { id: tmpId, suffix } }),
@@ -71,6 +67,6 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
         onError: fetchError.type,
       });
     }
-  }, [debouncedSearchTerm, isValid]);
+  }, [debouncedSearchTerm]);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
