@@ -45,6 +45,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   }, [isSuffixExist, isValid, suffix]);
 
   useEffect(() => {
+    console.log(isSuffixExist, suffix, count);
     if (count > 1) {
       setIsValid(false);
     } else if (count <= 1) {
