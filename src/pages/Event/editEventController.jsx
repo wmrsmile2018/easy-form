@@ -5,6 +5,7 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
 import { editEvent, fetchError, getInfoById } from "../../model/event/reducer";
+import dayjs from "dayjs";
 
 const parametres = {
   status: "edit",
@@ -66,10 +67,13 @@ export const EditEventController = React.memo(() => {
   }, [dispatch, location, event]);
 
   useEffect(() => {
-    setState({
-      ...state,
-      ...event,
-    });
+    if (event.name) {
+      setState({
+        ...state,
+        ...event,
+        date_picker: new Date(event.unixtime * 1000),
+      });
+    }
   }, [event]);
 
   useEffect(() => {

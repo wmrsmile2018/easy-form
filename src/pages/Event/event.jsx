@@ -198,7 +198,7 @@ export const Event = React.memo(
       },
       [state, onUpdateState],
     );
-
+    console.log(state);
     return (
       <div className={classes}>
         <Title>{title}</Title>
