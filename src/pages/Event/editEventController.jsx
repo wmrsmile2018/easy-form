@@ -27,7 +27,7 @@ export const EditEventController = React.memo(() => {
   const dispatch = useDispatch();
   const history = useHistory();
   const location = useLocation();
-  const isCreated = useSelector((state) => state.event.isCreated);
+  const isUpdated = useSelector((state) => state.event.isUpdated);
   const event = useSelector((state) => state.event.event);
 
   const [state, setState] = useState({
@@ -77,10 +77,11 @@ export const EditEventController = React.memo(() => {
   }, [event]);
 
   useEffect(() => {
-    if (isCreated) {
+    if (isUpdated) {
       history.push("/admin");
     }
-  }, [isCreated]);
+  }, [isUpdated]);
+
   return (
     <Event
       onUpdateState={setState}
