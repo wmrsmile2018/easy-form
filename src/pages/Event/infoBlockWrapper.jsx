@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
@@ -26,6 +26,16 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
   const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
+
+  const count = useMemo(
+    () =>
+      qrs.reduce((acc, cur) => {
+        if (cur.qr_suffix === suffix) return acc + 1;
+        return acc;
+      }, 0),
+    [qrs, suffix],
+  );
+
   useEffect(() => {
     console.log(isValid, isSuffixExist, suffix);
     if (isValid) {
@@ -36,10 +46,6 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   }, [isSuffixExist, isValid]);
 
   useEffect(() => {
-    const count = qrs.reduce((acc, cur) => {
-      if (cur.qr_suffix === suffix) return acc + 1;
-      return acc;
-    }, 0);
     console.log(count);
     if (count > 1) {
       console.log("hello");
@@ -49,7 +55,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
       setIsValid(true);
     }
     console.log(qrs);
-  }, [isSuffixExist, suffix, qrs]);
+  }, [isSuffixExist, suffix, qrs, count]);
 
   useEffect(() => {
     if (debouncedSearchTerm) {
