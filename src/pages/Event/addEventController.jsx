@@ -9,6 +9,7 @@ import dayjs from "dayjs";
 
 const parametres = {
   status: "add",
+  teamName: "team",
 };
 
 const isDev = process.env.NODE_ENV === "development";

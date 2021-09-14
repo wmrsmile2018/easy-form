@@ -35,6 +35,7 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
     () => (status === "edit" ? "Изменить внешний ресурс" : "Добавить внешний ресурс"),
     [status],
   );
+  console.log(status);
   const isUrlExist = useSelector((state) => state.event.isUrlExist);
 
   const handleOnAdd = useCallback(() => {

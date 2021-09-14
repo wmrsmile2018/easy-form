@@ -16,7 +16,7 @@
           "event_id": "165",
           "people_count": "0",
           "qr_url": "http:localhost/fish",
-          "team": "false",
+          "team": false,
           "deleted": "false",
           "qrPath": {
             "id": "143",
@@ -60,142 +60,76 @@
       ]
     },
     {
-      "event": "",
-      "city": "",
-      "date": "",
-      "area": "",
-      "qrs": [],
-      "id": "vrCi22a"
-    },
-    {
-      "event": "21312",
-      "city": "123",
-      "date": "01-09-2021",
-      "area": "asd",
-      "qrs": [],
-      "date_picker": "2021-08-31T21:00:00.000Z",
-      "id": "_M_g4uX"
-    },
-    {
-      "event": "xcvxcv",
-      "city": "vcxvcxv",
-      "date": "15-09-2021",
-      "area": "xcvxcvc",
-      "qrs": [],
-      "date_picker": "2021-09-14T21:00:00.000Z",
-      "id": "1gtm6Fs"
-    },
-    {
-      "event": "sadasd",
-      "city": "sdasdasda",
-      "date": "09-09-2021",
-      "area": "sadasd",
+      "name": "123213",
+      "city": "1213",
+      "date": "08-09-2021",
+      "area": "123123",
       "qrs": [
         {
           "status": "add",
-          "id": "1631449558121",
-          "suffix": "xzv",
+          "id": "tmpId-1631647819073",
+          "qr_suffix": "2131231231",
+          "team": "yes",
+          "resources": []
+        },
+        {
+          "status": "add",
+          "id": "tmpId-1631647823066",
+          "qr_suffix": "sadasdasd",
           "team": "no",
           "resources": []
         }
       ],
-      "date_picker": "2021-09-08T21:00:00.000Z",
-      "id": "s3SbR1y"
-    },
-    {
-      "event": "cxvcxv",
-      "city": "sadasd",
-      "date": "31-08-2021",
-      "area": "asdasd",
-      "qrs": [],
-      "date_picker": "2021-08-30T21:00:00.000Z",
-      "id": "wpuda31"
-    },
-    {
-      "event": "asd",
-      "city": "asdasd",
-      "date": "04-08-2021",
-      "area": "asdasdasd",
-      "qrs": [],
-      "date_picker": "2021-08-03T21:00:00.000Z",
-      "id": "aq69OxM"
-    },
-    {
-      "event": "asdasd",
-      "city": "sadasd",
-      "date": "10-08-2021",
-      "area": "asdasd",
-      "qrs": [],
-      "date_picker": "2021-08-09T21:00:00.000Z",
-      "id": "eprxQ8c"
-    },
-    {
-      "event": "21312",
-      "city": "123",
-      "date": "10-08-2021",
-      "area": "asd",
-      "qrs": [],
-      "date_picker": "2021-08-09T21:00:00.000Z",
-      "id": "tUIK2ED"
-    },
-    {
-      "event": "21312",
-      "city": "Москва",
-      "date": "07-08-2021",
-      "area": "asd",
-      "qrs": [],
-      "date_picker": "2021-08-06T21:00:00.000Z",
-      "id": "JBB7D4b"
-    },
-    {
-      "event": "привет",
-      "city": "123",
-      "date": "09-09-2021",
-      "area": "тута",
-      "qrs": [],
-      "id": "hvk5KOg"
-    },
-    {
-      "event": "fsdf",
-      "city": "asdasd",
-      "date": "16-09-2021",
-      "area": "тута",
-      "qrs": [],
-      "id": "3pFheq2"
-    },
-    {
-      "event": "fsdf",
-      "city": "asdasd",
-      "date": "22-09-2021",
-      "area": "asdasd",
-      "qrs": [],
-      "id": "kFgv5Lx"
-    },
-    {
-      "event": "21312",
-      "city": "123",
-      "date": "15-09-2021",
-      "area": "asdasd",
-      "qrs": [],
-      "id": "2G4lR_y"
-    },
-    {
-      "name": "asdsad",
-      "city": "sadsad",
-      "date": "23-09-2021",
-      "area": "asdasd",
-      "qrs": [],
       "date_picker": "",
-      "id": "dpzHIjt"
+      "id": "GsnuEWs"
     },
     {
-      "name": "",
-      "city": "",
-      "date": "",
-      "area": "",
-      "qrs": [],
+      "name": "readonly@city-mobil.ru",
+      "city": "Los Angeles",
+      "date": "01-09-2021",
+      "area": "sadasd",
+      "qrs": [
+        {
+          "status": "add",
+          "id": "tmpId-1631647902887",
+          "qr_suffix": "1",
+          "team": "yes",
+          "resources": []
+        },
+        {
+          "status": "add",
+          "id": "tmpId-1631647908098",
+          "qr_suffix": "2",
+          "team": "no",
+          "resources": []
+        }
+      ],
       "date_picker": "",
-      "id": "3W-3744"
+      "id": "OHpHRN2"
+    },
+    {
+      "name": "2131231",
+      "city": "asdadadad",
+      "date": "03-09-2021",
+      "area": "asdasd",
+      "qrs": [
+        {
+          "status": "add",
+          "id": "tmpId-1631648203336",
+          "qr_suffix": "sadsad",
+          "team": "yes",
+          "resources": []
+        },
+        {
+          "status": "add",
+          "id": "tmpId-1631648206137",
+          "qr_suffix": "1",
+          "team": "no",
+          "resources": []
+        }
+      ],
+      "date_picker": "",
+      "id": "3-i4UM-"
     }
   ],
   "existSuffix": {
@@ -229,7 +163,8 @@
         "event_id": "164",
         "people_count": "0",
         "qr_url": "http:localhost/troparevo",
-        "team": "true",
+        "team": true,
+        "teamForFront": true,
         "deleted": "false",
         "qrPath": {
           "id": "141",
@@ -266,7 +201,8 @@
         "event_id": "164",
         "people_count": "0",
         "qr_url": "https://via.placeholder.com/140x100",
-        "team": "false",
+        "team": false,
+        "teamForFront": false,
         "deleted": "false",
         "qrPath": {
           "id": "142",

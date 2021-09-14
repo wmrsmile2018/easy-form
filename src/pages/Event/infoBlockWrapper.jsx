@@ -6,7 +6,7 @@ import { useDebounce } from "../../utils/useHooks";
 import { sagaEventCallBegan } from "../../model/saga";
 import { checkSuffix, fetchError } from "../../model/event/reducer";
 
-const isDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 // const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
 
@@ -21,7 +21,7 @@ const getUrl = ({ type, state: { id, suffix } }) => {
   }
 };
 
-export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
+export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
   const dispatch = useDispatch();
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
