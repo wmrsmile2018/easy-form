@@ -6,7 +6,7 @@ import { useDebounce } from "../../utils/useHooks";
 import { sagaEventCallBegan } from "../../model/saga";
 import { checkSuffix, fetchError } from "../../model/event/reducer";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV !== "development";
 
 // const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
 
@@ -37,6 +37,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   );
 
   useEffect(() => {
+    console.log(1);
     if (isValid) {
       setIsValid(!isSuffixExist[suffix]);
     } else {
@@ -45,6 +46,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
   }, [isSuffixExist, isValid, suffix]);
 
   useEffect(() => {
+    console.log(2);
     console.log(isSuffixExist, suffix, count);
     if (count > 1) {
       setIsValid(false);
@@ -52,7 +54,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, status, ...rest }) => {
       setIsValid(true);
     } else if (isSuffixExist[suffix] === false) {
       setIsValid(true);
-    } else {
+    } else if (isSuffixExist[suffix] !== false) {
       setIsValid(false);
     }
   }, [isSuffixExist, suffix, count]);
