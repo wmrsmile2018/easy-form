@@ -1,12 +1,14 @@
-import React, { useReducer, useMemo } from "react";
+import React, { useReducer, useMemo, useCallback } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import key from "weak-key";
+import { saveAs } from "file-saver";
 
 import "./details.scss";
 
 import { Title } from "../../components/title";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
+import { Button } from "../../components/button";
 
 const Resources = React.memo(({ className, resources }) => {
   const classes = clsx("resources", className);
@@ -42,6 +44,11 @@ const Row = React.memo(
     const [toggle, dispatch] = useReducer((state) => !state, false);
     const classes = clsx("row", className, { showDetails: toggle });
     const height = useMemo(() => (toggle ? (resources.length + 1) * 51 : 0), [toggle]);
+
+    const handleOnClick = useCallback(({ href, name }) => {
+      saveAs(href, name);
+    }, []);
+
     return (
       <div className={classes}>
         <div className="row-cells__wrapper" onClick={dispatch}>
@@ -51,7 +58,12 @@ const Row = React.memo(
             <span className="row__cell row__team">{team ? "Да" : "Нет"}</span>
             <span className="row__cell row__people-count">{peopleCount}</span>
             <span className="row__cell row__rsrc-count">{rsrcCount}</span>
-            <img className="row__cell row__qr-path" src={qrPath.path} alt="qr code" />
+            <MarginGroup className="row-qr-path row__cell" isColumn gap={20}>
+              <img className="row__qr-path" src={qrPath.path} alt="qr code" />
+              <Button onClick={() => handleOnClick({ href: qrPath.path, name: "qr-code" })}>
+                Скачать Qr код1
+              </Button>
+            </MarginGroup>
           </div>
         </div>
         <div className="row-resources" style={{ height }}>
@@ -106,7 +118,7 @@ export const Details = React.memo(({ className, event }) => {
                 index={i}
                 qrUrl={el.qr_url}
                 peopleCount={el.people_count}
-                team={el.team}
+                team={el.teamForFront}
                 rsrcCount={el.resources.length}
                 resources={el.resources}
                 qrPath={el.qrPath}

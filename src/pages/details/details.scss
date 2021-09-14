@@ -32,9 +32,17 @@
       justify-content: center;
       min-width: 30px;
     }
-    .row__qr-path {
+    .row-qr-path {
       margin: 10px 0;
       border: none;
+      display: flex;
+
+      & > img {
+        width: 100%;
+      }
+      .button {
+        width: 100%;
+      }
     }
     .details-table-header {
       display: flex;
@@ -49,6 +57,10 @@
         font-size: 1rem;
         display: flex;
         align-items: center;
+      }
+
+      .row__qr-path {
+        border: none;
       }
     }
     .details-table-content {
