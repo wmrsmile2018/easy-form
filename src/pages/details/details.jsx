@@ -21,7 +21,7 @@ const Resources = React.memo(({ className, resources }) => {
         <span className="row__cell header__row-cell row__scheduled">
           Запланированное количество человек
         </span>
-        <span className="row__cell header__row-cell row__team">Перешеднее количество человек</span>
+        <span className="row__cell header__row-cell row__team">Перешедшие количество человек</span>
       </div>
       <div className="resources-content">
         {resources.map((el, i) => (
