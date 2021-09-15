@@ -6,7 +6,7 @@ import { useDebounce } from "../../utils/useHooks";
 import { sagaEventCallBegan } from "../../model/saga";
 import { checkSuffix, fetchError } from "../../model/event/reducer";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV !== "development";
 
 // const url = isDev ? "/existSuffix" : `/searchSuffixInDB?id=${suffix.id}&&suffix=${suffix.value}`;
 

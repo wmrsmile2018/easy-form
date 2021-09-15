@@ -5,7 +5,6 @@ import { useHistory, useLocation } from "react-router-dom";
 import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
 import { editEvent, fetchError, getInfoById } from "../../model/event/reducer";
-import dayjs from "dayjs";
 
 const parametres = {
   status: "edit",
