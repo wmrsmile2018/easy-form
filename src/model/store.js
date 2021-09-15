@@ -13,7 +13,7 @@ const logger = createLogger({
   level: "log",
   duration: true,
 });
-const middlewares = [sagaMiddleware, logger];
+const middlewares = [sagaMiddleware];
 const middleware = [...getDefaultMiddleware({ thunk: false }), ...middlewares];
 
 const configureAppStore = (preloadedState) =>
