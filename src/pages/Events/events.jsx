@@ -11,6 +11,7 @@ import "./events.scss";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Input } from "../../components/input";
 import { InputDate } from "../../components/datePicker/datePicker";
+console.log(Input);
 
 const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
@@ -82,9 +83,9 @@ export const Events = ({
       </Title>
       <MarginGroup gap={20} isColumn>
         <MarginGroup className="events-filters" isColumn>
-          <MarginGroup isColumn gap={10}>
+          <MarginGroup isColumn gap={10} style={{ width: 800 }}>
             <p style={{ fontWeight: "bold", fontSize: 19 }}>Фильтры</p>
-            <MarginGroup gap={10} style={{ width: 725 }}>
+            <MarginGroup gap={10}>
               {inputFields.map((el) => (
                 <Input
                   key={key(el)}
