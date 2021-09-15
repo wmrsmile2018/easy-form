@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import { useHistory } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isEmpty } from "lodash";
@@ -8,25 +8,29 @@ import { sagaEventCallBegan } from "../../model/saga";
 import {
   deleteMarkedEvent,
   fetchError,
-  getDeletedEvents,
+  // getDeletedEvents,
+  getEventsFilters,
   getInfoById,
   restoreEvent,
 } from "../../model/event/reducer";
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
+import { useDebounce } from "../../utils/useHooks";
 
 const isDev = process.env.NODE_ENV === "development";
 
 const getUrl = ({ type, id }) => {
   switch (type) {
-    case getDeletedEvents.type:
-      return isDev ? "/events" : `/getAllDeletedEvents`;
     case restoreEvent.type:
       return isDev ? `/events/${id}` : `/restoreEvent?id=${id}`;
     case deleteMarkedEvent.type:
       return isDev ? `/events/${id}` : `/deleteMarkedEvent?id=${id}`;
     case getInfoById.type:
       return isDev ? `/events/${id}` : `/getInfoByEventId?id=${id}`;
+    case getEventsFilters.type:
+      return isDev
+        ? `/eventsFilters`
+        : `/eventsFilter?name=${state.name}&&city=${state.city}&&area=${state.area}&&date=${state.date}&&deleted=${state.deleted}`;
   }
 };
 
@@ -38,15 +42,32 @@ export const DeletedEventsController = () => {
   const dispatch = useDispatch();
   const history = useHistory();
   const [id, setId] = useState("");
-
-  const events = useSelector((state) => state.event.deletedEvents);
+  const [filters, setFilters] = useState({
+    city: "",
+    name: "",
+    area: "",
+    date: "",
+    status: true,
+  });
+  const events = useSelector((state) => state.event.events);
   const isDeletedMarked = useSelector((state) => state.event.isDeletedMarked);
   const isRestored = useSelector((state) => state.event.isRestored);
   const event = useSelector((state) => state.event.event);
+  const debouncedFilters = useDebounce(filters, 1000);
 
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
+
+  const handleOnChange = useCallback(
+    ({ target }) => {
+      setFilters({
+        ...filters,
+        [target.name]: target.value,
+      });
+    },
+    [filters],
+  );
 
   useEffect(() => {
     if (!isEmpty(event) && id) {
@@ -55,12 +76,34 @@ export const DeletedEventsController = () => {
   }, [event, id]);
 
   useEffect(() => {
-    if (isDeletedMarked || isRestored) {
+    const isEmpty = Object.values(debouncedFilters).every((x) => x === "");
+    if (!isEmpty) {
       dispatch({
-        url: getUrl({ type: getDeletedEvents.type }),
+        url: getUrl({ type: getEventsFilters.type, state: filters }),
         type: sagaEventCallBegan.type,
         method: "get",
-        onSuccess: getDeletedEvents.type,
+        onSuccess: getEventsFilters.type,
+        onError: fetchError.type,
+      });
+    }
+  }, [debouncedFilters]);
+
+  useEffect(() => {
+    if (isDeletedMarked || isRestored) {
+      dispatch({
+        url: getUrl({
+          type: getEventsFilters.type,
+          state: {
+            city: "",
+            name: "",
+            area: "",
+            date: "",
+            status: true,
+          },
+        }),
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: getEventsFilters.type,
         onError: fetchError.type,
       });
     }
@@ -68,10 +111,19 @@ export const DeletedEventsController = () => {
 
   useEffect(() => {
     dispatch({
-      url: getUrl({ type: getDeletedEvents.type }),
+      url: getUrl({
+        type: getEventsFilters.type,
+        state: {
+          city: "",
+          name: "",
+          area: "",
+          date: "",
+          status: true,
+        },
+      }),
       type: sagaEventCallBegan.type,
       method: "get",
-      onSuccess: getDeletedEvents.type,
+      onSuccess: getEventsFilters.type,
       onError: fetchError.type,
     });
   }, [dispatch]);
@@ -118,7 +170,12 @@ export const DeletedEventsController = () => {
         },
       }}
     >
-      <Events events={events} addNew={handleOnAddNew} />
+      <Events
+        events={events}
+        addNew={handleOnAddNew}
+        handleOnChange={handleOnChange}
+        state={filters}
+      />
     </EventsContext.Provider>
   );
 };

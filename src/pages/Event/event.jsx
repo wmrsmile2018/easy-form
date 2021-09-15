@@ -212,6 +212,7 @@ export const Event = React.memo(
             isExist={popup.isExist}
           />
         </Modal>
+
         <MarginGroup gap={30} isColumn>
           <MarginGroup gap={30} className="event__input-fields">
             {inputFields1.map((el) => (

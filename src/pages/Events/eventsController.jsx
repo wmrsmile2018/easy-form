@@ -1,24 +1,33 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback } from "react";
 import { useHistory, useLocation } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { isEmpty } from "lodash";
 
 import { Events } from "./events";
 import { sagaEventCallBegan } from "../../model/saga";
-import { deleteActiveEvent, fetchError, getEvents, getInfoById } from "../../model/event/reducer";
+import {
+  deleteActiveEvent,
+  fetchError,
+  // getEvents,
+  getEventsFilters,
+  getInfoById,
+} from "../../model/event/reducer";
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
+import { useDebounce } from "../../utils/useHooks";
 
 const isDev = process.env.NODE_ENV === "development";
 
-const getUrl = ({ type, id }) => {
+const getUrl = ({ type, id, state }) => {
   switch (type) {
-    case getEvents.type:
-      return isDev ? "/events" : `/getAllNotDeletedEvents`;
     case deleteActiveEvent.type:
       return isDev ? `/events/${id}` : `/deleteActiveEvent?id=${id}`;
     case getInfoById.type:
       return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
+    case getEventsFilters.type:
+      return isDev
+        ? `/eventsFilters`
+        : `/eventsFilter?name=${state.name}&&city=${state.city}&&area=${state.area}&&date=${state.date}&&deleted=${state.deleted}`;
   }
 };
 
@@ -32,21 +41,60 @@ export const EventsController = () => {
   const location = useLocation();
   const [id, setId] = useState("");
   const [path, setPath] = useState("");
+  const [filters, setFilters] = useState({
+    city: "",
+    name: "",
+    area: "",
+    date: "",
+    deleted: false,
+  });
   const events = useSelector((state) => state.event.events);
   const event = useSelector((state) => state.event.event);
   const isDeletedActive = useSelector((state) => state.event.isDeletedActive);
-
+  const debouncedFilters = useDebounce(filters, 1000);
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
 
+  const handleOnChange = useCallback(
+    ({ target }) => {
+      setFilters({
+        ...filters,
+        [target.name]: target.value,
+      });
+    },
+    [filters],
+  );
+
+  useEffect(() => {
+    const isEmpty = Object.values(debouncedFilters).every((x) => x === "");
+    if (!isEmpty) {
+      dispatch({
+        url: getUrl({ type: getEventsFilters.type, state: filters }),
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: getEventsFilters.type,
+        onError: fetchError.type,
+      });
+    }
+  }, [debouncedFilters]);
+
   useEffect(() => {
     if (isDeletedActive) {
       dispatch({
-        url: getUrl({ type: getEvents.type }),
+        url: getUrl({
+          type: getEventsFilters.type,
+          state: {
+            city: "",
+            name: "",
+            area: "",
+            date: "",
+            deleted: false,
+          },
+        }),
         type: sagaEventCallBegan.type,
         method: "get",
-        onSuccess: getEvents.type,
+        onSuccess: getEventsFilters.type,
         onError: fetchError.type,
       });
     }
@@ -69,10 +117,19 @@ export const EventsController = () => {
 
   useEffect(() => {
     dispatch({
-      url: getUrl({ type: getEvents.type }),
+      url: getUrl({
+        type: getEventsFilters.type,
+        state: {
+          city: "",
+          name: "",
+          area: "",
+          date: "",
+          deleted: false,
+        },
+      }),
       type: sagaEventCallBegan.type,
       method: "get",
-      onSuccess: getEvents.type,
+      onSuccess: getEventsFilters.type,
       onError: fetchError.type,
     });
   }, [dispatch]);
@@ -121,7 +178,12 @@ export const EventsController = () => {
         },
       }}
     >
-      <Events events={events} addNew={handleOnAddNew} />
+      <Events
+        events={events}
+        addNew={handleOnAddNew}
+        handleOnChange={handleOnChange}
+        state={filters}
+      />
     </EventsContext.Provider>
   );
 };

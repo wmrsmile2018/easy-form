@@ -21,7 +21,7 @@ const Resources = React.memo(({ className, resources }) => {
         <span className="row__cell header__row-cell row__scheduled">
           Запланированное количество человек
         </span>
-        <span className="row__cell header__row-cell row__team">Перешедшие количество человек</span>
+        <span className="row__cell header__row-cell row__team">Перешедшее количество человек</span>
       </div>
       <div className="resources-content">
         {resources.map((el, i) => (
@@ -74,7 +74,7 @@ const Row = React.memo(
   },
 );
 
-export const Details = React.memo(({ className, event }) => {
+export const Details = React.memo(({ className, event, setZero }) => {
   const { name, city, date, area, people_count, qrs } = event;
   const classes = clsx("details", className);
   return (
@@ -82,22 +82,25 @@ export const Details = React.memo(({ className, event }) => {
       <Title>Информация о мероприятии</Title>
 
       <MarginGroup isColumn gap={20}>
-        <MarginGroup className="details-header" isColumn gap={5}>
-          <p>
-            Наименование мероприятия:<span>{name}</span>
-          </p>
-          <p>
-            Город:<span>{city}</span>
-          </p>
-          <p>
-            Дата:<span>{date}</span>
-          </p>
-          <p>
-            Место:<span>{area}</span>
-          </p>
-          <p>
-            Пришло людей:<span>{people_count}</span>
-          </p>
+        <MarginGroup className={"details-header-group"} gap={50}>
+          <MarginGroup className="details-header" isColumn gap={5}>
+            <p>
+              Наименование мероприятия:<span>{name}</span>
+            </p>
+            <p>
+              Город:<span>{city}</span>
+            </p>
+            <p>
+              Дата:<span>{date}</span>
+            </p>
+            <p>
+              Место:<span>{area}</span>
+            </p>
+            <p>
+              Пришло людей:<span>{people_count}</span>
+            </p>
+          </MarginGroup>
+          <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
         </MarginGroup>
 
         <div className="details-table">
