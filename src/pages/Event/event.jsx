@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef, useEffect } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import clsx from "clsx";
 import key from "weak-key";
 import produce from "immer";
@@ -8,7 +8,6 @@ import { Input } from "../../components/input";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Button } from "../../components/button";
 import { Modal } from "../../components/modal";
-import { Popup } from "../../components/popup/popup";
 import { InputDate } from "../../components/datePicker/datePicker";
 
 import { useOnClickOutside } from "../../utils/useHooks";

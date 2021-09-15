@@ -1,6 +1,7 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useHistory, useLocation } from "react-router-dom";
+import produce from "immer";
 
 import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
@@ -38,11 +39,24 @@ export const EditEventController = React.memo(() => {
   });
 
   const handleOnSubmit = useCallback(() => {
+    const nextState = produce(state, (draftState) => {
+      const qrs = draftState.qrs.map((qr) => {
+        qr.id = qr.id.split("-")[0] === "tmpId" ? "add" : qr.id;
+        qr.resources.map((rsc) => {
+          rsc.id = rsc.id.split("-")[0] === "tmpId" ? "add" : qr.id;
+          return rsc;
+        });
+        return qr;
+      });
+      console.log(qrs);
+      draftState.qrs = qrs;
+    });
+
     dispatch({
       url: getUrl({ type: editEvent.type }),
       type: sagaEventCallBegan.type,
       payload: {
-        ...state,
+        ...nextState,
         date_picker: "",
       },
       method: "put",
