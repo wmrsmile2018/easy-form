@@ -48,7 +48,7 @@ export const DeletedEventsController = () => {
     name: "",
     area: "",
     date: "",
-    status: true,
+    deleted: true,
   });
   const events = useSelector((state) => state.event.events);
   const isDeletedMarked = useSelector((state) => state.event.isDeletedMarked);
@@ -110,7 +110,7 @@ export const DeletedEventsController = () => {
             name: "",
             area: "",
             date: "",
-            status: true,
+            deleted: true,
           },
         }),
         type: sagaEventCallBegan.type,
@@ -130,7 +130,7 @@ export const DeletedEventsController = () => {
           name: "",
           area: "",
           date: "",
-          status: true,
+          deleted: true,
         },
       }),
       type: sagaEventCallBegan.type,
