@@ -16,10 +16,11 @@ import {
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
 import { useDebounce } from "../../utils/useHooks";
+import dayjs from "dayjs";
 
 const isDev = process.env.NODE_ENV !== "development";
 
-const getUrl = ({ type, id }) => {
+const getUrl = ({ type, id, state }) => {
   switch (type) {
     case restoreEvent.type:
       return isDev ? `/events/${id}` : `/restoreEvent?id=${id}`;
@@ -64,6 +65,17 @@ export const DeletedEventsController = () => {
       setFilters({
         ...filters,
         [target.name]: target.value,
+      });
+    },
+    [filters],
+  );
+
+  const handleOnChangeDate = useCallback(
+    (data) => {
+      setFilters({
+        ...filters,
+        [data.name]: dayjs(data.value).format("DD-MM-YYYY"),
+        [`${data.name}_picker`]: data.value,
       });
     },
     [filters],
@@ -175,6 +187,7 @@ export const DeletedEventsController = () => {
         addNew={handleOnAddNew}
         handleOnChange={handleOnChange}
         state={filters}
+        handleOnChangeDate={handleOnChangeDate}
       />
     </EventsContext.Provider>
   );

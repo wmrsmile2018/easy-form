@@ -32,6 +32,11 @@
       min-width: 250px;
       border-right: 1px dotted black;
     }
+
+    .row__url {
+      white-space: nowrap;
+    }
+
     .row__index {
       display: flex;
       width: 30px;

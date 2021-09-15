@@ -10,7 +10,7 @@ import { useEvents } from "./eventsContex";
 import "./events.scss";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Input } from "../../components/input";
-console.log(Input);
+import { InputDate } from "../../components/datePicker/datePicker";
 
 const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
@@ -61,11 +61,18 @@ const inputFields = [
   { name: "city", title: "Город" },
   { name: "name", title: "Название мероприятия" },
   { name: "area", title: "Место" },
-  { name: "date", title: "Дата" },
 ];
 
-export const Events = ({ events, className, addNew, handleOnChange, state }) => {
+export const Events = ({
+  events,
+  className,
+  addNew,
+  handleOnChange,
+  handleOnChangeDate,
+  state,
+}) => {
   const classes = clsx("events", className);
+
   const { status } = useEvents();
   return (
     <div className={classes}>
@@ -77,7 +84,7 @@ export const Events = ({ events, className, addNew, handleOnChange, state }) => 
         <MarginGroup className="events-filters" isColumn>
           <MarginGroup isColumn gap={10}>
             <p style={{ fontWeight: "bold", fontSize: 19 }}>Фильтры</p>
-            <MarginGroup gap={10}>
+            <MarginGroup gap={10} style={{ width: 725 }}>
               {inputFields.map((el) => (
                 <Input
                   key={key(el)}
@@ -87,6 +94,13 @@ export const Events = ({ events, className, addNew, handleOnChange, state }) => 
                   value={state[el.name]}
                 />
               ))}
+              <InputDate
+                title="Введите дату мероприятия"
+                onChange={handleOnChangeDate}
+                format="dd-MM-yyyy"
+                value={state.date_picker}
+                name={"date"}
+              />
             </MarginGroup>
           </MarginGroup>
         </MarginGroup>

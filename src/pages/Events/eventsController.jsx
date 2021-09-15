@@ -15,6 +15,7 @@ import {
 import { useSelector } from "react-redux";
 import { EventsContext } from "./eventsContex";
 import { useDebounce } from "../../utils/useHooks";
+import dayjs from "dayjs";
 
 const isDev = process.env.NODE_ENV !== "development";
 
@@ -61,6 +62,17 @@ export const EventsController = () => {
       setFilters({
         ...filters,
         [target.name]: target.value,
+      });
+    },
+    [filters],
+  );
+
+  const handleOnChangeDate = useCallback(
+    (data) => {
+      setFilters({
+        ...filters,
+        [data.name]: dayjs(data.value).format("DD-MM-YYYY"),
+        [`${data.name}_picker`]: data.value,
       });
     },
     [filters],
@@ -182,6 +194,7 @@ export const EventsController = () => {
         events={events}
         addNew={handleOnAddNew}
         handleOnChange={handleOnChange}
+        handleOnChangeDate={handleOnChangeDate}
         state={filters}
       />
     </EventsContext.Provider>

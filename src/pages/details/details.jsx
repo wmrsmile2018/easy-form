@@ -27,7 +27,14 @@ const Resources = React.memo(({ className, resources }) => {
         {resources.map((el, i) => (
           <div className="row-cells" key={key(el)}>
             <span className="row__cell row__index">{i + 1}</span>
-            <span className="row__cell row__url">{el.url}</span>
+            <a
+              href={decodeURI(el.url)}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="row__cell row__url"
+            >
+              {decodeURI(el.url)}
+            </a>
             <span className="row__cell row__scheduled">
               {el.people_count !== "0" ? el.people_count : "Бесконечное"}
             </span>

@@ -3,15 +3,16 @@ import clsx from "clsx";
 
 import "./marginGroup.scss";
 
-export const MarginGroup = React.memo(({ gap, className, children, isColumn }) => {
+export const MarginGroup = React.memo(({ gap, className, children, isColumn, style }) => {
   const classes = clsx("margin-group", className);
-  const style = {
+  const styleComponent = {
     gap,
     flexDirection: isColumn ? "column" : "",
+    ...style,
   };
 
   return (
-    <div style={style} className={classes}>
+    <div style={styleComponent} className={classes}>
       {children}
     </div>
   );
