@@ -34,7 +34,6 @@ export const AddEventController = React.memo(() => {
     qrs: [],
   });
 
-  window.dayjs = dayjs;
   const handleOnSubmit = useCallback(() => {
     dispatch({
       type: sagaEventCallBegan.type,

@@ -233,7 +233,7 @@
     "peopleCount": "sdgsfafsaf",
     "qrs": [
       {
-        "id": "236",
+        "id": "tmpId-236",
         "qr_suffix": "troparevo",
         "event_id": "164",
         "people_count": "0",
@@ -254,7 +254,7 @@
             "deleted": "false"
           },
           {
-            "id": "375",
+            "id": "tmpId-375",
             "qr_id": "236",
             "qr_suffix": "troparevo",
             "infinity": "true",
@@ -277,7 +277,7 @@
         "qrPath": "qrs/Поход/bitcevskiy.png",
         "resources": [
           {
-            "id": "376",
+            "id": "tmpId-376",
             "qr_id": "237",
             "qr_suffix": "bitcevskiy",
             "infinity": "false",
