@@ -19,7 +19,7 @@ import { useDebounce } from "../../utils/useHooks";
 
 const isDev = process.env.NODE_ENV === "development";
 
-const getUrl = ({ type, id }) => {
+const getUrl = ({ type, id, state }) => {
   switch (type) {
     case restoreEvent.type:
       return isDev ? `/events/${id}` : `/restoreEvent?id=${id}`;
