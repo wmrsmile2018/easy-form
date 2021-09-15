@@ -21,6 +21,7 @@ const initialState = {
   isRestored: false,
   error: {},
   status: false,
+  resetToZero: false,
 };
 
 const eventSlice = createSlice({
@@ -29,6 +30,9 @@ const eventSlice = createSlice({
   reducers: {
     createEvent(state, action) {
       state.isCreated = action.payload.success;
+    },
+    getEventsFilters(state, action) {
+      state.events = action.payload;
     },
     editEvent(state, action) {
       state.isUpdated = action.payload.success;
@@ -39,15 +43,19 @@ const eventSlice = createSlice({
         [action.payload.suffix]: action.payload.exist,
       };
     },
+    setToZero(state, action) {
+      console.log("hello", action);
+      state.resetToZero = action.payload.success;
+    },
     checkUrl(state, action) {
       state.isUrlExist = action.payload.exist;
     },
-    getEvents(state, action) {
-      state.events = action.payload;
-    },
-    getDeletedEvents(state, action) {
-      state.deletedEvents = action.payload;
-    },
+    // getEvents(state, action) {
+    //   state.events = action.payload;
+    // },
+    // getDeletedEvents(state, action) {
+    //   state.deletedEvents = action.payload;
+    // },
     getQRs(state, action) {
       state.QRs = action.payload;
     },
@@ -72,6 +80,7 @@ const eventSlice = createSlice({
       state.status = false;
       state.isCreated = false;
       state.isUpdated = false;
+
       // state.isSuffixExist = false;
       // state.isUrlExist = false;
       state.isDeletedActive = false;
@@ -94,12 +103,14 @@ export const {
   checkSuffix,
   checkUrl,
   fetchError,
-  getEvents,
-  getDeletedEvents,
+  // getEvents,
+  // getDeletedEvents,
   getQRs,
   deleteActiveEvent,
   deleteMarkedEvent,
   restoreEvent,
   getInfoById,
   editEvent,
+  setToZero,
+  getEventsFilters,
 } = eventSlice.actions;

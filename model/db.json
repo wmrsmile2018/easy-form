@@ -1,6 +1,80 @@
 {
   "events": [
     {
+      "name": "123213",
+      "city": "1213",
+      "date": "08-09-2021",
+      "area": "123123",
+      "qrs": [
+        {
+          "status": "add",
+          "id": "tmpId-1631647819073",
+          "qr_suffix": "2131231231",
+          "team": "yes",
+          "resources": []
+        },
+        {
+          "status": "add",
+          "id": "tmpId-1631647823066",
+          "qr_suffix": "sadasdasd",
+          "team": "no",
+          "resources": []
+        }
+      ],
+      "date_picker": "",
+      "id": "GsnuEWs"
+    },
+    {
+      "name": "readonly@city-mobil.ru",
+      "city": "Los Angeles",
+      "date": "01-09-2021",
+      "area": "sadasd",
+      "qrs": [
+        {
+          "status": "add",
+          "id": "tmpId-1631647902887",
+          "qr_suffix": "1",
+          "team": "yes",
+          "resources": []
+        },
+        {
+          "status": "add",
+          "id": "tmpId-1631647908098",
+          "qr_suffix": "2",
+          "team": "no",
+          "resources": []
+        }
+      ],
+      "date_picker": "",
+      "id": "OHpHRN2"
+    },
+    {
+      "name": "2131231",
+      "city": "asdadadad",
+      "date": "03-09-2021",
+      "area": "asdasd",
+      "qrs": [
+        {
+          "status": "add",
+          "id": "tmpId-1631648203336",
+          "qr_suffix": "sadsad",
+          "team": "yes",
+          "resources": []
+        },
+        {
+          "status": "add",
+          "id": "tmpId-1631648206137",
+          "qr_suffix": "1",
+          "team": "no",
+          "resources": []
+        }
+      ],
+      "date_picker": "",
+      "id": "3-i4UM-"
+    }
+  ],
+  "eventsFilters": [
+    {
       "id": "165",
       "name": "Рыбалка",
       "city": "",
@@ -215,5 +289,8 @@
         ]
       }
     ]
+  },
+  "resetToZero": {
+    "success": true
   }
 }
