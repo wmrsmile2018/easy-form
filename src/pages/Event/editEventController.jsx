@@ -9,7 +9,7 @@ import { editEvent, fetchError, getInfoById } from "../../model/event/reducer";
 
 const parametres = {
   status: "edit",
-  teamName: "teamForFront",
+  teamName: "team",
 };
 
 const isDev = process.env.NODE_ENV !== "development";
