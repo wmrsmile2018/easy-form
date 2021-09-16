@@ -78,6 +78,16 @@ export const EventsController = () => {
     [filters],
   );
 
+  const handleOnResetFilters = useCallback(() => {
+    setFilters({
+      ...filters,
+      city: "",
+      name: "",
+      area: "",
+      date: "",
+    });
+  }, []);
+
   useEffect(() => {
     const isEmpty = Object.values(debouncedFilters).every((x) => x === "");
     if (!isEmpty) {
@@ -196,6 +206,7 @@ export const EventsController = () => {
         handleOnChange={handleOnChange}
         handleOnChangeDate={handleOnChangeDate}
         state={filters}
+        resetFilters={handleOnResetFilters}
       />
     </EventsContext.Provider>
   );

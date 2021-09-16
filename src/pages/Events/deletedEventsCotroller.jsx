@@ -81,6 +81,16 @@ export const DeletedEventsController = () => {
     [filters],
   );
 
+  const handleOnResetFilters = useCallback(() => {
+    setFilters({
+      ...filters,
+      city: "",
+      name: "",
+      area: "",
+      date: "",
+    });
+  }, []);
+
   useEffect(() => {
     if (!isEmpty(event) && id) {
       history.push(`/admin/details/${id}`);
@@ -188,6 +198,7 @@ export const DeletedEventsController = () => {
         handleOnChange={handleOnChange}
         state={filters}
         handleOnChangeDate={handleOnChangeDate}
+        resetFilters={handleOnResetFilters}
       />
     </EventsContext.Provider>
   );
