@@ -13,7 +13,7 @@ export const DefaultResource = ({ className, rsrc, defaultResource, onChange, on
 
   return (
     <div className={classes}>
-      <Title>Дефолтные внешние данные</Title>
+      <Title>Дефолтный внешний ресур</Title>
       <MarginGroup isColumn gap={20}>
         <MarginGroup className="default-resource-data" isColumn gap={10}>
           <div className="default-resource-url">
