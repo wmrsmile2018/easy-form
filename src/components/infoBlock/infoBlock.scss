@@ -37,6 +37,9 @@
     }
     .info-block__url {
       width: 400px;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .info-block-content-title {

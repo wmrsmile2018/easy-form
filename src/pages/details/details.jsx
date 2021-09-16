@@ -10,7 +10,7 @@ import { Title } from "../../components/title";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Button } from "../../components/button";
 
-const Resources = React.memo(({ className, resources }) => {
+const Resources = React.memo(({ className, resources, defaultRsrc }) => {
   const classes = clsx("resources", className);
 
   return (
@@ -24,6 +24,14 @@ const Resources = React.memo(({ className, resources }) => {
         <span className="row__cell header__row-cell row__team">Перешедшее количество человек</span>
       </div>
       <div className="resources-content">
+        {defaultRsrc > 0 && (
+          <div className="row-cells">
+            <span className="row__cell row__index">0</span>
+            <span className="row__cell row__url"></span>
+            <span className="row__cell row__scheduled">Бесконечное</span>
+            <span className="row__cell row__team">{defaultRsrc}</span>
+          </div>
+        )}
         {resources.map((el, i) => (
           <div className="row-cells" key={key(el)}>
             <span className="row__cell row__index">{i + 1}</span>
@@ -47,10 +55,13 @@ const Resources = React.memo(({ className, resources }) => {
 });
 
 const Row = React.memo(
-  ({ className, qrUrl, peopleCount, team, index, rsrcCount, resources, qrPath }) => {
+  ({ className, qrUrl, peopleCount, team, index, rsrcCount, resources, qrPath, defaultRsrc }) => {
     const [toggle, dispatch] = useReducer((state) => !state, false);
     const classes = clsx("row", className, { showDetails: toggle });
-    const height = useMemo(() => (toggle ? (resources.length + 1) * 51 : 0), [toggle]);
+    const height = useMemo(() => (toggle ? (resources.length + 1 + !!defaultRsrc) * 51 : 0), [
+      toggle,
+      defaultRsrc,
+    ]);
 
     const handleOnClick = useCallback(({ href, name }) => {
       saveAs(href, name);
@@ -74,7 +85,7 @@ const Row = React.memo(
           </div>
         </div>
         <div className="row-resources" style={{ height }}>
-          <Resources resources={resources} />
+          <Resources resources={resources} defaultRsrc={defaultRsrc} />
         </div>
       </div>
     );
@@ -132,6 +143,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
                 rsrcCount={el.resources.length}
                 resources={el.resources}
                 qrPath={el.qrPath}
+                defaultRsrc={el.default_resource_people_count}
               />
             ))}
           </div>

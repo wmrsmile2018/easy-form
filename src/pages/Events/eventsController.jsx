@@ -56,6 +56,7 @@ export const EventsController = () => {
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
+  console.log(filters);
 
   const handleOnChange = useCallback(
     ({ target }) => {
@@ -71,7 +72,7 @@ export const EventsController = () => {
     (data) => {
       setFilters({
         ...filters,
-        [data.name]: dayjs(data.value).format("DD-MM-YYYY"),
+        [data.name]: data.value ? dayjs(data.value).format("DD-MM-YYYY") : "",
         [`${data.name}_picker`]: data.value,
       });
     },

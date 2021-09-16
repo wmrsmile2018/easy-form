@@ -113,8 +113,9 @@ export const Event = React.memo(
     const handleOnCheck = (curSuffix, { target }) => {
       const nextState = produce(state, (draftState) => {
         const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-        Qr.team = target.checked ? true : false;
+        Qr[teamName] = target.checked ? true : false;
       });
+
       onUpdateState(nextState);
     };
 

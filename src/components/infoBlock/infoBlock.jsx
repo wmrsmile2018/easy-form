@@ -63,7 +63,14 @@ export const InfoBlock = ({
               <div key={key(el)} className="info-block-source">
                 <div>
                   <p className="info-block__number">{i + 1}</p>
-                  <p className="info-block__url">{el.url}</p>
+                  <a
+                    href={el.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="info-block__url"
+                  >
+                    {decodeURI(el.url)}
+                  </a>
                   <p className="info-block__count">{el.people_count}</p>
                 </div>
                 <MarginGroup gap={20}>
