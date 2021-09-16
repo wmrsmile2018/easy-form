@@ -43,7 +43,7 @@ export const EditEventController = React.memo(() => {
       const qrs = draftState.qrs.map((qr) => {
         qr.id = qr.id.split("-")[0] === "tmpId" ? "add" : qr.id;
         qr.resources.map((rsc) => {
-          rsc.id = rsc.id.split("-")[0] === "tmpId" ? "add" : qr.id;
+          rsc.id = rsc.id.split("-")[0] === "tmpId" ? "add" : rsc.id;
           return rsc;
         });
         return qr;
