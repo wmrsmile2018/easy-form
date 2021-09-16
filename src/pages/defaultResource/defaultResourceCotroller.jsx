@@ -4,7 +4,7 @@ import { fetchError, getDefaultResource, updateDefaultResource } from "../../mod
 import { sagaEventCallBegan } from "../../model/saga";
 import { DefaultResource } from "./defaultResource";
 
-const isDev = process.env.NODE_ENV !== "development";
+const isDev = process.env.NODE_ENV === "development";
 
 const getUrl = ({ type }) => {
   switch (type) {
