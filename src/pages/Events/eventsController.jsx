@@ -17,7 +17,7 @@ import { EventsContext } from "./eventsContex";
 import { useDebounce } from "../../utils/useHooks";
 import dayjs from "dayjs";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV !== "development";
 
 const getUrl = ({ type, id, state }) => {
   switch (type) {
