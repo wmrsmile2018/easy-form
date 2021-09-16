@@ -5,6 +5,7 @@ import { DetailsController } from "./pages/details";
 import { AddEventController, EditEventController } from "./pages/Event";
 
 import "./App.css";
+import { DefaultResourceCotroller } from "./pages/defaultResource";
 
 const ErrorComponent = ({ status }) => {
   return <div className="error-component">Current page doesn't exist</div>;
@@ -23,6 +24,14 @@ function App() {
         <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/add-event">
           Добавить мероприятие
         </NavLink>
+        <NavLink
+          className="app__nav-link"
+          activeClassName="activeRoute"
+          to="/admin/get-info-default-resource"
+        >
+          Дефолтный <br />
+          внешний ресурс
+        </NavLink>
       </div>
       <main id="main">
         <div className="app-content">
@@ -35,6 +44,7 @@ function App() {
             <Route path="/admin/edit-event/:id" component={EditEventController} />
             <Route path="/admin/basket" component={DeletedEventsController} />
             <Route path="/admin/details/:id" component={DetailsController} />
+            <Route path="/admin/get-info-default-resource" component={DefaultResourceCotroller} />
             <Route path="*" component={ErrorComponent} />
           </Switch>
         </div>

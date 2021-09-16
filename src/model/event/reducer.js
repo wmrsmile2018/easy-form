@@ -56,6 +56,12 @@ const eventSlice = createSlice({
     // getDeletedEvents(state, action) {
     //   state.deletedEvents = action.payload;
     // },
+    getDefaultResource(state, action) {
+      state.defaultResource = action.payload.defaultResource;
+    },
+    updateDefaultResource(state, action) {
+      state.isUpdatedDefaultResource = action.payload.success;
+    },
     getQRs(state, action) {
       state.QRs = action.payload;
     },
@@ -113,4 +119,6 @@ export const {
   editEvent,
   setToZero,
   getEventsFilters,
+  getDefaultResource,
+  updateDefaultResource,
 } = eventSlice.actions;

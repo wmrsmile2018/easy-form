@@ -10,6 +10,8 @@ import { Title } from "../../components/title";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Button } from "../../components/button";
 
+const ROW_HEIGHT = 51;
+
 const Resources = React.memo(({ className, resources, defaultRsrc }) => {
   const classes = clsx("resources", className);
 
@@ -58,10 +60,11 @@ const Row = React.memo(
   ({ className, qrUrl, peopleCount, team, index, rsrcCount, resources, qrPath, defaultRsrc }) => {
     const [toggle, dispatch] = useReducer((state) => !state, false);
     const classes = clsx("row", className, { showDetails: toggle });
-    const height = useMemo(() => (toggle ? (resources.length + 1 + !!defaultRsrc) * 51 : 0), [
-      toggle,
-      defaultRsrc,
-    ]);
+
+    const height = useMemo(() => {
+      const rowCount = defaultRsrc > 0 ? resources.length + 2 : resources.length + 1;
+      return toggle ? rowCount * ROW_HEIGHT : 0;
+    }, [toggle, defaultRsrc]);
 
     const handleOnClick = useCallback(({ href, name }) => {
       saveAs(href, name);
