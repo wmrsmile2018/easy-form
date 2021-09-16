@@ -24,14 +24,6 @@ const Resources = React.memo(({ className, resources, defaultRsrc }) => {
         <span className="row__cell header__row-cell row__team">Перешедшее количество человек</span>
       </div>
       <div className="resources-content">
-        {defaultRsrc > 0 && (
-          <div className="row-cells">
-            <span className="row__cell row__index">0</span>
-            <span className="row__cell row__url"></span>
-            <span className="row__cell row__scheduled">Бесконечное</span>
-            <span className="row__cell row__team">{defaultRsrc}</span>
-          </div>
-        )}
         {resources.map((el, i) => (
           <div className="row-cells" key={key(el)}>
             <span className="row__cell row__index">{i + 1}</span>
@@ -49,6 +41,14 @@ const Resources = React.memo(({ className, resources, defaultRsrc }) => {
             <span className="row__cell row__team">{el.came_people_count}</span>
           </div>
         ))}
+        {defaultRsrc > 0 && (
+          <div className="row-cells">
+            <span className="row__cell row__index">0</span>
+            <span className="row__cell row__url">Дефолтный внешний ресурс</span>
+            <span className="row__cell row__scheduled">0</span>
+            <span className="row__cell row__team">{defaultRsrc}</span>
+          </div>
+        )}
       </div>
     </div>
   );
