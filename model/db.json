@@ -231,6 +231,7 @@
     "unixtime": 1631221200,
     "area": "asdasdasdad",
     "peopleCount": "sdgsfafsaf",
+    "default_resource_people_count": 15,
     "qrs": [
       {
         "id": "tmpId-236",

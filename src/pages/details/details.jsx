@@ -93,7 +93,7 @@ const Row = React.memo(
 );
 
 export const Details = React.memo(({ className, event, setZero }) => {
-  const { name, city, date, area, people_count, qrs } = event;
+  const { name, city, date, area, people_count, qrs, default_resource_people_count } = event;
   const classes = clsx("details", className);
   return (
     <div className={classes}>
@@ -115,7 +115,10 @@ export const Details = React.memo(({ className, event, setZero }) => {
               Место:<span>{area}</span>
             </p>
             <p>
-              Пришло людей:<span>{people_count}</span>
+              Перешло людей:<span>{people_count}</span>
+            </p>
+            <p>
+              Перешло на дефолтный внешний ресурс:<span>{default_resource_people_count}</span>
             </p>
           </MarginGroup>
           <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
