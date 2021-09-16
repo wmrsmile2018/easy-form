@@ -1,7 +1,6 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchError, getDefaultResource, updateDefaultResource } from "../../model/event/reducer";
-import { useHistory } from "react-router-dom";
 
 import { sagaEventCallBegan } from "../../model/saga";
 import { DefaultResource } from "./defaultResource";
@@ -19,10 +18,8 @@ const getUrl = ({ type }) => {
 
 export const DefaultResourceCotroller = () => {
   const dispatch = useDispatch();
-  const history = useHistory();
   const [defaultResource, setDefaultResource] = useState("");
   const rsrc = useSelector((state) => state.event.defaultResource);
-  const isSuccess = useSelector((state) => state.event.isUpdatedDefaultResource);
 
   const handleOnChange = useCallback(({ target }) => {
     setDefaultResource(target.value);
@@ -49,12 +46,6 @@ export const DefaultResourceCotroller = () => {
       onError: fetchError.type,
     });
   }, [dispatch]);
-
-  useEffect(() => {
-    if (isSuccess) {
-      history.push("/admin");
-    }
-  }, [isSuccess]);
 
   return (
     <DefaultResource
