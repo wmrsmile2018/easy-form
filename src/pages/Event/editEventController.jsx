@@ -48,9 +48,11 @@ export const EditEventController = React.memo(() => {
         });
         return qr;
       });
-      console.log(qrs);
       draftState.qrs = qrs;
     });
+
+    console.log(state);
+    console.log(nextState);
 
     dispatch({
       url: getUrl({ type: editEvent.type }),

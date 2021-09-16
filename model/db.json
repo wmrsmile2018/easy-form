@@ -242,6 +242,7 @@
         "teamForFront": true,
         "deleted": "false",
         "qrPath": "https://via.placeholder.com/140x100",
+        "default_resource_people_count": 10,
         "resources": [
           {
             "id": "374",
@@ -275,6 +276,7 @@
         "teamForFront": false,
         "deleted": "false",
         "qrPath": "qrs/Поход/bitcevskiy.png",
+        "default_resource_people_count": 0,
         "resources": [
           {
             "id": "tmpId-376",
