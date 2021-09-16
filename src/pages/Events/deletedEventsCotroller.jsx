@@ -18,7 +18,7 @@ import { EventsContext } from "./eventsContex";
 import { useDebounce } from "../../utils/useHooks";
 import dayjs from "dayjs";
 
-const isDev = process.env.NODE_ENV === "development";
+const isDev = process.env.NODE_ENV !== "development";
 
 const getUrl = ({ type, id, state }) => {
   switch (type) {
@@ -80,6 +80,16 @@ export const DeletedEventsController = () => {
     },
     [filters],
   );
+
+  const handleOnResetFilters = useCallback(() => {
+    setFilters({
+      ...filters,
+      city: "",
+      name: "",
+      area: "",
+      date: "",
+    });
+  }, []);
 
   useEffect(() => {
     if (!isEmpty(event) && id) {
@@ -188,6 +198,7 @@ export const DeletedEventsController = () => {
         handleOnChange={handleOnChange}
         state={filters}
         handleOnChangeDate={handleOnChangeDate}
+        resetFilters={handleOnResetFilters}
       />
     </EventsContext.Provider>
   );

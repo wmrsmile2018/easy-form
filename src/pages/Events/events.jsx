@@ -11,7 +11,12 @@ import "./events.scss";
 import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Input } from "../../components/input";
 import { InputDate } from "../../components/datePicker/datePicker";
-console.log(Input);
+
+const inputFields = [
+  { name: "name", title: "Название мероприятия" },
+  { name: "city", title: "Город" },
+  { name: "area", title: "Место" },
+];
 
 const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
@@ -58,12 +63,6 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
   );
 };
 
-const inputFields = [
-  { name: "city", title: "Город" },
-  { name: "name", title: "Название мероприятия" },
-  { name: "area", title: "Место" },
-];
-
 export const Events = ({
   events,
   className,
@@ -71,6 +70,7 @@ export const Events = ({
   handleOnChange,
   handleOnChangeDate,
   state,
+  resetFilters,
 }) => {
   const classes = clsx("events", className);
 
@@ -83,9 +83,9 @@ export const Events = ({
       </Title>
       <MarginGroup gap={20} isColumn>
         <MarginGroup className="events-filters" isColumn>
-          <MarginGroup isColumn gap={10} style={{ width: 800 }}>
+          <MarginGroup isColumn gap={10} style={{ width: 880 }}>
             <p style={{ fontWeight: "bold", fontSize: 19 }}>Фильтры</p>
-            <MarginGroup gap={10}>
+            <MarginGroup gap={10} style={{ alignItems: "flex-end" }}>
               {inputFields.map((el) => (
                 <Input
                   key={key(el)}
@@ -102,6 +102,9 @@ export const Events = ({
                 value={state.date_picker}
                 name={"date"}
               />
+              <Button style={{ minWidth: 150, height: 35 }} onClick={resetFilters}>
+                Сбросить фильтр
+              </Button>
             </MarginGroup>
           </MarginGroup>
         </MarginGroup>
