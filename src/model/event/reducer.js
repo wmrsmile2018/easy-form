@@ -22,6 +22,8 @@ const initialState = {
   error: {},
   status: false,
   resetToZero: false,
+  isUpdatedDefaultResource: false,
+  defaultResource: "",
 };
 
 const eventSlice = createSlice({
@@ -44,7 +46,6 @@ const eventSlice = createSlice({
       };
     },
     setToZero(state, action) {
-      console.log("hello", action);
       state.resetToZero = action.payload.success;
     },
     checkUrl(state, action) {
@@ -86,6 +87,7 @@ const eventSlice = createSlice({
       state.status = false;
       state.isCreated = false;
       state.isUpdated = false;
+      state.isUpdatedDefaultResource = false;
 
       // state.isSuffixExist = false;
       // state.isUrlExist = false;

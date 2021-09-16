@@ -1,6 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { fetchError, getDefaultResource, updateDefaultResource } from "../../model/event/reducer";
+import { useHistory } from "react-router-dom";
+
 import { sagaEventCallBegan } from "../../model/saga";
 import { DefaultResource } from "./defaultResource";
 
@@ -9,7 +11,7 @@ const isDev = process.env.NODE_ENV === "development";
 const getUrl = ({ type }) => {
   switch (type) {
     case getDefaultResource.type:
-      return isDev ? "/defaultResource" : `/getinfodefaultresourc`;
+      return isDev ? "/defaultResource" : `/getinfodefaultresource`;
     case updateDefaultResource.type:
       return isDev ? "/updateResource" : `/putinfodefaultresource`;
   }
@@ -17,8 +19,10 @@ const getUrl = ({ type }) => {
 
 export const DefaultResourceCotroller = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
   const [defaultResource, setDefaultResource] = useState("");
   const rsrc = useSelector((state) => state.event.defaultResource);
+  const isSuccess = useSelector((state) => state.event.isUpdatedDefaultResource);
 
   const handleOnChange = useCallback(({ target }) => {
     setDefaultResource(target.value);
@@ -26,7 +30,7 @@ export const DefaultResourceCotroller = () => {
 
   const handleOnSubmit = useCallback(() => {
     dispatch({
-      url: getUrl({ type: getDefaultResource.type }),
+      url: getUrl({ type: updateDefaultResource.type }),
       type: sagaEventCallBegan.type,
       method: "put",
       onSuccess: updateDefaultResource.type,
@@ -44,6 +48,12 @@ export const DefaultResourceCotroller = () => {
       onError: fetchError.type,
     });
   }, [dispatch]);
+
+  useEffect(() => {
+    if (isSuccess) {
+      history.push("/admin");
+    }
+  }, [isSuccess]);
 
   return (
     <DefaultResource

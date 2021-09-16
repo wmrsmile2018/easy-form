@@ -224,9 +224,12 @@
   "isNotDeletedActiveEvent": {
     "success": false
   },
-  "defaultResource": { "defaultResource": "hello" },
-  "updateResource": { "success": true },
-
+  "defaultResource": {
+    "defaultResource": ""
+  },
+  "updateResource": {
+    "defaultResource": ""
+  },
   "event": {
     "name": "asadad",
     "city": "asdadadad",

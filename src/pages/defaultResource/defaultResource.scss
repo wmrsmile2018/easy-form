@@ -1,0 +1,17 @@
+.default-resource {
+  width: 100%;
+  .button {
+    width: 180px;
+  }
+
+  .default-resource-data,
+  .default-resource-toggleForm {
+    width: 500px;
+  }
+
+  .default-resource-toggleForm {
+    padding: 20px 30px;
+    box-sizing: border-box;
+    box-shadow: 0px 0px 1.6px #949494;
+  }
+}
