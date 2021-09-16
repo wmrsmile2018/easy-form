@@ -24,7 +24,6 @@ export const DefaultResourceCotroller = () => {
   const handleOnChange = useCallback(({ target }) => {
     setDefaultResource(target.value);
   }, []);
-  console.log(defaultResource);
 
   const handleOnSubmit = useCallback(() => {
     dispatch({
