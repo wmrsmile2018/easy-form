@@ -18,7 +18,11 @@ export const DefaultResource = ({ className, rsrc, defaultResource, onChange, on
         <MarginGroup className="default-resource-data" isColumn gap={10}>
           <div className="default-resource-url">
             <span>Дефолтный внешний ресур:</span>
-            {rsrc}
+            {rsrc.defaultResource}
+          </div>
+          <div className="default-resource-date">
+            <span>Дата последнего изменения:</span>
+            {rsrc.date}
           </div>
           <Button onClick={dispatch}>Изменить</Button>
         </MarginGroup>

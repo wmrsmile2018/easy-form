@@ -58,7 +58,7 @@ const eventSlice = createSlice({
     //   state.deletedEvents = action.payload;
     // },
     getDefaultResource(state, action) {
-      state.defaultResource = action.payload.defaultResource;
+      state.defaultResource = action.payload;
     },
     updateDefaultResource(state, action) {
       state.isUpdatedDefaultResource = action.payload.success;

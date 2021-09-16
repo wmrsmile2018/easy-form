@@ -225,7 +225,8 @@
     "success": false
   },
   "defaultResource": {
-    "defaultResource": ""
+    "defaultResource": "sadasdasdasdasdasdasd",
+    "date": "строка"
   },
   "updateResource": {
     "defaultResource": ""

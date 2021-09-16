@@ -27,6 +27,7 @@ export const DefaultResourceCotroller = () => {
   const handleOnChange = useCallback(({ target }) => {
     setDefaultResource(target.value);
   }, []);
+  console.log(defaultResource);
 
   const handleOnSubmit = useCallback(() => {
     dispatch({
@@ -37,7 +38,7 @@ export const DefaultResourceCotroller = () => {
       onError: fetchError.type,
       payload: { defaultResource },
     });
-  }, [dispatch]);
+  }, [dispatch, defaultResource]);
 
   useEffect(() => {
     dispatch({
