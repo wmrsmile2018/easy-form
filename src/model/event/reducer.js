@@ -22,7 +22,6 @@ const initialState = {
   error: {},
   status: false,
   resetToZero: false,
-  isUpdatedDefaultResource: false,
   defaultResource: "",
 };
 
@@ -61,7 +60,7 @@ const eventSlice = createSlice({
       state.defaultResource = action.payload;
     },
     updateDefaultResource(state, action) {
-      state.isUpdatedDefaultResource = action.payload.success;
+      state.defaultResource = action.payload;
     },
     getQRs(state, action) {
       state.QRs = action.payload;
@@ -87,7 +86,6 @@ const eventSlice = createSlice({
       state.status = false;
       state.isCreated = false;
       state.isUpdated = false;
-      state.isUpdatedDefaultResource = false;
 
       // state.isSuffixExist = false;
       // state.isUrlExist = false;
