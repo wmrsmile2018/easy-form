@@ -2,9 +2,9 @@ import React, { useReducer, useMemo, useCallback, useRef } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import key from "weak-key";
-import { saveAs } from "file-saver";
-import { toPng } from "html-to-image";
-import * as htmlToImage from "html-to-image";
+// import { saveAs } from "file-saver";
+// import { toPng } from "html-to-image";
+// import * as htmlToImage from "html-to-image";
 
 import "./details.scss";
 
@@ -13,8 +13,8 @@ import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Button } from "../../components/button";
 
 const ROW_HEIGHT = 51;
-const file = new Blob([<div>hello my dear</div>], { type: "text/plain" });
-const downloadLink = window.URL.createObjectURL(file);
+// const file = new Blob([<div>hello my dear</div>], { type: "text/plain" });
+// const downloadLink = window.URL.createObjectURL(file);
 
 const Resources = React.memo(({ className, resources, defaultRsrc }) => {
   const classes = clsx("resources", className);
@@ -128,8 +128,17 @@ const Row = React.memo(
 );
 
 export const Details = React.memo(({ className, event, setZero }) => {
-  const { name, city, date, area, people_count, qrs, default_resource_people_count } = event;
-  const classes = clsx("details", className);
+  const {
+    name,
+    city,
+    date,
+    area,
+    people_count,
+    qrs,
+    default_resource_people_count,
+    deleted,
+  } = event;
+  const classes = clsx("details", className, { deleted: deleted });
   return (
     <div className={classes}>
       <Title>Информация о мероприятии</Title>
@@ -139,6 +148,16 @@ export const Details = React.memo(({ className, event, setZero }) => {
           <MarginGroup className="details-header" isColumn gap={5}>
             <p>
               Наименование мероприятия:<span>{name}</span>
+            </p>
+            <p className="details-status">
+              Стаус:
+              <span>
+                <i>
+                  {deleted
+                    ? "Мероприятие удалено, QR-код будет вести на общий дефолтный внешний ресурс"
+                    : "Мероприятие активно"}
+                </i>
+              </span>
             </p>
             <p>
               Город:<span>{city}</span>
@@ -156,7 +175,10 @@ export const Details = React.memo(({ className, event, setZero }) => {
               Перешло на дефолтный внешний ресурс:<span>{default_resource_people_count}</span>
             </p>
           </MarginGroup>
-          <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
+          <MarginGroup>
+            <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
+            <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
+          </MarginGroup>
         </MarginGroup>
 
         <div className="details-table">

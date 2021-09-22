@@ -45,7 +45,7 @@
 .app-content {
   min-width: 900px;
   /* max-width: 1200px; */
-  padding: 0 20px;
+  /* padding: 0 20px; */
 
   width: 100%;
   display: flex;
@@ -67,6 +67,22 @@
   font-size: 11px;
 }
 
+.app-navigation-wrapper {
+  display: flex;
+  width: 100%;
+  /* flex-direction: column; */
+  /* width: 200px; */
+  /* min-width: 200px; */
+  /* height: 100%; */
+  /* padding: 10px 20px; */
+  position: fixed;
+  height: 60px;
+  top: 0;
+  box-shadow: 0px -3px 8px black;
+  /* padding-left: 20px; */
+  background-color: #f1f1f1;
+}
+
 .app-navigation {
   display: flex;
   width: 100%;
@@ -75,11 +91,10 @@
   /* min-width: 200px; */
   /* height: 100%; */
   /* padding: 10px 20px; */
-  position: sticky;
   height: 60px;
-  top: 0;
+  min-height: 60px;
   box-shadow: 0px -3px 8px black;
-  padding-left: 20px;
+  /* padding-left: 20px; */
   background-color: #f1f1f1;
 }
 .app__nav-link {

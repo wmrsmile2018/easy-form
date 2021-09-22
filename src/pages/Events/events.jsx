@@ -47,11 +47,9 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
         <Button data-id={id} onClick={handleOnRemove}>
           Удалить
         </Button>
-        {status === "active" && (
-          <Button data-id={id} onClick={handleOnEdit}>
-            Изменить
-          </Button>
-        )}
+        <Button data-id={id} onClick={handleOnEdit}>
+          Изменить
+        </Button>
 
         {status === "deleted" && (
           <Button data-id={id} onClick={handleOnRestore}>

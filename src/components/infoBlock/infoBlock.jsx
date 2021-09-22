@@ -50,7 +50,9 @@ export const InfoBlock = ({
           onChange={onCheck}
           name="team"
           checked={checked}
-          title="Поставьте галочку, если на этом URL будут команды"
+          title="Поставьте галочку, если на этом URL будут команды <br/>
+          <i>Пользователи будут поочередно переходить по внешним ресурсам, нрпм имеется 3 внешних ресурса, при переходе 3-х пользователей по QR-коду, на каждом из 3-х внешних ресурсов будет по 1-му пользователю</i>
+          "
         />
         <div className="info-block-content">
           <div className="info-block-content-title">

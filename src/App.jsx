@@ -15,23 +15,25 @@ function App() {
   return (
     <div className="App">
       <div className="app-navigation">
-        <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/admin">
-          Главная
-        </NavLink>
-        <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/basket">
-          Корзина
-        </NavLink>
-        <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/add-event">
-          Добавить мероприятие
-        </NavLink>
-        <NavLink
-          className="app__nav-link"
-          activeClassName="activeRoute"
-          to="/admin/get-info-default-resource"
-        >
-          Дефолтный <br />
-          внешний ресурс
-        </NavLink>
+        <div className="app-navigation-wrapper">
+          <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/admin">
+            Главная
+          </NavLink>
+          <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/basket">
+            Корзина
+          </NavLink>
+          <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/add-event">
+            Добавить мероприятие
+          </NavLink>
+          <NavLink
+            className="app__nav-link"
+            activeClassName="activeRoute"
+            to="/admin/get-info-default-resource"
+          >
+            Общий дефолтный <br />
+            внешний ресурс
+          </NavLink>
+        </div>
       </div>
       <main id="main">
         <div className="app-content">
