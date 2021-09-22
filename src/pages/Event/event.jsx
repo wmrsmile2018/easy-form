@@ -1,4 +1,5 @@
 import React, { useState, useCallback, useRef } from "react";
+import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import key from "weak-key";
 import produce from "immer";
@@ -18,7 +19,7 @@ import { PopupWrapper } from "./popupWrapper";
 import { Title } from "../../components/title";
 
 const regex = /^[a-zA-Z\d]+$/;
-
+const regexMainFields = /^(?:[а-яА-ЯA-Za-z0-9 _]*)$/;
 const inputFields1 = [
   { name: "city", title: "Введите город" },
   { name: "name", title: "Введите название мероприятия" },
@@ -27,6 +28,7 @@ const inputFields1 = [
 export const Event = React.memo(
   ({ className, onSend, state, onUpdateState, status, title, teamName }) => {
     const ref = useRef(null);
+    const history = useHistory();
     const classes = clsx("event", className);
     // const [suffix, setSuffix] = useState({ id: "", value: "" });
     const [popup, setPopup] = useState({
@@ -121,10 +123,13 @@ export const Event = React.memo(
 
     const handleOnChange = useCallback(
       ({ target }) => {
-        onUpdateState({
-          ...state,
-          [target.name]: target.value,
-        });
+        const isValid = regexMainFields.test(target.value);
+        if (isValid) {
+          onUpdateState({
+            ...state,
+            [target.name]: target.value,
+          });
+        }
       },
       [state, onUpdateState],
     );
@@ -198,6 +203,11 @@ export const Event = React.memo(
       },
       [state, onUpdateState],
     );
+
+    const handleOnClickDetails = useCallback(() => {
+      history.push(`/admin/details/${state.id}`);
+    }, [state]);
+
     return (
       <div className={classes}>
         <Title>{title}</Title>
@@ -245,6 +255,11 @@ export const Event = React.memo(
             <Button className="event__suffix" onClick={handleOnAddSuffix}>
               Добавить суффикс на URL
             </Button>
+            {status === "edit" && (
+              <Button className="event__send" onClick={handleOnClickDetails}>
+                Подробнее
+              </Button>
+            )}
             <Button className="event__send" onClick={onSend}>
               {status === "add" ? "Отправить" : "Изменить"}
             </Button>
