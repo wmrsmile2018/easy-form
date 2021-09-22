@@ -73,28 +73,28 @@ export const Event = React.memo(
 
     const handleOnHideModal = useCallback(
       (data) => {
-        const tmpAllRes = state.qrs.reduce((acc, cur) => {
-          const tmp = cur.resources.map((el) => el.url);
-          return [...acc, ...tmp];
-        }, []);
-        if (!tmpAllRes.find((el) => el === data.url)) {
-          const nextState = produce(state, (draftState) => {
-            const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
-            Qr.resources = [...Qr.resources, data];
-          });
+        // const tmpAllRes = state.qrs.reduce((acc, cur) => {
+        //   const tmp = cur.resources.map((el) => el.url);
+        //   return [...acc, ...tmp];
+        // }, []);
+        const nextState = produce(state, (draftState) => {
+          const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
+          Qr.resources = [...Qr.resources, data];
+        });
 
-          onUpdateState(nextState);
+        onUpdateState(nextState);
 
-          setPopup({
-            curSuffix: 0,
-            showPopup: false,
-          });
-        } else {
-          setPopup({
-            ...popup,
-            isExist: true,
-          });
-        }
+        setPopup({
+          curSuffix: 0,
+          showPopup: false,
+        });
+        // if (!tmpAllRes.find((el) => el === data.url)) {
+        // } else {
+        //   setPopup({
+        //     ...popup,
+        //     isExist: true,
+        //   });
+        // }
       },
       [state, onUpdateState, popup],
     );
