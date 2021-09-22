@@ -1,6 +1,7 @@
 import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
+
 import { fetchError, getInfoById, setToZero } from "../../model/event/reducer";
 import { sagaEventCallBegan } from "../../model/saga";
 
