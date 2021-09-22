@@ -96,7 +96,7 @@ export const DeletedEventsController = () => {
     if (!isEmpty(event) && id) {
       switch (path) {
         case "details":
-          history.push(`${location.pathname}/details/${id}`);
+          history.push(`/admin/details/${id}`);
           break;
         case "edit":
           history.push(`/admin/edit-event/${id}`);
