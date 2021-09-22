@@ -2,6 +2,7 @@ import React, { useReducer, useMemo, useCallback, useRef } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import key from "weak-key";
+import { useHistory } from "react-router-dom";
 // import { saveAs } from "file-saver";
 // import { toPng } from "html-to-image";
 // import * as htmlToImage from "html-to-image";
@@ -137,8 +138,15 @@ export const Details = React.memo(({ className, event, setZero }) => {
     qrs,
     default_resource_people_count,
     deleted,
+    id,
   } = event;
+  const history = useHistory();
   const classes = clsx("details", className, { deleted: deleted });
+
+  const handleOnClick = useCallback(() => {
+    history.push(`/admin/edit-event/${id}`);
+  }, []);
+
   return (
     <div className={classes}>
       <Title>Информация о мероприятии</Title>
@@ -175,9 +183,9 @@ export const Details = React.memo(({ className, event, setZero }) => {
               Перешло на дефолтный внешний ресурс:<span>{default_resource_people_count}</span>
             </p>
           </MarginGroup>
-          <MarginGroup>
+          <MarginGroup gap={20}>
             <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
-            <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
+            <Button onClick={handleOnClick}>Изменить </Button>
           </MarginGroup>
         </MarginGroup>
 
