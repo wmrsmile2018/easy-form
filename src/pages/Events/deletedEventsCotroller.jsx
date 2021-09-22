@@ -27,7 +27,7 @@ const getUrl = ({ type, id, state }) => {
     case deleteMarkedEvent.type:
       return isDev ? `/events/${id}` : `/deleteMarkedEvent?id=${id}`;
     case getInfoById.type:
-      return isDev ? `/events/${id}` : `/getInfoByEventId?id=${id}`;
+      return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
     case getEventsFilters.type:
       return isDev
         ? `/eventsFilters`
@@ -42,6 +42,7 @@ const parametres = {
 export const DeletedEventsController = () => {
   const dispatch = useDispatch();
   const history = useHistory();
+  const [path, setPath] = useState("");
   const [id, setId] = useState("");
   const [filters, setFilters] = useState({
     city: "",
@@ -93,7 +94,16 @@ export const DeletedEventsController = () => {
 
   useEffect(() => {
     if (!isEmpty(event) && id) {
-      history.push(`/admin/details/${id}`);
+      switch (path) {
+        case "details":
+          history.push(`${location.pathname}/details/${id}`);
+          break;
+        case "edit":
+          history.push(`/admin/edit-event/${id}`);
+          break;
+        default:
+          break;
+      }
     }
   }, [event, id]);
 
@@ -154,7 +164,19 @@ export const DeletedEventsController = () => {
     <EventsContext.Provider
       value={{
         ...parametres,
-        handleOnEdit: (e) => {},
+        handleOnEdit: (e) => {
+          e.stopPropagation();
+          const tmpId = e.target.dataset["id"];
+          setPath("edit");
+          setId(tmpId);
+          dispatch({
+            url: getUrl({ type: getInfoById.type, id: tmpId }),
+            type: sagaEventCallBegan.type,
+            method: "get",
+            onSuccess: getInfoById.type,
+            onError: fetchError.type,
+          });
+        },
         handleOnRestore: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
@@ -169,6 +191,7 @@ export const DeletedEventsController = () => {
         },
         handleOnDetails: (e) => {
           const tmpId = e.target.dataset["id"];
+          setPath("details");
           setId(tmpId);
           dispatch({
             url: getUrl({ type: getInfoById.type, id: tmpId }),

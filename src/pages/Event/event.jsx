@@ -19,7 +19,7 @@ import { PopupWrapper } from "./popupWrapper";
 import { Title } from "../../components/title";
 
 const regex = /^[a-zA-Z\d]+$/;
-const regexMainFields = /^(?:[а-яА-ЯA-Za-z0-9 _]*)$/;
+const regexMainFields = /^(?:[а-яА-ЯA-Za-z0-9 ]*)$/;
 const inputFields1 = [
   { name: "city", title: "Введите город" },
   { name: "name", title: "Введите название мероприятия" },

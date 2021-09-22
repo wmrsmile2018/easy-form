@@ -53,6 +53,10 @@
       border-bottom: 1px solid black;
       height: 40px;
       align-items: center;
+      position: sticky;
+      top: 60px;
+      background: white;
+      box-shadow: 0 5px 3px #00000021;
 
       .header__row-cell {
         font-weight: bold;
