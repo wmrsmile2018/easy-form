@@ -58,6 +58,9 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
             Восстановить
           </Button>
         )}
+        <Button data-id={id} onClick={handleOnDetails}>
+          Подробнее
+        </Button>
       </div>
     </div>
   );

@@ -1,8 +1,10 @@
-import React, { useReducer, useMemo, useCallback } from "react";
+import React, { useReducer, useMemo, useCallback, useRef } from "react";
 import clsx from "clsx";
 import PropTypes from "prop-types";
 import key from "weak-key";
 import { saveAs } from "file-saver";
+import { toPng } from "html-to-image";
+import * as htmlToImage from "html-to-image";
 
 import "./details.scss";
 
@@ -11,6 +13,8 @@ import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Button } from "../../components/button";
 
 const ROW_HEIGHT = 51;
+const file = new Blob([<div>hello my dear</div>], { type: "text/plain" });
+const downloadLink = window.URL.createObjectURL(file);
 
 const Resources = React.memo(({ className, resources, defaultRsrc }) => {
   const classes = clsx("resources", className);
@@ -58,7 +62,8 @@ const Resources = React.memo(({ className, resources, defaultRsrc }) => {
 
 const Row = React.memo(
   ({ className, qrUrl, peopleCount, team, index, rsrcCount, resources, qrPath, defaultRsrc }) => {
-    const [toggle, dispatch] = useReducer((state) => !state, false);
+    const [toggle, dispatch] = useReducer((state) => !state, true);
+    const ref = useRef(null);
     const classes = clsx("row", className, { showDetails: toggle });
 
     const height = useMemo(() => {
@@ -66,9 +71,31 @@ const Row = React.memo(
       return toggle ? rowCount * ROW_HEIGHT : 0;
     }, [toggle, defaultRsrc]);
 
-    const handleOnClick = useCallback(({ href, name }) => {
-      saveAs(href, name);
-    }, []);
+    const handleOnClick = useCallback();
+    // ({ href, name, ref }) => {
+    //   // saveAs(href, name, ref);
+    //   if (!ref.current) {
+    //     return null;
+    //   }
+    //   // const node = document.getElementById("details-qr");
+    //   // console.log(node);
+    //   // console.log(<div></div>);
+    //   console.log(ref.current);
+    //   htmlToImage
+    //     .toPng(ref.current)
+    //     .then((dataUrl) => {
+    //       window.saveAs(dataUrl, "someFile.png");
+    //       console.log(dataUrl);
+    //       // const link = document.createElement("a");
+    //       // link.download = "my-image-name.png";
+    //       // link.href = dataUrl;
+    //       // link.click();
+    //     })
+    //     .catch((err) => {
+    //       console.log(err);
+    //     });
+    // },
+    // [ref],
 
     return (
       <div className={classes}>
@@ -81,7 +108,8 @@ const Row = React.memo(
             <span className="row__cell row__rsrc-count">{rsrcCount}</span>
             <MarginGroup className="row-qr-path row__cell" isColumn gap={20}>
               <img className="row__qr-path" src={qrPath} alt="qr code" />
-              <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code" })}>
+
+              <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code", ref })}>
                 Скачать Qr код1
               </Button>
             </MarginGroup>
@@ -89,6 +117,10 @@ const Row = React.memo(
         </div>
         <div className="row-resources" style={{ height }}>
           <Resources resources={resources} defaultRsrc={defaultRsrc} />
+        </div>
+        <div ref={ref} id="details-qr" style={{ display: "none" }}>
+          <img className="row__qr-path" src={qrPath} alt="qr code" />
+          {qrUrl.split("://")[1]}
         </div>
       </div>
     );
