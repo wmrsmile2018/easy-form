@@ -102,16 +102,25 @@ export const Event = React.memo(
 
     const handleOnChangeSuffix = (curSuffix, { target }) => {
       const isValid = regex.test(target.value);
-      console.log(target.name, target.value);
       if (target.value === "" || isValid) {
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-          Qr[target.name] = target.value;
+          Qr.qr_suffix = target.value;
         });
         onUpdateState({
           ...nextState,
         });
       }
+    };
+
+    const handleOnChangeDefRsrc = (curSuffix, { target }) => {
+      const nextState = produce(state, (draftState) => {
+        const Qr = draftState.qrs.find((el) => el.id === curSuffix);
+        Qr.default_resource = target.value;
+      });
+      onUpdateState({
+        ...nextState,
+      });
     };
 
     const handleOnCheck = (curSuffix, { target }) => {
@@ -281,7 +290,8 @@ export const Event = React.memo(
                 onClick={() => handleOnShowModal(el.id)}
                 onCheck={(e) => handleOnCheck(el.id, e)}
                 onDelete={() => handleOnRemoveSuffix(el.id)}
-                onChange={(e) => handleOnChangeSuffix(el.id, e)}
+                onChangeSuffix={(e) => handleOnChangeSuffix(el.id, e)}
+                onChangeDefRsrc={(e) => handleOnChangeDefRsrc(el.id, e)}
                 onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
                 onEditResource={(curRes) => handleOnShowEditResource(el.id, curRes)}
               />
