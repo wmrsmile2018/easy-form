@@ -135,8 +135,8 @@ const Row = React.memo(
             <span className="row__cell row__people-count">{peopleCount}</span>
             <span className="row__cell row__rsrc-count">{rsrcCount}</span>
             <MarginGroup className="row-qr-path row__cell" isColumn gap={20}>
-              <div ref={ref}>
-                <QRCode className="row__qr-path" value={qrUrl} />
+              <div className="row-qr" ref={ref}>
+                <QRCode className="row__qr-path" title="hello" size={200} value={qrUrl} />
                 <p>{qrUrl.split("://")[1]}</p>
               </div>
               <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code", ref })}>
