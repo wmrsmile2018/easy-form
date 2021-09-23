@@ -18,7 +18,8 @@ export const InfoBlock = ({
   onCheck,
   resources,
   checked,
-  value,
+  suffx,
+  defRsrc,
   onDelete,
   onDeleteResource,
   isValid,
@@ -35,7 +36,7 @@ export const InfoBlock = ({
               type="text"
               name="qr_suffix"
               onChange={onChange}
-              value={value}
+              value={suffx}
             />
             {!isValid && (
               <p className="invalid-info">
@@ -45,6 +46,19 @@ export const InfoBlock = ({
             )}
           </MarginGroup>
           <Button onClick={onClick}>Добавить внешний ресурс</Button>
+        </MarginGroup>
+
+        <MarginGroup gap={10} style={{ alignItems: "flex-end" }}>
+          <Input
+            title="Дефолтный внешний ресурс"
+            placeholder="Дефолтный внешний ресурс"
+            type="text"
+            name="default_resource"
+            onChange={onChange}
+            value={defRsrc}
+            style={{ width: 380 }}
+          />
+          <i>Оставь пустым если дефолтного внешнего ресурса не будет</i>
         </MarginGroup>
         <CheckBox
           onChange={onCheck}
