@@ -59,7 +59,7 @@ const Resources = React.memo(
               <span className="row__cell row__team">{genDefaultRsrc}</span>
             </div>
           )}
-          {genDefaultRsrc > 0 && (
+          {defaultResource && (
             <div className="row-cells">
               <span className="row__cell row__index">
                 {resources.length + 1 + !!genDefaultRsrc}
