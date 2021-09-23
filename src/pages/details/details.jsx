@@ -3,9 +3,9 @@ import clsx from "clsx";
 import PropTypes from "prop-types";
 import key from "weak-key";
 import { useHistory } from "react-router-dom";
-// import { saveAs } from "file-saver";
-// import { toPng } from "html-to-image";
-// import * as htmlToImage from "html-to-image";
+import { saveAs } from "file-saver";
+import { toPng } from "html-to-image";
+import * as htmlToImage from "html-to-image";
 
 import "./details.scss";
 
@@ -64,7 +64,14 @@ const Resources = React.memo(
               <span className="row__cell row__index">
                 {resources.length + 1 + !!genDefaultRsrc}
               </span>
-              <span className="row__cell row__url">{defaultResource}</span>
+              <a
+                href={decodeURI(defaultResource)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="row__cell row__url"
+              >
+                {decodeURI(defaultResource)}
+              </a>
               <span className="row__cell row__scheduled">0 (Дефолтный внешний ресурс)</span>
               <span className="row__cell row__team">{defaultResourceCount}</span>
             </div>
@@ -99,31 +106,32 @@ const Row = React.memo(
       return toggle ? rowCount * ROW_HEIGHT : 0;
     }, [toggle, genDefaultRsrc]);
 
-    const handleOnClick = useCallback();
-    // ({ href, name, ref }) => {
-    //   // saveAs(href, name, ref);
-    //   if (!ref.current) {
-    //     return null;
-    //   }
-    //   // const node = document.getElementById("details-qr");
-    //   // console.log(node);
-    //   // console.log(<div></div>);
-    //   console.log(ref.current);
-    //   htmlToImage
-    //     .toPng(ref.current)
-    //     .then((dataUrl) => {
-    //       window.saveAs(dataUrl, "someFile.png");
-    //       console.log(dataUrl);
-    //       // const link = document.createElement("a");
-    //       // link.download = "my-image-name.png";
-    //       // link.href = dataUrl;
-    //       // link.click();
-    //     })
-    //     .catch((err) => {
-    //       console.log(err);
-    //     });
-    // },
-    // [ref],
+    const handleOnClick = useCallback(
+      ({ href, name, ref }) => {
+        // saveAs(href, name, ref);
+        if (!ref.current) {
+          return null;
+        }
+        // console.log(node);
+        // console.log(node);
+        // console.log(<div></div>);
+        console.log(ref.current);
+        htmlToImage
+          .toPng(ref.current)
+          .then((dataUrl) => {
+            // window.saveAs(dataUrl, "someFile.png");
+            // console.log(dataUrl);
+            // const link = document.createElement("a");
+            // link.download = "my-image-name.png";
+            // link.href = dataUrl;
+            // link.click();
+          })
+          .catch((err) => {
+            console.log(err);
+          });
+      },
+      [ref],
+    );
 
     return (
       <div className={classes}>
@@ -151,9 +159,14 @@ const Row = React.memo(
             defaultResourceCount={defaultResourceCount}
           />
         </div>
-        <div ref={ref} id="details-qr" style={{ display: "none" }}>
-          <img className="row__qr-path" src={qrPath} alt="qr code" />
+        <div ref={ref} id="details-qr">
+          <img
+            className="row__qr-path"
+            src={"https://sbis.perm.ru/wp-content/uploads/2019/09/placeholder.png"}
+            alt="qr code"
+          />
           {qrUrl.split("://")[1]}
+          asdasdasdjkajsdlkaklsdkljasld
         </div>
       </div>
     );
@@ -178,7 +191,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
 
   const handleOnClick = useCallback(() => {
     history.push(`/admin/edit-event/${id}`);
-  }, []);
+  }, [id]);
 
   return (
     <div className={classes}>
