@@ -17,7 +17,7 @@ const ROW_HEIGHT = 51;
 // const file = new Blob([<div>hello my dear</div>], { type: "text/plain" });
 // const downloadLink = window.URL.createObjectURL(file);
 
-const Resources = React.memo(({ className, resources, defaultRsrc }) => {
+const Resources = React.memo(({ className, resources, genDefaultRsrc }) => {
   const classes = clsx("resources", className);
 
   return (
@@ -48,12 +48,12 @@ const Resources = React.memo(({ className, resources, defaultRsrc }) => {
             <span className="row__cell row__team">{el.came_people_count}</span>
           </div>
         ))}
-        {defaultRsrc > 0 && (
+        {genDefaultRsrc > 0 && (
           <div className="row-cells">
-            <span className="row__cell row__index">0</span>
-            <span className="row__cell row__url">Дефолтный внешний ресурс</span>
+            <span className="row__cell row__index">{resources.length}</span>
+            <span className="row__cell row__url">Общий дефолтный внешний ресурс</span>
             <span className="row__cell row__scheduled">0</span>
-            <span className="row__cell row__team">{defaultRsrc}</span>
+            <span className="row__cell row__team">{genDefaultRsrc}</span>
           </div>
         )}
       </div>
@@ -62,15 +62,25 @@ const Resources = React.memo(({ className, resources, defaultRsrc }) => {
 });
 
 const Row = React.memo(
-  ({ className, qrUrl, peopleCount, team, index, rsrcCount, resources, qrPath, defaultRsrc }) => {
+  ({
+    className,
+    qrUrl,
+    peopleCount,
+    team,
+    index,
+    rsrcCount,
+    resources,
+    qrPath,
+    genDefaultRsrc,
+  }) => {
     const [toggle, dispatch] = useReducer((state) => !state, true);
     const ref = useRef(null);
     const classes = clsx("row", className, { showDetails: toggle });
 
     const height = useMemo(() => {
-      const rowCount = defaultRsrc > 0 ? resources.length + 2 : resources.length + 1;
+      const rowCount = genDefaultRsrc > 0 ? resources.length + 2 : resources.length + 1;
       return toggle ? rowCount * ROW_HEIGHT : 0;
-    }, [toggle, defaultRsrc]);
+    }, [toggle, genDefaultRsrc]);
 
     const handleOnClick = useCallback();
     // ({ href, name, ref }) => {
@@ -117,7 +127,7 @@ const Row = React.memo(
           </div>
         </div>
         <div className="row-resources" style={{ height }}>
-          <Resources resources={resources} defaultRsrc={defaultRsrc} />
+          <Resources resources={resources} genDefaultRsrc={genDefaultRsrc} />
         </div>
         <div ref={ref} id="details-qr" style={{ display: "none" }}>
           <img className="row__qr-path" src={qrPath} alt="qr code" />
@@ -136,7 +146,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
     area,
     people_count,
     qrs,
-    default_resource_people_count,
+    general_default_resource_people_count,
     deleted,
     id,
   } = event;
@@ -180,7 +190,8 @@ export const Details = React.memo(({ className, event, setZero }) => {
               Перешло людей:<span>{people_count}</span>
             </p>
             <p>
-              Перешло на дефолтный внешний ресурс:<span>{default_resource_people_count}</span>
+              Перешло на общий дефолтный внешний ресурс:
+              <span>{general_default_resource_people_count}</span>
             </p>
           </MarginGroup>
           <MarginGroup gap={20}>
@@ -211,7 +222,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
                 rsrcCount={el.resources.length}
                 resources={el.resources}
                 qrPath={el.qrPath}
-                defaultRsrc={el.default_resource_people_count}
+                genDefaultRsrc={el.general_default_resource_people_count}
               />
             ))}
           </div>
