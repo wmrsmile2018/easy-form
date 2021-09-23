@@ -13,7 +13,8 @@ import "./infoBlock.scss";
 
 export const InfoBlock = ({
   className,
-  onChange,
+  onChangeSuffix,
+  onChangeDefRsrc,
   onClick,
   onCheck,
   resources,
@@ -35,12 +36,12 @@ export const InfoBlock = ({
               title="Введите хвост URL"
               type="text"
               name="qr_suffix"
-              onChange={onChange}
+              onChange={onChangeSuffix}
               value={suffx}
             />
             {!isValid && (
               <p className="invalid-info">
-                {`Хвост "${value}"`}
+                {`Хвост "${suffx}"`}
                 <br /> уже существует в системе
               </p>
             )}
@@ -51,10 +52,9 @@ export const InfoBlock = ({
         <MarginGroup gap={10} style={{ alignItems: "flex-end" }}>
           <Input
             title="Дефолтный внешний ресурс"
-            placeholder="Дефолтный внешний ресурс"
             type="text"
             name="default_resource"
-            onChange={onChange}
+            onChange={onChangeDefRsrc}
             value={defRsrc}
             style={{ width: 380 }}
           />
