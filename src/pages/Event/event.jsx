@@ -266,11 +266,7 @@ export const Event = React.memo(
             <Button className="event__suffix" onClick={handleOnAddSuffix}>
               Добавить суффикс на URL
             </Button>
-            {status === "edit" && (
-              <Button className="event__send" onClick={handleOnClickDetails}>
-                Подробнее
-              </Button>
-            )}
+
             <Button className="event__send" onClick={onSend}>
               {status === "add" ? "Отправить" : "Изменить"}
             </Button>

@@ -5,7 +5,9 @@ import key from "weak-key";
 import { useHistory } from "react-router-dom";
 import { saveAs } from "file-saver";
 import { toPng } from "html-to-image";
-import * as htmlToImage from "html-to-image";
+// import domtoimage from "dom-to-image";
+
+import QRCode from "react-qr-code";
 
 import "./details.scss";
 
@@ -107,24 +109,14 @@ const Row = React.memo(
     }, [toggle, genDefaultRsrc]);
 
     const handleOnClick = useCallback(
-      ({ href, name, ref }) => {
-        // saveAs(href, name, ref);
+      ({ ref }) => {
         if (!ref.current) {
           return null;
         }
-        // console.log(node);
-        // console.log(node);
-        // console.log(<div></div>);
-        console.log(ref.current);
-        htmlToImage
-          .toPng(ref.current)
+
+        toPng(ref.current)
           .then((dataUrl) => {
-            // window.saveAs(dataUrl, "someFile.png");
-            // console.log(dataUrl);
-            // const link = document.createElement("a");
-            // link.download = "my-image-name.png";
-            // link.href = dataUrl;
-            // link.click();
+            window.saveAs(dataUrl, "someFile.png");
           })
           .catch((err) => {
             console.log(err);
@@ -143,10 +135,12 @@ const Row = React.memo(
             <span className="row__cell row__people-count">{peopleCount}</span>
             <span className="row__cell row__rsrc-count">{rsrcCount}</span>
             <MarginGroup className="row-qr-path row__cell" isColumn gap={20}>
-              <img className="row__qr-path" src={qrPath} alt="qr code" />
-
+              <div ref={ref}>
+                <QRCode className="row__qr-path" value={qrUrl} />
+                <p>{qrUrl.split("://")[1]}</p>
+              </div>
               <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code", ref })}>
-                Скачать Qr код1
+                Скачать Qr код
               </Button>
             </MarginGroup>
           </div>
@@ -158,15 +152,6 @@ const Row = React.memo(
             defaultResource={defaultResource}
             defaultResourceCount={defaultResourceCount}
           />
-        </div>
-        <div ref={ref} id="details-qr">
-          <img
-            className="row__qr-path"
-            src={"https://sbis.perm.ru/wp-content/uploads/2019/09/placeholder.png"}
-            alt="qr code"
-          />
-          {qrUrl.split("://")[1]}
-          asdasdasdjkajsdlkaklsdkljasld
         </div>
       </div>
     );
