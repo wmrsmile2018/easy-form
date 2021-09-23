@@ -17,49 +17,63 @@ const ROW_HEIGHT = 51;
 // const file = new Blob([<div>hello my dear</div>], { type: "text/plain" });
 // const downloadLink = window.URL.createObjectURL(file);
 
-const Resources = React.memo(({ className, resources, genDefaultRsrc }) => {
-  const classes = clsx("resources", className);
+const Resources = React.memo(
+  ({ className, resources, genDefaultRsrc, defaultResource, defaultResourceCount }) => {
+    const classes = clsx("resources", className);
 
-  return (
-    <div classes={classes}>
-      <div className="resources-header">
-        <span className="row__cell header__row-cell row__index">№</span>
-        <span className="row__cell header__row-cell row__url">Внешние ресурсы</span>
-        <span className="row__cell header__row-cell row__scheduled">
-          Запланированное количество человек
-        </span>
-        <span className="row__cell header__row-cell row__team">Перешедшее количество человек</span>
+    return (
+      <div classes={classes}>
+        <div className="resources-header">
+          <span className="row__cell header__row-cell row__index">№</span>
+          <span className="row__cell header__row-cell row__url">Внешние ресурсы</span>
+          <span className="row__cell header__row-cell row__scheduled">
+            Запланированное количество человек
+          </span>
+          <span className="row__cell header__row-cell row__team">
+            Перешедшее количество человек
+          </span>
+        </div>
+        <div className="resources-content">
+          {resources.map((el, i) => (
+            <div className="row-cells" key={key(el)}>
+              <span className="row__cell row__index">{i + 1}</span>
+              <a
+                href={decodeURI(el.url)}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="row__cell row__url"
+              >
+                {decodeURI(el.url)}
+              </a>
+              <span className="row__cell row__scheduled">
+                {el.people_count !== "0" ? el.people_count : "Бесконечное"}
+              </span>
+              <span className="row__cell row__team">{el.came_people_count}</span>
+            </div>
+          ))}
+          {genDefaultRsrc > 0 && (
+            <div className="row-cells">
+              <span className="row__cell row__index">{resources.length + 1}</span>
+              <span className="row__cell row__url">Общий дефолтный внешний ресурс</span>
+              <span className="row__cell row__scheduled">0</span>
+              <span className="row__cell row__team">{genDefaultRsrc}</span>
+            </div>
+          )}
+          {genDefaultRsrc > 0 && (
+            <div className="row-cells">
+              <span className="row__cell row__index">
+                {resources.length + 1 + !!genDefaultRsrc}
+              </span>
+              <span className="row__cell row__url">{defaultResource}</span>
+              <span className="row__cell row__scheduled">0 (Дефолтный внешний ресурс)</span>
+              <span className="row__cell row__team">{defaultResourceCount}</span>
+            </div>
+          )}
+        </div>
       </div>
-      <div className="resources-content">
-        {resources.map((el, i) => (
-          <div className="row-cells" key={key(el)}>
-            <span className="row__cell row__index">{i + 1}</span>
-            <a
-              href={decodeURI(el.url)}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="row__cell row__url"
-            >
-              {decodeURI(el.url)}
-            </a>
-            <span className="row__cell row__scheduled">
-              {el.people_count !== "0" ? el.people_count : "Бесконечное"}
-            </span>
-            <span className="row__cell row__team">{el.came_people_count}</span>
-          </div>
-        ))}
-        {genDefaultRsrc > 0 && (
-          <div className="row-cells">
-            <span className="row__cell row__index">{resources.length}</span>
-            <span className="row__cell row__url">Общий дефолтный внешний ресурс</span>
-            <span className="row__cell row__scheduled">0</span>
-            <span className="row__cell row__team">{genDefaultRsrc}</span>
-          </div>
-        )}
-      </div>
-    </div>
-  );
-});
+    );
+  },
+);
 
 const Row = React.memo(
   ({
@@ -127,7 +141,12 @@ const Row = React.memo(
           </div>
         </div>
         <div className="row-resources" style={{ height }}>
-          <Resources resources={resources} genDefaultRsrc={genDefaultRsrc} />
+          <Resources
+            resources={resources}
+            genDefaultRsrc={genDefaultRsrc}
+            defaultResource={defaultResource}
+            defaultResourceCount={defaultResourceCount}
+          />
         </div>
         <div ref={ref} id="details-qr" style={{ display: "none" }}>
           <img className="row__qr-path" src={qrPath} alt="qr code" />
@@ -228,6 +247,8 @@ export const Details = React.memo(({ className, event, setZero }) => {
                 resources={el.resources}
                 qrPath={el.qrPath}
                 genDefaultRsrc={el.general_default_resource_people_count}
+                defaultResource={el.default_resource}
+                defaultResourceCount={el.default_resource_people_count}
               />
             ))}
           </div>
