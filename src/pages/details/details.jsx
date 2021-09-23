@@ -86,6 +86,8 @@ const Row = React.memo(
     resources,
     qrPath,
     genDefaultRsrc,
+    defaultResource,
+    defaultResourceCount,
   }) => {
     const [toggle, dispatch] = useReducer((state) => !state, true);
     const ref = useRef(null);
