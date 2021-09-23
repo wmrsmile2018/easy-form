@@ -147,6 +147,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
     people_count,
     qrs,
     general_default_resource_people_count,
+    default_resource_people_count,
     deleted,
     id,
   } = event;
@@ -188,6 +189,10 @@ export const Details = React.memo(({ className, event, setZero }) => {
             </p>
             <p>
               Перешло людей:<span>{people_count}</span>
+            </p>
+            <p>
+              Перешло на дефолтные внешние ресурсы вставить:
+              <span>{default_resource_people_count}</span>
             </p>
             <p>
               Перешло на общий дефолтный внешний ресурс:
