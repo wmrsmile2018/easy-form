@@ -55,6 +55,7 @@ export const Event = React.memo(
             status,
             id: `tmpId-${Date.now().toString()}`,
             "qr_suffix": "",
+            "default_resource": "",
             "team": false,
             "resources": [],
           },
@@ -101,10 +102,11 @@ export const Event = React.memo(
 
     const handleOnChangeSuffix = (curSuffix, { target }) => {
       const isValid = regex.test(target.value);
+      console.log(target.name, target.value);
       if (target.value === "" || isValid) {
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-          Qr.qr_suffix = target.value;
+          Qr[target.name] = target.value;
         });
         onUpdateState({
           ...nextState,
@@ -272,7 +274,8 @@ export const Event = React.memo(
                 key={el.id}
                 qrs={state.qrs}
                 suffix={el.qr_suffix}
-                value={el.qr_suffix}
+                suffx={el.qr_suffix}
+                defRsrc={el.default_resource}
                 resources={el.resources}
                 checked={el[teamName] ? true : false}
                 onClick={() => handleOnShowModal(el.id)}
