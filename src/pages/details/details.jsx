@@ -94,7 +94,8 @@ const Row = React.memo(
     const classes = clsx("row", className, { showDetails: toggle });
 
     const height = useMemo(() => {
-      const rowCount = genDefaultRsrc > 0 ? resources.length + 2 : resources.length + 1;
+      let rowCount = genDefaultRsrc > 0 ? resources.length + 2 : resources.length + 1;
+      rowCount = defaultResource ? rowCount + 1 : rowCount;
       return toggle ? rowCount * ROW_HEIGHT : 0;
     }, [toggle, genDefaultRsrc]);
 
@@ -212,7 +213,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
               Перешло людей:<span>{people_count}</span>
             </p>
             <p>
-              Перешло на дефолтные внешние ресурсы вставить:
+              Перешло на дефолтные внешние ресурсы:
               <span>{default_resource_people_count}</span>
             </p>
             <p>
