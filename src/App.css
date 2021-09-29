@@ -45,7 +45,7 @@
 .app-content {
   min-width: 900px;
   /* max-width: 1200px; */
-  /* padding: 0 20px; */
+  padding: 0 40px;
 
   width: 100%;
   display: flex;
