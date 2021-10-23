@@ -280,5 +280,10 @@
   },
   "resetToZero": {
     "success": true
+  },
+  "login": {
+    "token": "asdasdadad4dasdasda",
+    "success": true,
+    "text": ""
   }
 }
