@@ -7,10 +7,11 @@ import { Button } from "../../components/button";
 import { Title } from "../../components/title";
 import { useEvents } from "./eventsContex";
 
-import "./events.scss";
-import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { Input } from "../../components/input";
+import { MarginGroup } from "../../components/marginGroup/marginGroup";
 import { InputDate } from "../../components/datePicker/datePicker";
+import { Delete, Info, Edit, Restore } from "../../icons/";
+import "./events.scss";
 
 const inputFields = [
   { name: "name", title: "Название мероприятия" },
@@ -44,21 +45,11 @@ const Row = ({ className, name, city, index, id, date, area, peopleCount }) => {
         </span>
       </div>
       <div className="row-buttons" data-id={id}>
-        <Button data-id={id} onClick={handleOnRemove}>
-          Удалить
-        </Button>
-        <Button data-id={id} onClick={handleOnEdit}>
-          Изменить
-        </Button>
+        <Delete data-id={id} onClick={handleOnRemove} />
+        <Info data-id={id} onClick={handleOnDetails} />
+        <Edit data-id={id} onClick={handleOnEdit} />
 
-        {status === "deleted" && (
-          <Button data-id={id} onClick={handleOnRestore}>
-            Восстановить
-          </Button>
-        )}
-        <Button data-id={id} onClick={handleOnDetails}>
-          Подробнее
-        </Button>
+        {status === "deleted" && <Restore data-id={id} onClick={handleOnRestore} />}
       </div>
     </div>
   );
@@ -112,7 +103,11 @@ export const Events = ({
         <div className="events-table">
           <div className="events-table-header">
             <span className="row__cell row__index header__row-cell">№</span>
-            <span className="row__cell row__name header__row-cell">Наименование мероприятия</span>
+            <span className="row__cell row__name header__row-cell">
+              Наименование
+              <br />
+              мероприятия
+            </span>
             <span className="row__cell row__city header__row-cell">Город</span>
             <span className="row__cell row__date header__row-cell">Дата</span>
             <span className="row__cell row__area header__row-cell">Место</span>

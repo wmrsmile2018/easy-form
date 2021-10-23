@@ -28,6 +28,9 @@ const initialState = {
   status: false,
   resetToZero: false,
   defaultResource: "",
+  users: [],
+  isAddedUser: false,
+  isDeletedUsers: false,
 };
 
 const eventSlice = createSlice({
@@ -82,6 +85,15 @@ const eventSlice = createSlice({
     getInfoById(state, action) {
       state.event = action.payload;
     },
+    addUser(state, action) {
+      state.isAddedUser = action.payload.success;
+    },
+    deleteUser(state, action) {
+      state.isDeletedUsers = action.payload.success;
+    },
+    getAllUsers(state, action) {
+      state.users = action.payload;
+    },
     fetchError(state, action) {
       state.error = action.payload;
     },
@@ -91,7 +103,8 @@ const eventSlice = createSlice({
       state.status = false;
       state.isCreated = false;
       state.isUpdated = false;
-
+      state.isAddedUser = false;
+      state.isDeletedUsers = false;
       // state.isSuffixExist = false;
       // state.isUrlExist = false;
       state.isDeletedActive = false;
@@ -126,4 +139,7 @@ export const {
   getEventsFilters,
   getDefaultResource,
   updateDefaultResource,
+  addUser,
+  deleteUser,
+  getAllUsers,
 } = eventSlice.actions;

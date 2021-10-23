@@ -17,9 +17,9 @@ const isDev = process.env.NODE_ENV !== "development";
 const getUrl = ({ type, id }) => {
   switch (type) {
     case editEvent.type:
-      return isDev ? "/events" : `/editEvent`;
+      return isDev ? "/events" : `/admin/editEvent`;
     case getInfoById.type:
-      return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
+      return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
   }
 };
 
@@ -29,6 +29,7 @@ export const EditEventController = React.memo(() => {
   const location = useLocation();
   const isUpdated = useSelector((state) => state.event.isUpdated);
   const event = useSelector((state) => state.event.event);
+  const token = useSelector((state) => state.auth.token);
 
   const [state, setState] = useState({
     name: "",
@@ -63,6 +64,7 @@ export const EditEventController = React.memo(() => {
       },
       method: "put",
       onSuccess: editEvent.type,
+      token,
     });
 
     setState({ name: "", city: "", date: "", area: "", qrs: [] });
@@ -77,6 +79,7 @@ export const EditEventController = React.memo(() => {
         method: "get",
         onSuccess: getInfoById.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [dispatch, location, event]);

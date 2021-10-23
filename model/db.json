@@ -47,30 +47,6 @@
       ],
       "date_picker": "",
       "id": "OHpHRN2"
-    },
-    {
-      "name": "2131231",
-      "city": "asdadadad",
-      "date": "03-09-2021",
-      "area": "asdasd",
-      "qrs": [
-        {
-          "status": "add",
-          "id": "tmpId-1631648203336",
-          "qr_suffix": "sadsad",
-          "team": "yes",
-          "resources": []
-        },
-        {
-          "status": "add",
-          "id": "tmpId-1631648206137",
-          "qr_suffix": "1",
-          "team": "no",
-          "resources": []
-        }
-      ],
-      "date_picker": "",
-      "id": "3-i4UM-"
     }
   ],
   "eventsFilters": [
@@ -304,5 +280,10 @@
   },
   "resetToZero": {
     "success": true
+  },
+  "login": {
+    "token": "asdasdadad4dasdasda",
+    "success": true,
+    "text": ""
   }
 }

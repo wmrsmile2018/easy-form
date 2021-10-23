@@ -1,23 +1,29 @@
 import { fork, takeEvery, call, put } from "redux-saga/effects";
 import { createAction } from "@reduxjs/toolkit";
 import axios from "axios";
-
+import { useSelector } from "react-redux";
 ////// for testing using json server
 const envBaseUrl =
   process.env.NODE_ENV === "development"
     ? process.env.REACT_APP_LOCALHOST
     : process.env.REACT_APP_BASE_URL;
 
+import { authorisationFailed } from "./auth/reducer";
+// import { sagaEventCallBegan, sagaEventCallFail, sagaEventCallSuccess } from "../saga";
+
 export const sagaEventCallBegan = createAction("saga/eventCallBegan");
 export const sagaEventCallSuccess = createAction("saga/eventCallSuccess");
 export const sagaEventCallFail = createAction("saga/eventCallFail");
 
-const fetchApi = async ({ baseURL, url, method, data }) =>
+const fetchApi = async ({ baseURL, url, method, data, token = "" }) =>
   await axios.request({
     baseURL,
     url,
     method,
     data,
+    headers: {
+      authToken: token,
+    },
   });
 
 const getOptions = ({ url, method, data = null, baseURL = envBaseUrl }) => ({
@@ -28,13 +34,14 @@ const getOptions = ({ url, method, data = null, baseURL = envBaseUrl }) => ({
 });
 
 function* requestExecutor(action) {
-  const { url, method, onSuccess, onError, payload, baseURL } = action;
+  const { url, method, onSuccess, onError, payload, baseURL, token } = action;
 
   const options = getOptions({
     baseURL,
     url,
     method,
     data: payload,
+    token,
   });
 
   try {
@@ -45,11 +52,15 @@ function* requestExecutor(action) {
     });
     yield put({ type: sagaEventCallSuccess.type });
   } catch (error) {
+    console.log(error.response.status);
     yield put({
       type: onError,
       payload: error.response,
     });
     yield put({ type: sagaEventCallFail.type });
+    if (error.response.status === 401) {
+      yield put({ type: authorisationFailed.type, payload: error.response.status });
+    }
   }
 }
 
