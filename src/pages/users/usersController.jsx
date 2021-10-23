@@ -58,6 +58,7 @@ export const UsersController = () => {
       method: "post",
       onSuccess: addUser.type,
       onError: fetchError.type,
+      data: state,
       token,
     });
     setState({
