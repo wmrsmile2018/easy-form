@@ -87,6 +87,7 @@ export const UsersController = () => {
       method: "post",
       onSuccess: deleteUser.type,
       onError: fetchError.type,
+      // date:
       token,
     });
   };
