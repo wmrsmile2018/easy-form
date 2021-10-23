@@ -55,7 +55,7 @@ export const UsersController = () => {
     dispatch({
       url: `/admin/adduser`,
       type: sagaEventCallBegan.type,
-      method: "get",
+      method: "post",
       onSuccess: addUser.type,
       onError: fetchError.type,
       token,
@@ -69,7 +69,7 @@ export const UsersController = () => {
   useEffect(() => {
     if (isAddedUsers || isDeletedUser) {
       dispatch({
-        url: "/admin/adduser",
+        url: "/admin/getusers",
         type: sagaEventCallBegan.type,
         method: "get",
         onSuccess: getAllUsers.type,
@@ -83,7 +83,7 @@ export const UsersController = () => {
     dispatch({
       url: "/admin/deleteuser",
       type: sagaEventCallBegan.type,
-      method: "get",
+      method: "post",
       onSuccess: deleteUser.type,
       onError: fetchError.type,
       token,
