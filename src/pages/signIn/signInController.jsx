@@ -31,7 +31,7 @@ export const SignInController = () => {
       method: "post",
       onSuccess: authorisation.type,
       onError: fetchError.type,
-      data: state,
+      payload: state,
     });
   };
 
