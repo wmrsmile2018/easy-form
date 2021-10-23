@@ -27,14 +27,14 @@
     .row-cells {
       display: flex;
       gap: 30px;
+      width: 100%;
     }
 
     .row-buttons {
       display: flex;
       justify-content: center;
-      width: 100%;
       gap: 15px;
-      min-width: 315px;
+      min-width: 150px;
 
       button {
         width: 120px;
@@ -45,11 +45,11 @@
   .events-table {
     display: flex;
     flex-direction: column;
-    min-width: 1510px;
+    // min-width: 1510px;
 
     .events-table-header {
       display: flex;
-      gap: 30px;
+      // gap: 10px;
       border-bottom: 1px solid black;
       height: 60px;
       align-items: center;
@@ -57,10 +57,12 @@
       top: 60px;
       background: white;
       box-shadow: 0 5px 3px #00000021;
+      justify-content: space-between;
 
       .header__row-cell {
         font-weight: bold;
         font-size: 1rem;
+        justify-content: center;
       }
     }
 
@@ -70,16 +72,18 @@
     .row__cell {
       display: flex;
       justify-content: flex-start;
-      width: 200px;
-      min-width: 200px;
+      width: 100%;
+      // min-width: 200px;
       border-right: 1px dotted black;
       color: #585858;
+      word-break: break-word;
     }
     .row__operations {
-      width: 100%;
+      // width: 100%;
+      width: 200px;
       display: flex;
       justify-content: center;
-      min-width: 315px;
+      min-width: 150px;
       border-right: none;
     }
     .row__index {

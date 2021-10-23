@@ -23,15 +23,15 @@ const isDev = process.env.NODE_ENV === "development";
 const getUrl = ({ type, id, state }) => {
   switch (type) {
     case restoreEvent.type:
-      return isDev ? `/events/${id}` : `/restoreEvent?id=${id}`;
+      return isDev ? `/events/${id}` : `/admin/restoreEvent?id=${id}`;
     case deleteMarkedEvent.type:
-      return isDev ? `/events/${id}` : `/deleteMarkedEvent?id=${id}`;
+      return isDev ? `/events/${id}` : `/admin/deleteMarkedEvent?id=${id}`;
     case getInfoById.type:
-      return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
+      return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
     case getEventsFilters.type:
       return isDev
         ? `/eventsFilters`
-        : `/eventsFilter?name=${state.name}&&city=${state.city}&&area=${state.area}&&date=${state.date}&&deleted=${state.deleted}`;
+        : `/admin/eventsFilter?name=${state.name}&&city=${state.city}&&area=${state.area}&&date=${state.date}&&deleted=${state.deleted}`;
   }
 };
 
@@ -55,6 +55,7 @@ export const DeletedEventsController = () => {
   const isDeletedMarked = useSelector((state) => state.event.isDeletedMarked);
   const isRestored = useSelector((state) => state.event.isRestored);
   const event = useSelector((state) => state.event.event);
+  const token = useSelector((state) => state.auth.token);
   const debouncedFilters = useDebounce(filters, 1000);
 
   const handleOnAddNew = () => {
@@ -116,6 +117,7 @@ export const DeletedEventsController = () => {
         method: "get",
         onSuccess: getEventsFilters.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [debouncedFilters]);
@@ -137,6 +139,7 @@ export const DeletedEventsController = () => {
         method: "get",
         onSuccess: getEventsFilters.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [dispatch, isDeletedMarked, isRestored]);
@@ -157,6 +160,7 @@ export const DeletedEventsController = () => {
       method: "get",
       onSuccess: getEventsFilters.type,
       onError: fetchError.type,
+      token,
     });
   }, [dispatch]);
 
@@ -167,6 +171,7 @@ export const DeletedEventsController = () => {
         handleOnEdit: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
+
           setPath("edit");
           setId(tmpId);
           dispatch({
@@ -175,6 +180,7 @@ export const DeletedEventsController = () => {
             method: "get",
             onSuccess: getInfoById.type,
             onError: fetchError.type,
+            token,
           });
         },
         handleOnRestore: (e) => {
@@ -187,6 +193,7 @@ export const DeletedEventsController = () => {
             method: "put",
             onSuccess: restoreEvent.type,
             onError: fetchError.type,
+            token,
           });
         },
         handleOnDetails: (e) => {
@@ -199,18 +206,19 @@ export const DeletedEventsController = () => {
             method: "get",
             onSuccess: getInfoById.type,
             onError: fetchError.type,
+            token,
           });
         },
         handleOnRemove: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
-
           dispatch({
             url: getUrl({ type: deleteMarkedEvent.type, id: tmpId }),
             type: sagaEventCallBegan.type,
             method: "delete",
             onSuccess: deleteMarkedEvent.type,
             onError: fetchError.type,
+            token,
           });
         },
       }}

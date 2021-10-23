@@ -12,9 +12,9 @@ const isDev = process.env.NODE_ENV === "development";
 const getUrl = ({ type, id }) => {
   switch (type) {
     case getInfoById.type:
-      return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
+      return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
     case setToZero.type:
-      return isDev ? `/resetToZero` : `/resetResources?id=${id}`;
+      return isDev ? `/resetToZero` : `/admin/resetResources?id=${id}`;
   }
 };
 
@@ -23,6 +23,7 @@ export const DetailsController = ({ className }) => {
   const dispatch = useDispatch();
   const event = useSelector((state) => state.event.event);
   const resetToZero = useSelector((state) => state.event.resetToZero);
+  const token = useSelector((state) => state.auth.token);
 
   useEffect(() => {
     if (!event.name) {
@@ -33,6 +34,7 @@ export const DetailsController = ({ className }) => {
         method: "get",
         onSuccess: getInfoById.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [dispatch, location, event]);
@@ -46,6 +48,7 @@ export const DetailsController = ({ className }) => {
         method: "get",
         onSuccess: getInfoById.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [dispatch, location, resetToZero]);
@@ -59,6 +62,7 @@ export const DetailsController = ({ className }) => {
       onSuccess: setToZero.type,
       onError: fetchError.type,
       payload: { success: true },
+      token,
     });
   }, [dispatch]);
 

@@ -10,9 +10,9 @@ const isDev = process.env.NODE_ENV === "development";
 const getUrl = ({ type }) => {
   switch (type) {
     case getDefaultResource.type:
-      return isDev ? "/defaultResource" : `/getinfodefaultresource`;
+      return isDev ? "/defaultResource" : `/admin/getinfodefaultresource`;
     case updateDefaultResource.type:
-      return isDev ? "/updateResource" : `/putinfodefaultresource`;
+      return isDev ? "/updateResource" : `/admin/putinfodefaultresource`;
   }
 };
 
@@ -20,7 +20,7 @@ export const DefaultResourceCotroller = () => {
   const dispatch = useDispatch();
   const [defaultResource, setDefaultResource] = useState("");
   const rsrc = useSelector((state) => state.event.defaultResource);
-
+  const token = useSelector((state) => state.auth.token);
   const handleOnChange = useCallback(({ target }) => {
     setDefaultResource(target.value);
   }, []);
@@ -33,6 +33,7 @@ export const DefaultResourceCotroller = () => {
       onSuccess: updateDefaultResource.type,
       onError: fetchError.type,
       payload: { defaultResource },
+      token,
     });
   }, [dispatch, defaultResource]);
 
@@ -43,6 +44,7 @@ export const DefaultResourceCotroller = () => {
       method: "get",
       onSuccess: getDefaultResource.type,
       onError: fetchError.type,
+      token,
     });
   }, [dispatch]);
 

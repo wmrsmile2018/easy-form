@@ -17,7 +17,7 @@ const isDev = process.env.NODE_ENV === "development";
 const getUrl = ({ type }) => {
   switch (type) {
     case createEvent.type:
-      return isDev ? "/events" : `/addEvent`;
+      return isDev ? "/events" : `/admin/addEvent`;
   }
 };
 
@@ -25,6 +25,7 @@ export const AddEventController = React.memo(() => {
   const dispatch = useDispatch();
   const history = useHistory();
   const isCreated = useSelector((state) => state.event.isCreated);
+  const token = useSelector((state) => state.auth.token);
 
   const [state, setState] = useState({
     name: "",
@@ -44,6 +45,7 @@ export const AddEventController = React.memo(() => {
       url: getUrl({ type: createEvent.type }),
       method: "post",
       onSuccess: createEvent.type,
+      token,
     });
 
     setState({ name: "", city: "", date: "", area: "", qrs: [] });

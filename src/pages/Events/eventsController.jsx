@@ -22,13 +22,13 @@ const isDev = process.env.NODE_ENV === "development";
 const getUrl = ({ type, id, state }) => {
   switch (type) {
     case deleteActiveEvent.type:
-      return isDev ? `/events/${id}` : `/deleteActiveEvent?id=${id}`;
+      return isDev ? `/events/${id}` : `/admin/deleteActiveEvent?id=${id}`;
     case getInfoById.type:
-      return isDev ? `/event` : `/getInfoByEventId?id=${id}`;
+      return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
     case getEventsFilters.type:
       return isDev
         ? `/eventsFilters`
-        : `/eventsFilter?name=${state.name}&&city=${state.city}&&area=${state.area}&&date=${state.date}&&deleted=${state.deleted}`;
+        : `/admin/eventsFilter?name=${state.name}&&city=${state.city}&&area=${state.area}&&date=${state.date}&&deleted=${state.deleted}`;
   }
 };
 
@@ -52,6 +52,7 @@ export const EventsController = () => {
   const events = useSelector((state) => state.event.events);
   const event = useSelector((state) => state.event.event);
   const isDeletedActive = useSelector((state) => state.event.isDeletedActive);
+  const token = useSelector((state) => state.auth.token);
   const debouncedFilters = useDebounce(filters, 1000);
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
@@ -98,6 +99,7 @@ export const EventsController = () => {
         method: "get",
         onSuccess: getEventsFilters.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [debouncedFilters]);
@@ -119,6 +121,7 @@ export const EventsController = () => {
         method: "get",
         onSuccess: getEventsFilters.type,
         onError: fetchError.type,
+        token,
       });
     }
   }, [isDeletedActive, dispatch]);
@@ -154,6 +157,7 @@ export const EventsController = () => {
       method: "get",
       onSuccess: getEventsFilters.type,
       onError: fetchError.type,
+      token,
     });
   }, [dispatch]);
 
@@ -164,6 +168,7 @@ export const EventsController = () => {
         handleOnEdit: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
+          console.log(tmpId);
           setPath("edit");
           setId(tmpId);
           dispatch({
@@ -172,6 +177,7 @@ export const EventsController = () => {
             method: "get",
             onSuccess: getInfoById.type,
             onError: fetchError.type,
+            token,
           });
         },
         handleOnRestore: () => {},
@@ -186,6 +192,7 @@ export const EventsController = () => {
             method: "get",
             onSuccess: getInfoById.type,
             onError: fetchError.type,
+            token,
           });
         },
         handleOnRemove: (e) => {
@@ -197,6 +204,7 @@ export const EventsController = () => {
             method: "delete",
             onSuccess: deleteActiveEvent.type,
             onError: fetchError.type,
+            token,
           });
         },
       }}
