@@ -80,7 +80,7 @@ function App() {
         <Route
           exact
           path="/sign-in"
-          render={() => (true ? <Redirect to="/" /> : <SignInController />)}
+          render={() => (token ? <Redirect to="/" /> : <SignInController />)}
         />
         <Route path="/" component={Router} />
       </Switch>
