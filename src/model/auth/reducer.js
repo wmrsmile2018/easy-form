@@ -23,7 +23,7 @@ const authSlice = createSlice({
     authorisationFailed(state, action) {
       state.status = action.payload;
     },
-    fetchError(state, action) {
+    userFetchError(state, action) {
       state.error = action.payload;
     },
   },
@@ -36,4 +36,4 @@ const authSlice = createSlice({
 
 export default authSlice.reducer;
 
-export const { fetchError, authorisation, authorisationFailed } = authSlice.actions;
+export const { userFetchError, authorisation, authorisationFailed } = authSlice.actions;

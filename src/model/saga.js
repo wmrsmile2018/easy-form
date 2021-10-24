@@ -55,7 +55,7 @@ function* requestExecutor(action) {
     console.log(error.response.status);
     yield put({
       type: onError,
-      payload: error.response,
+      payload: { data: error.response.data, status: error.response.status },
     });
     yield put({ type: sagaEventCallFail.type });
     yield put({ type: authorisationFailed.type, payload: error.response.status });

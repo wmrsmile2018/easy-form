@@ -52,9 +52,6 @@ export const EditEventController = React.memo(() => {
       draftState.qrs = qrs;
     });
 
-    console.log(state);
-    console.log(nextState);
-
     dispatch({
       url: getUrl({ type: editEvent.type }),
       type: sagaEventCallBegan.type,

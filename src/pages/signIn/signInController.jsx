@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sagaEventCallBegan } from "../../model/saga";
-import { authorisation, fetchError } from "../../model/auth/reducer";
+import { authorisation, userFetchError } from "../../model/auth/reducer";
 import { SignIn } from "./signIn";
 
 // const isDev = process.env.NODE_ENV === "development";
@@ -31,7 +31,7 @@ export const SignInController = () => {
       type: sagaEventCallBegan.type,
       method: "post",
       onSuccess: authorisation.type,
-      onError: fetchError.type,
+      onError: userFetchError.type,
       payload: state,
     });
     setState({
@@ -47,7 +47,7 @@ export const SignInController = () => {
         type: sagaEventCallBegan.type,
         method: "post",
         onSuccess: authorisation.type,
-        onError: fetchError.type,
+        onError: userFetchError.type,
         payload: state,
       });
       setState({
