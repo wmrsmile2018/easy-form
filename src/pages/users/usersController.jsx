@@ -46,7 +46,7 @@ export const UsersController = () => {
   const isDeletedUser = useSelector((state) => state.event.isDeletedUser);
   const users = useSelector((state) => state.event.users);
   const token = useSelector((state) => state.auth.token);
-
+  const status = useSelector((state) => state.auth.status);
   const handleOnChange = ({ target }) => {
     setState({ ...state, [target.name]: target.value });
   };
@@ -105,6 +105,7 @@ export const UsersController = () => {
 
   return (
     <Users
+      isValid={status !== 403}
       users={users}
       handleOnRemove={handleOnRemove}
       onChange={handleOnChange}

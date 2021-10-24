@@ -68,19 +68,19 @@ export const Router = () => (
 
 function App() {
   const history = useHistory();
-  const token = useSelector((state) => state.auth.token);
+  const status = useSelector((state) => state.auth.token);
   useEffect(() => {
-    if (!token) {
+    if (status === 401) {
       history.push("/sign-in");
     }
-  }, [token]);
+  }, [status]);
   return (
     <div className="App">
       <Switch>
         <Route
           exact
           path="/sign-in"
-          render={() => (token ? <Redirect to="/" /> : <SignInController />)}
+          render={() => (true ? <Redirect to="/" /> : <SignInController />)}
         />
         <Route path="/" component={Router} />
       </Switch>

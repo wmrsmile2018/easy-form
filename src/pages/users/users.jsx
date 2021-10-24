@@ -11,6 +11,7 @@ import { Delete } from "../../icons/";
 import "./users.scss";
 import { Button } from "../../components/button";
 import { Input } from "../../components/input";
+import noPermission from "./noPermission.jpeg";
 
 const fields = [
   { value: "Логин:", name: "login", type: "text" },
@@ -31,45 +32,51 @@ const Row = ({ className, login, index, handleOnRemove, id }) => {
   );
 };
 
-export const Users = ({ users, className, handleOnRemove, state, onAdd, onChange }) => {
+export const Users = ({ users, className, handleOnRemove, state, onAdd, onChange, isValid }) => {
   const classes = clsx("users", className);
 
   return (
     <div className={classes}>
       <Title>Управление пользователями</Title>
-      <MarginGroup gap={20} className="users-add-user">
-        <MarginGroup gap={10}>
-          {fields.map((el) => (
-            <Input
-              key={key(el)}
-              name={el.name}
-              type={el.type}
-              value={state[el.name]}
-              onChange={onChange}
-              title={el.value}
-            />
-          ))}
-        </MarginGroup>
-        <Button onClick={onAdd}>Добавить новового пользователя</Button>
-      </MarginGroup>
-      <MarginGroup isColumn>
-        <div className="users-header">
-          <span className="row__cell row__index header__row-cell">№</span>
-          <span className="row__cell row__name header__row-cell">Логин</span>
-          <span className="row__cell row__operations header__row-cell">Операции</span>
-        </div>
-        <div className="users-content">
-          {users.map((el, i) => (
-            <Row
-              key={key(el)}
-              index={i}
-              login={el.login}
-              handleOnRemove={handleOnRemove}
-              id={el.id}
-            />
-          ))}
-        </div>
-      </MarginGroup>
+      {isValid ? (
+        <>
+          <MarginGroup gap={20} className="users-add-user">
+            <MarginGroup gap={10}>
+              {fields.map((el) => (
+                <Input
+                  key={key(el)}
+                  name={el.name}
+                  type={el.type}
+                  value={state[el.name]}
+                  onChange={onChange}
+                  title={el.value}
+                />
+              ))}
+            </MarginGroup>
+            <Button onClick={onAdd}>Добавить новового пользователя</Button>
+          </MarginGroup>
+          <MarginGroup isColumn>
+            <div className="users-header">
+              <span className="row__cell row__index header__row-cell">№</span>
+              <span className="row__cell row__name header__row-cell">Логин</span>
+              <span className="row__cell row__operations header__row-cell">Операции</span>
+            </div>
+            <div className="users-content">
+              {users.map((el, i) => (
+                <Row
+                  key={key(el)}
+                  index={i}
+                  login={el.login}
+                  handleOnRemove={handleOnRemove}
+                  id={el.id}
+                />
+              ))}
+            </div>
+          </MarginGroup>
+        </>
+      ) : (
+        <img src={noPermission} alt="no permission" />
+      )}
     </div>
   );
 };
