@@ -37,9 +37,9 @@ export const Users = ({ users, className, handleOnRemove, state, onAdd, onChange
 
   return (
     <div className={classes}>
-      <Title>Управление пользователями</Title>
       {isValid ? (
         <>
+          <Title>Управление пользователями</Title>
           <MarginGroup gap={20} className="users-add-user">
             <MarginGroup gap={10}>
               {fields.map((el) => (
