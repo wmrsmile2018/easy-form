@@ -17,7 +17,7 @@ const fields = [
   { value: "Пароль:", name: "password", type: "text" },
 ];
 
-const Row = ({ className, name, index, handleOnRemove }) => {
+const Row = ({ className, name, index, handleOnRemove, id }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
   // const { handleOnRemove } = useusers();
   return (
@@ -25,7 +25,7 @@ const Row = ({ className, name, index, handleOnRemove }) => {
       <div className="row-cells">
         <span className="row__cell row__index">{index + 1}</span>
         <span className="row__cell row__name">{name}</span>
-        <Delete className="row__cell row__operations" onClick={handleOnRemove} />
+        <Delete data-id={id} className="row__cell row__operations" onClick={handleOnRemove} />
       </div>
     </div>
   );
@@ -60,7 +60,13 @@ export const Users = ({ users, className, handleOnRemove, state, onAdd, onChange
         </div>
         <div className="users-content">
           {users.map((el, i) => (
-            <Row key={key(el)} index={i} name={el.name} handleOnRemove={handleOnRemove} />
+            <Row
+              key={key(el)}
+              index={i}
+              name={el.name}
+              handleOnRemove={handleOnRemove}
+              id={el.id}
+            />
           ))}
         </div>
       </MarginGroup>

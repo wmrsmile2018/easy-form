@@ -80,14 +80,14 @@ export const UsersController = () => {
     }
   }, [dispatch, isAddedUsers, isDeletedUser]);
 
-  const handleOnRemove = (e) => {
+  const handleOnRemove = ({ target }) => {
     dispatch({
       url: "/admin/deleteuser",
       type: sagaEventCallBegan.type,
       method: "post",
       onSuccess: deleteUser.type,
       onError: fetchError.type,
-      // date:
+      payload: { id: target.dataset["id"] },
       token,
     });
   };
