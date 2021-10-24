@@ -12,7 +12,7 @@ const fields = [
   { value: "Пароль:", name: "password", type: "password" },
 ];
 
-export const SignIn = ({ onChange, state, className, onSubmit, text }) => {
+export const SignIn = ({ onChange, state, className, onSubmit, text, onKeyDown }) => {
   const classes = clsx("sign-in", className);
   return (
     <MarginGroup isColumn gap={20} className={classes}>
@@ -26,6 +26,7 @@ export const SignIn = ({ onChange, state, className, onSubmit, text }) => {
             value={state[el.name]}
             onChange={onChange}
             title={el.value}
+            onKeyDown={onKeyDown}
           />
         ))}
       </MarginGroup>

@@ -40,5 +40,30 @@ export const SignInController = () => {
     });
   };
 
-  return <SignIn text={text} state={state} onChange={handleOnChange} onSubmit={handleOnSumbit} />;
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      dispatch({
+        url: `/login`,
+        type: sagaEventCallBegan.type,
+        method: "post",
+        onSuccess: authorisation.type,
+        onError: fetchError.type,
+        payload: state,
+      });
+      setState({
+        login: "",
+        password: "",
+      });
+    }
+  };
+
+  return (
+    <SignIn
+      text={text}
+      onKeyDown={handleKeyDown}
+      state={state}
+      onChange={handleOnChange}
+      onSubmit={handleOnSumbit}
+    />
+  );
 };

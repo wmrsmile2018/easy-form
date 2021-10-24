@@ -282,8 +282,7 @@
     "success": true
   },
   "login": {
-    "token": "asdasdsadasdd",
-    "success": true,
-    "text": ""
+    "login": "toshchev_da",
+    "password": "Qwertyu1asdasdasd"
   }
 }
