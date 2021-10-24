@@ -63,7 +63,7 @@ export const Users = ({ users, className, handleOnRemove, state, onAdd, onChange
             <Row
               key={key(el)}
               index={i}
-              name={el.login}
+              login={el.login}
               handleOnRemove={handleOnRemove}
               id={el.id}
             />
