@@ -24,7 +24,7 @@ const Row = ({ className, name, index, handleOnRemove, id }) => {
     <div className={classes}>
       <div className="row-cells">
         <span className="row__cell row__index">{index + 1}</span>
-        <span className="row__cell row__name">{name}</span>
+        <span className="row__cell row__name">{login}</span>
         <Delete data-id={id} className="row__cell row__operations" onClick={handleOnRemove} />
       </div>
     </div>
@@ -63,7 +63,7 @@ export const Users = ({ users, className, handleOnRemove, state, onAdd, onChange
             <Row
               key={key(el)}
               index={i}
-              name={el.name}
+              name={el.login}
               handleOnRemove={handleOnRemove}
               id={el.id}
             />
