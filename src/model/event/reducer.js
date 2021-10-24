@@ -30,7 +30,7 @@ const initialState = {
   defaultResource: "",
   users: [],
   isAddedUser: false,
-  isDeletedUsers: false,
+  isDeletedUser: false,
 };
 
 const eventSlice = createSlice({
@@ -89,7 +89,7 @@ const eventSlice = createSlice({
       state.isAddedUser = action.payload.success;
     },
     deleteUser(state, action) {
-      state.isDeletedUsers = action.payload.success;
+      state.isDeletedUser = action.payload.success;
     },
     getAllUsers(state, action) {
       state.users = action.payload;
@@ -104,7 +104,7 @@ const eventSlice = createSlice({
       state.isCreated = false;
       state.isUpdated = false;
       state.isAddedUser = false;
-      state.isDeletedUsers = false;
+      state.isDeletedUser = false;
       // state.isSuffixExist = false;
       // state.isUrlExist = false;
       state.isDeletedActive = false;

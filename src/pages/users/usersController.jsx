@@ -42,7 +42,7 @@ export const UsersController = () => {
     password: "",
   });
 
-  const isAddedUsers = useSelector((state) => state.event.isAddedUsers);
+  const isAddedUser = useSelector((state) => state.event.isAddedUser);
   const isDeletedUser = useSelector((state) => state.event.isDeletedUser);
   const users = useSelector((state) => state.event.users);
   const token = useSelector((state) => state.auth.token);
@@ -68,7 +68,7 @@ export const UsersController = () => {
   };
 
   useEffect(() => {
-    if (isAddedUsers || isDeletedUser) {
+    if (isAddedUser || isDeletedUser) {
       dispatch({
         url: "/admin/getusers",
         type: sagaEventCallBegan.type,
@@ -78,7 +78,7 @@ export const UsersController = () => {
         token,
       });
     }
-  }, [dispatch, isAddedUsers, isDeletedUser, token]);
+  }, [dispatch, isAddedUser, isDeletedUser, token]);
 
   useEffect(() => {
     dispatch({
