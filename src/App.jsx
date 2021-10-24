@@ -10,7 +10,7 @@ import { DefaultResourceCotroller } from "./pages/defaultResource";
 import { AboutUs } from "./pages/AboutUs";
 import { UsersController } from "./pages/users";
 import { SignInController } from "./pages/signIn";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 
 const ErrorComponent = ({ status }) => {
   return <div className="error-component">Current page doesn't exist</div>;
@@ -68,10 +68,12 @@ export const Router = () => (
 
 function App() {
   const history = useHistory();
+  const dispatch = useDispatch();
   const status = useSelector((state) => state.auth.status);
   useEffect(() => {
     if (status === 401) {
       history.push("/sign-in");
+      dispatch({ type: "CLEAR_STORE" });
     }
   }, [status]);
   console.log(status);
