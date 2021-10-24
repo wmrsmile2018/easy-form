@@ -281,5 +281,9 @@
   "resetToZero": {
     "success": true
   },
-  "login": {}
+  "login": {
+    "token": "asdasdsadasdd",
+    "success": true,
+    "text": ""
+  }
 }
