@@ -41,8 +41,7 @@ const eventSlice = createSlice({
       state.isCreated = action.payload.success;
     },
     getEventsFilters(state, action) {
-      console.log(action.payload);
-      // state.events = action.payload;
+      state.events = action.payload;
     },
     editEvent(state, action) {
       state.isUpdated = action.payload.success;
