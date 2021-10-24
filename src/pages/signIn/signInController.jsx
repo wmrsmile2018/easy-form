@@ -28,7 +28,7 @@ export const SignInController = () => {
     dispatch({
       url: `/login`,
       type: sagaEventCallBegan.type,
-      method: "post",
+      method: "get",
       onSuccess: authorisation.type,
       onError: fetchError.type,
       payload: state,

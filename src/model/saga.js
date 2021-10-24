@@ -15,7 +15,7 @@ export const sagaEventCallBegan = createAction("saga/eventCallBegan");
 export const sagaEventCallSuccess = createAction("saga/eventCallSuccess");
 export const sagaEventCallFail = createAction("saga/eventCallFail");
 
-const fetchApi = async ({ baseURL, url, method, data, token = "" }) =>
+const fetchApi = async ({ baseURL, url, method, data, token }) =>
   await axios.request({
     baseURL,
     url,
@@ -26,16 +26,16 @@ const fetchApi = async ({ baseURL, url, method, data, token = "" }) =>
     },
   });
 
-const getOptions = ({ url, method, data = null, baseURL = envBaseUrl }) => ({
+const getOptions = ({ url, method, data = null, baseURL = envBaseUrl, token = "" }) => ({
   baseURL,
   url,
   method,
   data,
+  token,
 });
 
 function* requestExecutor(action) {
   const { url, method, onSuccess, onError, payload, baseURL, token } = action;
-
   const options = getOptions({
     baseURL,
     url,

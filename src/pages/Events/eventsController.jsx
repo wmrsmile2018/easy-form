@@ -142,6 +142,7 @@ export const EventsController = () => {
   }, [event, id]);
 
   useEffect(() => {
+    console.log(token);
     dispatch({
       url: getUrl({
         type: getEventsFilters.type,
