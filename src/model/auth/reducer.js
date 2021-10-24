@@ -18,6 +18,7 @@ const authSlice = createSlice({
       state.text = action.payload.text;
       state.success = action.payload.success;
       state.role = action.payload.role;
+      state.status = 200;
     },
     authorisationFailed(state, action) {
       state.status = action.payload;
