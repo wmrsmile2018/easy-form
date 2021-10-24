@@ -12,10 +12,10 @@ const fields = [
   { value: "Пароль:", name: "password", type: "password" },
 ];
 
-export const SignIn = ({ onChange, state, className, onSubmit }) => {
+export const SignIn = ({ onChange, state, className, onSubmit, text }) => {
   const classes = clsx("sign-in", className);
   return (
-    <MarginGroup isColumn gap={30} className={classes}>
+    <MarginGroup isColumn gap={20} className={classes}>
       <h2>Авторизация</h2>
       <MarginGroup isColumn gap={15} className="sign-in-fields">
         {fields.map((el) => (
@@ -29,6 +29,7 @@ export const SignIn = ({ onChange, state, className, onSubmit }) => {
           />
         ))}
       </MarginGroup>
+      <p className="sign-in__text-error">{text}</p>
       <Button onClick={onSubmit}>Войти</Button>
     </MarginGroup>
   );

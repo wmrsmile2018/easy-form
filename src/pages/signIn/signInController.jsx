@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { sagaEventCallBegan } from "../../model/saga";
 import { authorisation, fetchError } from "../../model/auth/reducer";
 import { SignIn } from "./signIn";
@@ -19,6 +19,7 @@ export const SignInController = () => {
     login: "",
     password: "",
   });
+  const text = useSelector((state) => state.auth.text);
 
   const handleOnChange = ({ target }) => {
     setState({ ...state, [target.name]: target.value });
@@ -33,7 +34,11 @@ export const SignInController = () => {
       onError: fetchError.type,
       payload: state,
     });
+    setState({
+      login: "",
+      password: "",
+    });
   };
 
-  return <SignIn state={state} onChange={handleOnChange} onSubmit={handleOnSumbit} />;
+  return <SignIn text={text} state={state} onChange={handleOnChange} onSubmit={handleOnSumbit} />;
 };
