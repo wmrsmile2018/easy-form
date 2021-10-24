@@ -78,7 +78,7 @@ export const UsersController = () => {
         token,
       });
     }
-  }, [dispatch, isAddedUsers, isDeletedUser]);
+  }, [dispatch, isAddedUsers, isDeletedUser, token]);
 
   const handleOnRemove = ({ target }) => {
     dispatch({

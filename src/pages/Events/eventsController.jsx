@@ -102,7 +102,7 @@ export const EventsController = () => {
         token,
       });
     }
-  }, [debouncedFilters]);
+  }, [debouncedFilters, token]);
 
   useEffect(() => {
     if (isDeletedActive) {
@@ -124,7 +124,7 @@ export const EventsController = () => {
         token,
       });
     }
-  }, [isDeletedActive, dispatch]);
+  }, [isDeletedActive, dispatch, token]);
 
   useEffect(() => {
     if (!isEmpty(event) && id) {
@@ -159,7 +159,7 @@ export const EventsController = () => {
       onError: fetchError.type,
       token,
     });
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <EventsContext.Provider

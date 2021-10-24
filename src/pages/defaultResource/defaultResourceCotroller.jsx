@@ -35,7 +35,7 @@ export const DefaultResourceCotroller = () => {
       payload: { defaultResource },
       token,
     });
-  }, [dispatch, defaultResource]);
+  }, [dispatch, defaultResource, token]);
 
   useEffect(() => {
     dispatch({
@@ -46,7 +46,7 @@ export const DefaultResourceCotroller = () => {
       onError: fetchError.type,
       token,
     });
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <DefaultResource

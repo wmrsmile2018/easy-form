@@ -68,7 +68,7 @@ export const EditEventController = React.memo(() => {
     });
 
     setState({ name: "", city: "", date: "", area: "", qrs: [] });
-  }, [state]);
+  }, [state, token]);
 
   useEffect(() => {
     if (!event.name) {
@@ -82,7 +82,7 @@ export const EditEventController = React.memo(() => {
         token,
       });
     }
-  }, [dispatch, location, event]);
+  }, [dispatch, location, event, token]);
 
   useEffect(() => {
     if (event.name) {

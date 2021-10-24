@@ -37,7 +37,7 @@ export const DetailsController = ({ className }) => {
         token,
       });
     }
-  }, [dispatch, location, event]);
+  }, [dispatch, location, event, token]);
 
   useEffect(() => {
     if (resetToZero) {
@@ -51,7 +51,7 @@ export const DetailsController = ({ className }) => {
         token,
       });
     }
-  }, [dispatch, location, resetToZero]);
+  }, [dispatch, location, resetToZero, token]);
 
   const handleOnSetZero = useCallback(() => {
     const id = location.pathname.split("/")[3];
@@ -64,7 +64,7 @@ export const DetailsController = ({ className }) => {
       payload: { success: true },
       token,
     });
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return <Details className={className} event={event} setZero={handleOnSetZero} />;
 };

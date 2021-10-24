@@ -120,7 +120,7 @@ export const DeletedEventsController = () => {
         token,
       });
     }
-  }, [debouncedFilters]);
+  }, [debouncedFilters, token]);
 
   useEffect(() => {
     if (isDeletedMarked || isRestored) {
@@ -142,7 +142,7 @@ export const DeletedEventsController = () => {
         token,
       });
     }
-  }, [dispatch, isDeletedMarked, isRestored]);
+  }, [dispatch, isDeletedMarked, isRestored, token]);
 
   useEffect(() => {
     dispatch({
@@ -162,7 +162,7 @@ export const DeletedEventsController = () => {
       onError: fetchError.type,
       token,
     });
-  }, [dispatch]);
+  }, [dispatch, token]);
 
   return (
     <EventsContext.Provider

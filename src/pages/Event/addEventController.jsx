@@ -49,7 +49,7 @@ export const AddEventController = React.memo(() => {
     });
 
     setState({ name: "", city: "", date: "", area: "", qrs: [] });
-  }, [state]);
+  }, [state, token]);
 
   useEffect(() => {
     if (isCreated) {
