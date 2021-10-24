@@ -84,7 +84,7 @@ function App() {
   const dispatch = useDispatch();
   const status = useSelector((state) => state.auth.status);
   useEffect(() => {
-    if (status === 404) {
+    if (status === 401) {
       history.push("/sign-in");
     }
   }, [status]);
@@ -94,7 +94,7 @@ function App() {
         <Route
           exact
           path="/sign-in"
-          render={() => (status !== 404 ? <Redirect to="/" /> : <SignInController />)}
+          render={() => (status !== 401 ? <Redirect to="/" /> : <SignInController />)}
         />
         <Route path="/" component={Router} />
       </Switch>
