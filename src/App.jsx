@@ -94,7 +94,7 @@ function App() {
         <Route
           exact
           path="/sign-in"
-          render={() => (false ? <Redirect to="/" /> : <SignInController />)}
+          render={() => (status !== 401 ? <Redirect to="/" /> : <SignInController />)}
         />
         <Route path="/" component={Router} />
       </Switch>
