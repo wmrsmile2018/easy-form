@@ -81,16 +81,14 @@ export const UsersController = () => {
   }, [dispatch, isAddedUsers, isDeletedUser, token]);
 
   useEffect(() => {
-    if (isAddedUsers || isDeletedUser) {
-      dispatch({
-        url: "/admin/getusers",
-        type: sagaEventCallBegan.type,
-        method: "get",
-        onSuccess: getAllUsers.type,
-        onError: fetchError.type,
-        token,
-      });
-    }
+    dispatch({
+      url: "/admin/getusers",
+      type: sagaEventCallBegan.type,
+      method: "get",
+      onSuccess: getAllUsers.type,
+      onError: fetchError.type,
+      token,
+    });
   }, [dispatch, token]);
 
   const handleOnRemove = ({ target }) => {
