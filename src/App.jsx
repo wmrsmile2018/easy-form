@@ -70,7 +70,7 @@ function App() {
   const history = useHistory();
   const status = useSelector((state) => state.auth.status);
   useEffect(() => {
-    if (status === 401) {
+    if (status !== 401) {
       history.push("/sign-in");
     }
   }, [status]);
