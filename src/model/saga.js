@@ -58,9 +58,7 @@ function* requestExecutor(action) {
       payload: error.response,
     });
     yield put({ type: sagaEventCallFail.type });
-    if (error.response.status === 401) {
-      yield put({ type: authorisationFailed.type, payload: error.response.status });
-    }
+    yield put({ type: authorisationFailed.type, payload: error.response.status });
   }
 }
 
