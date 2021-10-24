@@ -17,7 +17,7 @@ const fields = [
   { value: "Пароль:", name: "password", type: "text" },
 ];
 
-const Row = ({ className, name, index, handleOnRemove, id }) => {
+const Row = ({ className, login, index, handleOnRemove, id }) => {
   const classes = clsx("row", className, { "outline": index % 2 === 0 });
   // const { handleOnRemove } = useusers();
   return (
