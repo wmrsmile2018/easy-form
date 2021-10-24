@@ -60,7 +60,7 @@ function* requestExecutor(action) {
     yield put({ type: sagaEventCallFail.type });
     yield put({ type: authorisationFailed.type, payload: error.response.status });
     if (error.response.status === 401) {
-      yield put({ type: "CLEAR_STORE" });
+      // yield put({ type: "CLEAR_STORE" });
     }
   }
 }
