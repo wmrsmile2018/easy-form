@@ -19,10 +19,20 @@ const ErrorComponent = ({ status }) => {
 export const Router = () => {
   const history = useHistory();
   const dispatch = useDispatch();
+  const status = useSelector((state) => state.auth.status);
+  console.log("status   ", status);
+
+  useEffect(() => {
+    if (status === 401) {
+      history.push("/sign-in");
+      dispatch({ type: "CLEAR_STORE" });
+    }
+  }, [status]);
 
   const handleOnLogout = () => {
     history.push("/sign-in");
     dispatch({ type: "CLEAR_STORE" });
+    console.log("hello");
   };
 
   return (
@@ -52,8 +62,13 @@ export const Router = () => {
           <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/users">
             Администрирование
           </NavLink>
-          <NavLink className="app__nav-link" activeClassName="activeRoute" to="/sign-in">
-            <p onClick={handleOnLogout}>Выйти</p>
+          <NavLink
+            onClick={handleOnLogout}
+            className="app__nav-link"
+            activeClassName="activeRoute"
+            to="/sign-in"
+          >
+            Выйти
           </NavLink>
         </div>
       </div>
@@ -81,21 +96,18 @@ export const Router = () => {
 
 function App() {
   const history = useHistory();
-  const dispatch = useDispatch();
-  const status = useSelector((state) => state.auth.status);
+  const token = useSelector((state) => state.auth.token);
+
   useEffect(() => {
-    if (status === 401) {
-      history.push("/sign-in");
+    if (token) {
+      history.push("/");
     }
-  }, [status]);
+  }, [token]);
+
   return (
     <div className="App">
       <Switch>
-        <Route
-          exact
-          path="/sign-in"
-          render={() => (status !== 401 ? <Redirect to="/" /> : <SignInController />)}
-        />
+        <Route path="/sign-in" component={SignInController} />
         <Route path="/" component={Router} />
       </Switch>
     </div>

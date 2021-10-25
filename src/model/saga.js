@@ -52,14 +52,14 @@ function* requestExecutor(action) {
     });
     yield put({ type: sagaEventCallSuccess.type });
   } catch (error) {
-    console.log(error.response.status);
+    console.log(error);
     yield put({
       type: onError,
-      payload: { data: error.response.data, status: error.response.status },
+      payload: { data: error?.response?.data, status: error?.response?.status },
     });
     yield put({ type: sagaEventCallFail.type });
-    yield put({ type: authorisationFailed.type, payload: error.response.status });
-    if (error.response.status === 401) {
+    yield put({ type: authorisationFailed.type, payload: error?.response?.status });
+    if (error?.response?.status === 401) {
       // yield put({ type: "CLEAR_STORE" });
     }
   }
