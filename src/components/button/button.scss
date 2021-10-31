@@ -2,13 +2,30 @@
 
 .button {
   color: white;
-  background-color: $light-green-v1;
-  border: 1px solid $light-green-v2;
+
   box-sizing: border-box;
   padding: 10px;
 
   &:active {
     background-color: green;
+  }
+
+  &.green {
+    background-color: $light-green-v1;
+    border: 1px solid $light-green-v2;
+  }
+  &.blue {
+    background-color: $light-blue-v1;
+    border: 1px solid $light-blue-v2;
+  }
+  &.yellow {
+    background-color: $light-yellow-v1;
+    border: 1px solid $light-yellow-v2;
+    color: #585858;
+  }
+  &.red {
+    background-color: $light-red-v1;
+    border: 1px solid $light-red-v2;
   }
 
   &.disabled {

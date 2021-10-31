@@ -31,6 +31,9 @@ const initialState = {
   users: [],
   isAddedUser: false,
   isDeletedUser: false,
+  statisticStop: false,
+  statisticUpdate: false,
+  statisticStart: false,
 };
 
 const eventSlice = createSlice({
@@ -64,6 +67,15 @@ const eventSlice = createSlice({
     // getDeletedEvents(state, action) {
     //   state.deletedEvents = action.payload;
     // },
+    statisticStop(state) {
+      state.statisticStop = true;
+    },
+    statisticUpdate(state) {
+      state.statisticUpdate = true;
+    },
+    statisticStart(state) {
+      state.statisticStart = true;
+    },
     getDefaultResource(state, action) {
       state.defaultResource = action.payload;
     },
@@ -110,6 +122,9 @@ const eventSlice = createSlice({
       state.isDeletedActive = false;
       state.isDeletedMarked = false;
       state.isRestored = false;
+      state.statisticStop = false;
+      state.statisticUpdate = false;
+      state.statisticStart = false;
     });
     builder.addCase(sagaEventCallSuccess, (state) => {
       state.status = true;
@@ -142,4 +157,7 @@ export const {
   addUser,
   deleteUser,
   getAllUsers,
+  statisticStop,
+  statisticUpdate,
+  statisticStart,
 } = eventSlice.actions;

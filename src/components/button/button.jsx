@@ -4,8 +4,8 @@ import clsx from "clsx";
 
 import "./button.scss";
 
-export const Button = ({ className, children, ...rest }) => {
-  const classes = clsx("button", className, { "disabled": rest.disabled });
+export const Button = ({ className, children, color, ...rest }) => {
+  const classes = clsx("button", className, { "disabled": rest.disabled }, color);
   return (
     <button className={classes} {...rest}>
       {children}
@@ -16,8 +16,10 @@ export const Button = ({ className, children, ...rest }) => {
 Button.propTypes = {
   className: PropTypes.string,
   children: PropTypes.node.isRequired,
+  colro: PropTypes.string,
 };
 
 Button.defaultProps = {
   className: "",
+  color: "green",
 };

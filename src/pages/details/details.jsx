@@ -158,103 +158,165 @@ const Row = React.memo(
   },
 );
 
-export const Details = React.memo(({ className, event, setZero }) => {
-  const {
-    name,
-    city,
-    date,
-    area,
-    people_count,
-    qrs,
-    general_default_resource_people_count,
-    default_resource_people_count,
-    deleted,
-    id,
-  } = event;
-  const history = useHistory();
-  const classes = clsx("details", className, { deleted: deleted });
+export const Details = React.memo(
+  ({
+    className,
+    event,
+    setZero,
+    handleStatisticStart,
+    handleStatisticUpdate,
+    handleStatisticStop,
+  }) => {
+    const {
+      name,
+      city,
+      date,
+      area,
+      people_count,
+      qrs,
+      general_default_resource_people_count,
+      default_resource_people_count,
+      deleted,
+      id,
 
-  const handleOnClick = useCallback(() => {
-    history.push(`/admin/edit-event/${id}`);
-  }, [id]);
+      statisticStart,
+    } = event;
+    const history = useHistory();
+    const classes = clsx("details", className, { deleted: deleted });
 
-  return (
-    <div className={classes}>
-      <Title>Информация о мероприятии</Title>
+    const handleOnClick = useCallback(() => {
+      history.push(`/admin/edit-event/${id}`);
+    }, [id]);
 
-      <MarginGroup isColumn gap={20}>
-        <MarginGroup className={"details-header-group"} gap={50}>
-          <MarginGroup className="details-header" isColumn gap={5}>
-            <p>
-              Наименование мероприятия:<span>{name}</span>
-            </p>
-            <p className="details-status">
-              Стаус:
-              <span>
-                <i>
-                  {deleted
-                    ? "Мероприятие удалено, QR-код будет вести на общий дефолтный внешний ресурс"
-                    : "Мероприятие активно"}
-                </i>
+    return (
+      <div className={classes}>
+        <Title>Информация о мероприятии</Title>
+
+        <MarginGroup isColumn gap={20}>
+          <MarginGroup className={"details-header-group"} gap={50}>
+            <MarginGroup gap={40}>
+              <MarginGroup className="details-header" isColumn gap={5}>
+                <p>
+                  Наименование мероприятия:<span>{name}</span>
+                </p>
+                <p className="details-status">
+                  Стаус:
+                  <span>
+                    <i>
+                      {deleted
+                        ? "Мероприятие удалено, QR-код будет вести на общий дефолтный внешний ресурс"
+                        : "Мероприятие активно"}
+                    </i>
+                  </span>
+                </p>
+                <p>
+                  Город:<span>{city}</span>
+                </p>
+                <p>
+                  Дата:<span>{date}</span>
+                </p>
+                <p>
+                  Место:<span>{area}</span>
+                </p>
+                <p>
+                  Перешло людей:<span>{people_count}</span>
+                </p>
+                <p>
+                  Перешло на дефолтные внешние ресурсы:
+                  <span>{default_resource_people_count}</span>
+                </p>
+                <p>
+                  Перешло на общий дефолтный внешний ресурс:
+                  <span>{general_default_resource_people_count}</span>
+                </p>
+              </MarginGroup>
+              <MarginGroup isColumn style={{ justifyContent: "space-between" }}>
+                <MarginGroup gap={10} isColumn>
+                  {!deleted && (
+                    <>
+                      <MarginGroup gap={5}>
+                        <Button
+                          disabled={statisticStart === true}
+                          data-id={id}
+                          onClick={handleStatisticStart}
+                          color={"blue"}
+                        >
+                          Нажать перед мероприятием для сбора статистики
+                        </Button>
+                        <Button
+                          disabled={statisticStart === false}
+                          data-id={id}
+                          onClick={handleStatisticUpdate}
+                          color={"yellow"}
+                        >
+                          Обновить статистику
+                        </Button>
+                        <Button
+                          disabled={statisticStart === false}
+                          data-id={id}
+                          onClick={handleStatisticStop}
+                          color={"red"}
+                        >
+                          Остановить сбор статистики
+                        </Button>
+                      </MarginGroup>
+                      <>
+                        {statisticStart ? (
+                          <p style={{ color: "#ed1414", fontSize: 24 }}>
+                            Идёт мероприятие. Можешь обновить статистику в реальном времени.
+                            Остановить сброс статистики можно ТОЛЬКО ПО ОКОНЧАНИИ МЕРОПРИЯТИЯ
+                          </p>
+                        ) : (
+                          <p style={{ color: "#12158d", fontSize: 24 }}>
+                            Мероприятие не идет. Не забудь обнулить кол-во пришедших пользователей и
+                            нажать СИНЮЮ КНОПКУ ПЕРЕД НАЧАЛОМ МЕРОПРИЯТИЯ.
+                          </p>
+                        )}
+                      </>
+                    </>
+                  )}
+                </MarginGroup>
+                <MarginGroup gap={20}>
+                  <Button disabled={statisticStart === true} onClick={setZero}>
+                    Обнулить кол-во пришедших пользователей{" "}
+                  </Button>
+                  <Button onClick={handleOnClick}>Изменить </Button>
+                </MarginGroup>
+              </MarginGroup>
+            </MarginGroup>
+          </MarginGroup>
+
+          <div className="details-table">
+            <div className="details-table-header">
+              <span className="row__cell header__row-cell row__index">№</span>
+              <span className="row__cell header__row-cell row__url">Url QR кода</span>
+              <span className="row__cell header__row-cell row__team">Командный QR</span>
+              <span className="row__cell header__row-cell row__people-count">Перешло людей</span>
+              <span className="row__cell header__row-cell row__rsrc-count">
+                Количество внешних ресурсов
               </span>
-            </p>
-            <p>
-              Город:<span>{city}</span>
-            </p>
-            <p>
-              Дата:<span>{date}</span>
-            </p>
-            <p>
-              Место:<span>{area}</span>
-            </p>
-            <p>
-              Перешло людей:<span>{people_count}</span>
-            </p>
-            <p>
-              Перешло на дефолтные внешние ресурсы:
-              <span>{default_resource_people_count}</span>
-            </p>
-            <p>
-              Перешло на общий дефолтный внешний ресурс:
-              <span>{general_default_resource_people_count}</span>
-            </p>
-          </MarginGroup>
-          <MarginGroup gap={20}>
-            <Button onClick={setZero}>Обнулить кол-во пришедших пользователей </Button>
-            <Button onClick={handleOnClick}>Изменить </Button>
-          </MarginGroup>
+              <span className="row__cell header__row-cell row__qr-path">Qr код</span>
+            </div>
+            <div className="details-table-content">
+              {qrs.map((el, i) => (
+                <Row
+                  key={key(el)}
+                  index={i}
+                  qrUrl={el.qr_url}
+                  peopleCount={el.people_count}
+                  team={el.teamForFront}
+                  rsrcCount={el.resources.length}
+                  resources={el.resources}
+                  qrPath={el.qrPath}
+                  genDefaultRsrc={el.general_default_resource_people_count}
+                  defaultResource={el.default_resource}
+                  defaultResourceCount={el.default_resource_people_count}
+                />
+              ))}
+            </div>
+          </div>
         </MarginGroup>
-
-        <div className="details-table">
-          <div className="details-table-header">
-            <span className="row__cell header__row-cell row__index">№</span>
-            <span className="row__cell header__row-cell row__url">Url QR кода</span>
-            <span className="row__cell header__row-cell row__team">Командный QR</span>
-            <span className="row__cell header__row-cell row__people-count">Перешло людей</span>
-            <span className="row__cell header__row-cell row__rsrc-count">
-              Количество внешних ресурсов
-            </span>
-            <span className="row__cell header__row-cell row__qr-path">Qr код</span>
-          </div>
-          <div className="details-table-content">
-            {qrs.map((el, i) => (
-              <Row
-                key={key(el)}
-                index={i}
-                qrUrl={el.qr_url}
-                peopleCount={el.people_count}
-                team={el.teamForFront}
-                rsrcCount={el.resources.length}
-                resources={el.resources}
-                qrPath={el.qrPath}
-                genDefaultRsrc={el.general_default_resource_people_count}
-                defaultResource={el.default_resource}
-                defaultResourceCount={el.default_resource_people_count}
-              />
-            ))}
-          </div>
-        </div>
-      </MarginGroup>
-    </div>
-  );
-});
+      </div>
+    );
+  },
+);

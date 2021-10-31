@@ -17,7 +17,7 @@ const isDev = process.env.NODE_ENV !== "development";
 const getUrl = ({ type, state: { id, suffix } }) => {
   switch (type) {
     case checkSuffix.type:
-      return isDev ? "/existSuffix" : `/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+      return isDev ? "/existSuffix" : `/admin/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
   }
 };
 

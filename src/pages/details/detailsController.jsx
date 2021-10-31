@@ -2,7 +2,14 @@ import React, { useEffect, useCallback } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 
-import { fetchError, getInfoById, setToZero } from "../../model/event/reducer";
+import {
+  fetchError,
+  getInfoById,
+  setToZero,
+  statisticStop,
+  statisticUpdate,
+  statisticStart,
+} from "../../model/event/reducer";
 import { sagaEventCallBegan } from "../../model/saga";
 
 import { Details } from "./details";
@@ -24,20 +31,21 @@ export const DetailsController = ({ className }) => {
   const event = useSelector((state) => state.event.event);
   const resetToZero = useSelector((state) => state.event.resetToZero);
   const token = useSelector((state) => state.auth.token);
+  const stop = useSelector((state) => state.event.statisticStop);
+  const update = useSelector((state) => state.event.statisticUpdate);
+  const start = useSelector((state) => state.event.statisticStart);
 
   useEffect(() => {
-    if (!event.name) {
-      const id = location.pathname.split("/")[3];
-      dispatch({
-        url: getUrl({ type: getInfoById.type, id }),
-        type: sagaEventCallBegan.type,
-        method: "get",
-        onSuccess: getInfoById.type,
-        onError: fetchError.type,
-        token,
-      });
-    }
-  }, [dispatch, location, event, token]);
+    const id = location.pathname.split("/")[3];
+    dispatch({
+      url: getUrl({ type: getInfoById.type, id }),
+      type: sagaEventCallBegan.type,
+      method: "get",
+      onSuccess: getInfoById.type,
+      onError: fetchError.type,
+      token,
+    });
+  }, [dispatch, location, token, stop, update, start]);
 
   useEffect(() => {
     if (resetToZero) {
@@ -66,5 +74,57 @@ export const DetailsController = ({ className }) => {
     });
   }, [dispatch, token]);
 
-  return <Details className={className} event={event} setZero={handleOnSetZero} />;
+  const handleStatisticStop = useCallback(
+    ({ target }) => {
+      const id = target.dataset["id"];
+      dispatch({
+        url: `/admin/statisticStop?id=${id}`,
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: statisticStop.type,
+        onError: fetchError.type,
+        token,
+      });
+    },
+    [token],
+  );
+  const handleStatisticUpdate = useCallback(
+    ({ target }) => {
+      const id = target.dataset["id"];
+      dispatch({
+        url: `/admin/statisticUpdate?id=${id}`,
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: statisticUpdate.type,
+        onError: fetchError.type,
+        token,
+      });
+    },
+    [token],
+  );
+  const handleStatisticStart = useCallback(
+    ({ target }) => {
+      const id = target.dataset["id"];
+      dispatch({
+        url: `/admin/statisticStart?id=${id}`,
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: statisticStart.type,
+        onError: fetchError.type,
+        token,
+      });
+    },
+    [token],
+  );
+
+  return (
+    <Details
+      className={className}
+      event={event}
+      setZero={handleOnSetZero}
+      handleStatisticStop={handleStatisticStop}
+      handleStatisticUpdate={handleStatisticUpdate}
+      handleStatisticStart={handleStatisticStart}
+    />
+  );
 };
