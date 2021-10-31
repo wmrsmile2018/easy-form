@@ -26,6 +26,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
   const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
+  const token = useSelector((state) => state.auth.token);
 
   const count = useMemo(
     () =>
@@ -64,8 +65,9 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
         method: "get",
         onSuccess: checkSuffix.type,
         onError: fetchError.type,
+        token,
       });
     }
-  }, [debouncedSearchTerm]);
+  }, [debouncedSearchTerm, token]);
   return <InfoBlock isValid={isValid} {...rest} />;
 };
