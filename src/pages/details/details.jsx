@@ -86,6 +86,7 @@ const Resources = React.memo(
 
 const Row = React.memo(
   ({
+    id,
     className,
     qrUrl,
     peopleCount,
@@ -114,16 +115,19 @@ const Row = React.memo(
           return null;
         }
 
-        toPng(ref.current)
-          .then((dataUrl) => {
-            window.saveAs(dataUrl, "someFile.png");
-          })
-          .catch((err) => {
-            console.log(err);
-          });
+        toPng(ref.current).then((dataUrl) => {
+          window.saveAs(dataUrl, "someFile.png");
+        });
+        // .catch((err) => {
+        //   console.log(err);
+        // });
       },
       [ref],
     );
+
+    const handleOnClickAccess = useCallback(() => {
+      window.open(`http://qrga.me:49274/admin/getpasswords?id=${id}`, "_blank");
+    });
 
     return (
       <div className={classes}>
@@ -139,6 +143,7 @@ const Row = React.memo(
                 <QRCode className="row__qr-path" title="hello" size={200} value={qrUrl} />
                 <p>{qrUrl.split("://")[1]}</p>
               </div>
+              <Button onClick={handleOnClickAccess}>Доступы</Button>
               <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code", ref })}>
                 Скачать Qr код
               </Button>
@@ -241,6 +246,7 @@ export const Details = React.memo(({ className, event, setZero }) => {
               <Row
                 key={key(el)}
                 index={i}
+                id={el.id}
                 qrUrl={el.qr_url}
                 peopleCount={el.people_count}
                 team={el.teamForFront}
