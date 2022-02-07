@@ -35,11 +35,22 @@ export const AddEventController = React.memo(() => {
     qrs: [],
   });
 
+  const [access, setAccess] = useState({
+    "group_access": false,
+    "group_password": "",
+    "personal_access": false,
+    "personal_access_template": "",
+    "personal_access_length": 0,
+    "personal_access_quantity": 0,
+    "personal_access_count": 0,
+  });
+
   const handleOnSubmit = useCallback(() => {
     dispatch({
       type: sagaEventCallBegan.type,
       payload: {
         ...state,
+        ...access,
         date_picker: "",
       },
       url: getUrl({ type: createEvent.type }),
@@ -50,6 +61,20 @@ export const AddEventController = React.memo(() => {
 
     setState({ name: "", city: "", date: "", area: "", qrs: [] });
   }, [state]);
+
+  const handleOnChangeAccess = ({ target }) => {
+    setAccess({
+      ...access,
+      [target.name]: target.checked,
+    });
+  };
+
+  const handleOnChangeFieldsAccess = ({ target }) => {
+    setAccess({
+      ...access,
+      [target.name]: target.value,
+    });
+  };
 
   useEffect(() => {
     if (isCreated) {
@@ -63,6 +88,9 @@ export const AddEventController = React.memo(() => {
       state={state}
       onSend={handleOnSubmit}
       title="Новое мероприятие"
+      access={access}
+      onUpdateAccess={handleOnChangeAccess}
+      onUpdateAccessFields={handleOnChangeFieldsAccess}
       {...parametres}
     />
   );

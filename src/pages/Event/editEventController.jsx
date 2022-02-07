@@ -39,6 +39,30 @@ export const EditEventController = React.memo(() => {
     qrs: [],
   });
 
+  const [access, setAccess] = useState({
+    "group_access": false,
+    "group_password": "",
+    "personal_access": false,
+    "personal_access_template": "",
+    "personal_access_length": 0,
+    "personal_access_quantity": 0,
+    "personal_access_count": 0,
+  });
+
+  const handleOnChangeAccess = ({ target }) => {
+    setAccess({
+      ...access,
+      [target.name]: target.checked,
+    });
+  };
+
+  const handleOnChangeFieldsAccess = ({ target }) => {
+    setAccess({
+      ...access,
+      [target.name]: target.value,
+    });
+  };
+
   const handleOnSubmit = useCallback(() => {
     const nextState = produce(state, (draftState) => {
       const qrs = draftState.qrs.map((qr) => {
@@ -52,14 +76,15 @@ export const EditEventController = React.memo(() => {
       draftState.qrs = qrs;
     });
 
-    console.log(state);
-    console.log(nextState);
+    // console.log(state);
+    // console.log(nextState);
 
     dispatch({
       url: getUrl({ type: editEvent.type }),
       type: sagaEventCallBegan.type,
       payload: {
         ...nextState,
+        ...access,
         date_picker: "",
       },
       method: "put",
@@ -86,10 +111,29 @@ export const EditEventController = React.memo(() => {
 
   useEffect(() => {
     if (event.name) {
+      const {
+        group_access,
+        group_password,
+        personal_access,
+        personal_access_template,
+        personal_access_length,
+        personal_access_quantity,
+        personal_access_count,
+      } = event;
       setState({
         ...state,
         ...event,
         date_picker: new Date(event.unixtime * 1000),
+      });
+
+      setAccess({
+        group_access,
+        group_password,
+        personal_access,
+        personal_access_template,
+        personal_access_length,
+        personal_access_quantity,
+        personal_access_count,
       });
     }
   }, [event]);
@@ -106,6 +150,9 @@ export const EditEventController = React.memo(() => {
       state={state}
       onSend={handleOnSubmit}
       title="Редактировать мероприятие"
+      access={access}
+      onUpdateAccess={handleOnChangeAccess}
+      onUpdateAccessFields={handleOnChangeFieldsAccess}
       {...parametres}
     />
   );
