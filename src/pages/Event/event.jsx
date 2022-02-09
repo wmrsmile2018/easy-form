@@ -17,18 +17,43 @@ import "./event.scss";
 import { InfoBlockWrapper } from "./infoBlockWrapper";
 import { PopupWrapper } from "./popupWrapper";
 import { Title } from "../../components/title";
+import { CheckBox } from "../../components/checkBox";
 
 const regex = /^[a-zA-Z\d]+$/;
 const regexMainFields = /^(?:[а-яА-ЯA-Za-z0-9 ]*)$/;
-const inputFields1 = [
+const inputFields = [
   { name: "city", title: "Введите город" },
   { name: "name", title: "Введите название мероприятия" },
 ];
 
+const checkboxFields = [
+  { name: "personal_access", title: "Персональный доступ" },
+  { name: "group_access", title: "Групповой доступ" },
+];
+
+const personalAccessFields = [
+  { name: "personal_access_template", title: "Шаблон пароля" },
+  { name: "personal_access_length", title: "Количество символов" },
+  { name: "personal_access_quantity", title: "Количество попыток" },
+  { name: "personal_access_count", title: "Количество паролей" },
+];
+
 export const Event = React.memo(
-  ({ className, onSend, state, onUpdateState, status, title, teamName }) => {
+  ({
+    className,
+    onSend,
+    state,
+    access,
+    onUpdateAccess,
+    onUpdateAccessFields,
+    onUpdateState,
+    status,
+    title,
+    teamName,
+  }) => {
     const ref = useRef(null);
-    const history = useHistory();
+
+    // const history = useHistory();
     const classes = clsx("event", className);
     // const [suffix, setSuffix] = useState({ id: "", value: "" });
     const [popup, setPopup] = useState({
@@ -215,10 +240,6 @@ export const Event = React.memo(
       [state, onUpdateState],
     );
 
-    const handleOnClickDetails = useCallback(() => {
-      history.push(`/admin/details/${state.id}`);
-    }, [state]);
-
     return (
       <div className={classes}>
         <Title>{title}</Title>
@@ -233,33 +254,91 @@ export const Event = React.memo(
           />
         </Modal>
 
-        <MarginGroup gap={30} isColumn>
-          <MarginGroup gap={30} className="event__input-fields">
-            {inputFields1.map((el) => (
-              <Input
-                key={key(el)}
-                name={el.name}
-                title={el.title}
-                onChange={handleOnChange}
-                value={state[el.name]}
-              />
-            ))}
+        <MarginGroup gap={30} isColumn className="event__content">
+          <MarginGroup gap={10} className="event__access" isColumn>
+            <h2>Доступы</h2>
+            <MarginGroup gap={15}>
+              {checkboxFields.map((el) => (
+                <CheckBox
+                  title={el.title}
+                  name={el.name}
+                  onChange={onUpdateAccess}
+                  checked={access[el.name]}
+                />
+              ))}
+            </MarginGroup>
           </MarginGroup>
-          <MarginGroup gap={30} className="event__input-fields">
-            <InputDate
-              style={popup.showPopup ? { zIndex: -1 } : { zIndex: 0 }}
-              title="Введите дату мероприятия"
-              onChange={handleOnDatePicked}
-              format="dd-MM-yyyy"
-              value={state.date_picker}
-              name={"date"}
-            />
-            <Input
-              name={"area"}
-              title={"Введите место"}
-              onChange={handleOnChange}
-              value={state.area}
-            />
+          {(access.group_access || access.personal_access) && (
+            <MarginGroup gap={10} isColumn className="event__access-fields">
+              {access.group_access && (
+                <>
+                  <h2>Групповой доступ</h2>
+                  <Input
+                    name={"group_password"}
+                    title={"Групповой пароль"}
+                    onChange={onUpdateAccessFields}
+                    value={access.group_password}
+                  />
+                </>
+              )}
+              {access.personal_access && (
+                <>
+                  <h2>Персональный доступ</h2>
+                  <MarginGroup gap={5}>
+                    {personalAccessFields.slice(0, 2).map((el) => (
+                      <Input
+                        key={key(el)}
+                        name={el.name}
+                        title={el.title}
+                        onChange={onUpdateAccessFields}
+                        value={state[el.name]}
+                      />
+                    ))}
+                  </MarginGroup>
+                  <MarginGroup gap={5}>
+                    {personalAccessFields.slice(2).map((el) => (
+                      <Input
+                        key={key(el)}
+                        name={el.name}
+                        title={el.title}
+                        onChange={onUpdateAccessFields}
+                        value={state[el.name]}
+                      />
+                    ))}
+                  </MarginGroup>
+                </>
+              )}
+            </MarginGroup>
+          )}
+          <MarginGroup gap={10} isColumn>
+            <h2>Мероприятие</h2>
+            <MarginGroup gap={30} className="event__input-fields">
+              {inputFields.map((el) => (
+                <Input
+                  key={key(el)}
+                  name={el.name}
+                  title={el.title}
+                  onChange={handleOnChange}
+                  value={state[el.name]}
+                />
+              ))}
+            </MarginGroup>
+            <MarginGroup gap={30} className="event__input-fields">
+              <InputDate
+                style={popup.showPopup ? { zIndex: -1 } : { zIndex: 0 }}
+                title="Введите дату мероприятия"
+                onChange={handleOnDatePicked}
+                format="dd-MM-yyyy"
+                value={state.date_picker}
+                name={"date"}
+              />
+              <Input
+                name={"area"}
+                title={"Введите место"}
+                onChange={handleOnChange}
+                value={state.area}
+              />
+            </MarginGroup>
           </MarginGroup>
 
           <MarginGroup gap={20}>

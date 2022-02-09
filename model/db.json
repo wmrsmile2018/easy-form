@@ -47,6 +47,24 @@
       ],
       "date_picker": "",
       "id": "OHpHRN2"
+    },
+    {
+      "name": "концерт",
+      "city": "Москва",
+      "date": "12-02-2022",
+      "area": "какое то место",
+      "qrs": [
+        {
+          "status": "add",
+          "id": "tmpId-1644063234069",
+          "qr_suffix": "sometest",
+          "default_resource": "asdasdasdasdasdasdasdasdasdasd///13/123/12/321/321/3",
+          "team": true,
+          "resources": []
+        }
+      ],
+      "date_picker": "",
+      "id": "g-aQVfU"
     }
   ],
   "eventsFilters": [

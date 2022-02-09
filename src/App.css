@@ -96,7 +96,6 @@
   /* padding: 10px 20px; */
   height: 60px;
   min-height: 60px;
-  /* min-height: px; */
   box-shadow: 0px -3px 8px black;
   /* padding-left: 20px; */
   background-color: #f1f1f1;
@@ -116,17 +115,12 @@
   line-height: 1.2rem;
   text-decoration: none;
 }
-.app__nav-link:visited {
-  /* color: #fff; */
-}
+
 .app__nav-link:hover {
   color: #abaeb9;
-}
-.app__nav-link:active {
 }
 
 .activeRoute {
   background-color: #979797;
-  /* border-bottom:  solid teal; */
   cursor: not-allowed;
 }

@@ -2,6 +2,12 @@
   width: 100%;
   height: 100%;
 
+  .event__content {
+    h2 {
+      margin: 0;
+    }
+  }
+
   .event__input-fields {
     .input {
       width: 250px;
@@ -14,5 +20,13 @@
   .input-date {
     width: 250px;
     min-width: 250px;
+  }
+  .event__access {
+  }
+  .event__access-fields {
+    width: 800px;
+    .input {
+      width: 100%;
+    }
   }
 }
