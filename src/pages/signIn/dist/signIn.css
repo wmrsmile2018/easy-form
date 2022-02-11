@@ -1,0 +1,10 @@
+.sign-in {
+  width: 500px;
+  box-shadow: 0 0 4px #00000036;
+  padding: 40px;
+  margin: auto auto;
+}
+.sign-in h2 {
+  margin: 0;
+  padding: 0;
+}
