@@ -11,6 +11,7 @@ import { AboutUs } from "./pages/AboutUs";
 import { UsersController } from "./pages/users";
 import { SignInController } from "./pages/signIn";
 import { useSelector } from "react-redux";
+import { MainPageController } from "./pages/MainPage/mainPageController";
 
 const ErrorComponent = ({ status }) => {
   return <div className="error-component">Current page doesn't exist</div>;
@@ -20,8 +21,11 @@ export const Router = () => (
   <>
     <div className="app-navigation">
       <div className="app-navigation-wrapper">
-        <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/admin">
+        <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/">
           Главная
+        </NavLink>
+        <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/admin">
+          Активные
         </NavLink>
         <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/basket">
           Корзина
@@ -48,9 +52,7 @@ export const Router = () => (
     <main id="main">
       <div className="app-content">
         <Switch>
-          <Route exact path="/">
-            <Redirect to="/admin" />
-          </Route>
+          <Route exact path="/" component={MainPageController} />
           <Route exact path="/admin" component={EventsController} />
           <Route path="/admin/add-event" component={AddEventController} />
           <Route path="/admin/users" component={UsersController} />
