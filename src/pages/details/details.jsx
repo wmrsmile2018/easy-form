@@ -126,7 +126,7 @@ const Row = React.memo(
     );
 
     const handleOnClickAccess = useCallback(() => {
-      window.open(`http://qrga.me:49274/admin/getpasswords?id=${id}`, "_blank");
+      window.open(`http://qrga.me:80/admin/getpasswords?id=${id}`, "_blank");
     });
 
     return (

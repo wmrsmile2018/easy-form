@@ -11,6 +11,25 @@ import { Delete, Edit } from "../../icons/";
 
 import "./infoBlock.scss";
 
+const checkboxFields = [
+  { name: "personal_access", title: "Персональный пароль" },
+  { name: "group_access", title: "Групповой пароль" },
+];
+
+const personalAccessFields = [
+  { name: "personal_access_template", title: "Шаблон пароля" },
+  { name: "personal_access_length", title: "Количество символов" },
+  { name: "personal_access_quantity", title: "Количество попыток" },
+  { name: "personal_access_count", title: "Количество паролей" },
+];
+
+// group_access,
+// group_password,
+// personal_access,
+// personal_access_template,
+// personal_access_length,
+// personal_access_quantity,
+// personal_access_count,
 export const InfoBlock = ({
   className,
   onChangeSuffix,
@@ -19,12 +38,15 @@ export const InfoBlock = ({
   onCheck,
   resources,
   checked,
-  suffx,
+  suffix,
   defRsrc,
   onDelete,
   onDeleteResource,
   isValid,
   onEditResource,
+  onChangePassword,
+  onChangeCheckedPassword,
+  ...rest
 }) => {
   const classes = clsx("info-block", className);
   return (
@@ -37,17 +59,73 @@ export const InfoBlock = ({
               type="text"
               name="qr_suffix"
               onChange={onChangeSuffix}
-              value={suffx}
+              value={suffix}
             />
             {!isValid && (
               <p className="invalid-info">
-                {`Хвост "${suffx}"`}
+                {`Хвост "${suffix}"`}
                 <br /> уже существует в системе
               </p>
             )}
           </MarginGroup>
           <Button onClick={onClick}>Добавить внешний ресурс</Button>
         </MarginGroup>
+
+        <MarginGroup gap={10} className="event__access" isColumn>
+          <h2>Доступы</h2>
+          <MarginGroup gap={15}>
+            {checkboxFields.map((el) => (
+              <CheckBox
+                title={el.title}
+                name={el.name}
+                onChange={onChangeCheckedPassword}
+                checked={rest[el.name]}
+              />
+            ))}
+          </MarginGroup>
+        </MarginGroup>
+        {(rest.personal_access || rest.group_access) && (
+          <MarginGroup gap={10} isColumn className="event__access-fields">
+            {rest.group_access && (
+              <>
+                <h2>Групповой пароль</h2>
+                <Input
+                  name={"group_password"}
+                  title={"Групповой пароль"}
+                  onChange={onChangePassword}
+                  value={rest.group_password}
+                />
+              </>
+            )}
+            {rest.personal_access && (
+              <>
+                <h2>Персональный пароль</h2>
+                <MarginGroup gap={5}>
+                  {personalAccessFields.slice(0, 2).map((el) => (
+                    <Input
+                      key={key(el)}
+                      name={el.name}
+                      title={el.title}
+                      onChange={onChangePassword}
+                      value={rest[el.name]}
+                    />
+                  ))}
+                </MarginGroup>
+                <MarginGroup gap={5}>
+                  {personalAccessFields.slice(2).map((el) => (
+                    <Input
+                      key={key(el)}
+                      name={el.name}
+                      title={el.title}
+                      onChange={onChangePassword}
+                      value={rest[el.name]}
+                    />
+                  ))}
+                </MarginGroup>
+              </>
+            )}
+          </MarginGroup>
+        )}
 
         <MarginGroup gap={10} style={{ alignItems: "flex-end" }}>
           <Input
