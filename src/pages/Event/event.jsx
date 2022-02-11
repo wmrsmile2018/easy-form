@@ -26,26 +26,14 @@ const inputFields = [
   { name: "name", title: "Введите название мероприятия" },
 ];
 
-const checkboxFields = [
-  { name: "personal_access", title: "Персональный доступ" },
-  { name: "group_access", title: "Групповой доступ" },
-];
-
-const personalAccessFields = [
-  { name: "personal_access_template", title: "Шаблон пароля" },
-  { name: "personal_access_length", title: "Количество символов" },
-  { name: "personal_access_quantity", title: "Количество попыток" },
-  { name: "personal_access_count", title: "Количество паролей" },
-];
-
 export const Event = React.memo(
   ({
     className,
     onSend,
     state,
-    access,
-    onUpdateAccess,
-    onUpdateAccessFields,
+    // access,
+    // onUpdateAccess,
+    // onUpdateAccessFields,
     onUpdateState,
     status,
     title,
@@ -83,6 +71,13 @@ export const Event = React.memo(
             "default_resource": "",
             "team": false,
             "resources": [],
+            "group_access": false,
+            "group_password": "",
+            "personal_access": false,
+            "personal_access_template": "",
+            "personal_access_length": 0,
+            "personal_access_quantity": 0,
+            "personal_access_count": 0,
           },
         ],
       });
@@ -136,6 +131,26 @@ export const Event = React.memo(
           ...nextState,
         });
       }
+    };
+
+    const handleOnChangePassword = (curSuffix, { target }) => {
+      const nextState = produce(state, (draftState) => {
+        const Qr = draftState.qrs.find((el) => el.id === curSuffix);
+        Qr[target.name] = target.value;
+      });
+      onUpdateState({
+        ...nextState,
+      });
+    };
+
+    const handleOnCheckedPassword = (curSuffix, { target }) => {
+      const nextState = produce(state, (draftState) => {
+        const Qr = draftState.qrs.find((el) => el.id === curSuffix);
+        Qr[target.name] = target.checked;
+      });
+      onUpdateState({
+        ...nextState,
+      });
     };
 
     const handleOnChangeDefRsrc = (curSuffix, { target }) => {
@@ -255,63 +270,7 @@ export const Event = React.memo(
         </Modal>
 
         <MarginGroup gap={30} isColumn className="event__content">
-          <MarginGroup gap={10} className="event__access" isColumn>
-            <h2>Доступы</h2>
-            <MarginGroup gap={15}>
-              {checkboxFields.map((el) => (
-                <CheckBox
-                  title={el.title}
-                  name={el.name}
-                  onChange={onUpdateAccess}
-                  checked={access[el.name]}
-                />
-              ))}
-            </MarginGroup>
-          </MarginGroup>
-          {(access.group_access || access.personal_access) && (
-            <MarginGroup gap={10} isColumn className="event__access-fields">
-              {access.group_access && (
-                <>
-                  <h2>Групповой доступ</h2>
-                  <Input
-                    name={"group_password"}
-                    title={"Групповой пароль"}
-                    onChange={onUpdateAccessFields}
-                    value={access.group_password}
-                  />
-                </>
-              )}
-              {access.personal_access && (
-                <>
-                  <h2>Персональный доступ</h2>
-                  <MarginGroup gap={5}>
-                    {personalAccessFields.slice(0, 2).map((el) => (
-                      <Input
-                        key={key(el)}
-                        name={el.name}
-                        title={el.title}
-                        onChange={onUpdateAccessFields}
-                        value={state[el.name]}
-                      />
-                    ))}
-                  </MarginGroup>
-                  <MarginGroup gap={5}>
-                    {personalAccessFields.slice(2).map((el) => (
-                      <Input
-                        key={key(el)}
-                        name={el.name}
-                        title={el.title}
-                        onChange={onUpdateAccessFields}
-                        value={state[el.name]}
-                      />
-                    ))}
-                  </MarginGroup>
-                </>
-              )}
-            </MarginGroup>
-          )}
           <MarginGroup gap={10} isColumn>
-            <h2>Мероприятие</h2>
             <MarginGroup gap={30} className="event__input-fields">
               {inputFields.map((el) => (
                 <Input
@@ -358,15 +317,23 @@ export const Event = React.memo(
                 key={el.id}
                 qrs={state.qrs}
                 suffix={el.qr_suffix}
-                suffx={el.qr_suffix}
                 defRsrc={el.default_resource}
                 resources={el.resources}
+                group_access={el.group_access}
+                group_password={el.group_password}
+                personal_access={el.personal_access}
+                personal_access_template={el.personal_access_template}
+                personal_access_length={el.personal_access_length}
+                personal_access_quantity={el.personal_access_quantity}
+                personal_access_count={el.personal_access_count}
                 checked={el[teamName] ? true : false}
                 onClick={() => handleOnShowModal(el.id)}
                 onCheck={(e) => handleOnCheck(el.id, e)}
                 onDelete={() => handleOnRemoveSuffix(el.id)}
                 onChangeSuffix={(e) => handleOnChangeSuffix(el.id, e)}
                 onChangeDefRsrc={(e) => handleOnChangeDefRsrc(el.id, e)}
+                onChangePassword={(e) => handleOnChangePassword(el.id, e)}
+                onChangeCheckedPassword={(e) => handleOnCheckedPassword(el.id, e)}
                 onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
                 onEditResource={(curRes) => handleOnShowEditResource(el.id, curRes)}
               />
