@@ -76,6 +76,7 @@ export const InfoBlock = ({
           <MarginGroup gap={15}>
             {checkboxFields.map((el) => (
               <CheckBox
+                key={el.name}
                 title={el.title}
                 name={el.name}
                 onChange={onChangeCheckedPassword}

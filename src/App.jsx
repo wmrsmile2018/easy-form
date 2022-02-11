@@ -21,7 +21,6 @@ export const Router = () => {
   const history = useHistory();
   const dispatch = useDispatch();
   const status = useSelector((state) => state.auth.status);
-  console.log("status   ", status);
 
   useEffect(() => {
     if (status === 401) {
@@ -33,7 +32,6 @@ export const Router = () => {
   const handleOnLogout = () => {
     history.push("/sign-in");
     dispatch({ type: "CLEAR_STORE" });
-    console.log("hello");
   };
 
   return (
