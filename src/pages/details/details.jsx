@@ -143,7 +143,7 @@ const Row = React.memo(
                 <QRCode className="row__qr-path" title="hello" size={200} value={qrUrl} />
                 <p>{qrUrl.split("://")[1]}</p>
               </div>
-              <Button onClick={handleOnClickAccess}>Доступы</Button>
+              <Button onClick={handleOnClickAccess}>Пароли</Button>
               <Button onClick={() => handleOnClick({ href: qrPath, name: "qr-code", ref })}>
                 Скачать Qr код
               </Button>
