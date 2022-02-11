@@ -10,7 +10,7 @@ import { DefaultResourceCotroller } from "./pages/defaultResource";
 import { AboutUs } from "./pages/AboutUs";
 import { UsersController } from "./pages/users";
 import { SignInController } from "./pages/signIn";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
 import { MainPageController } from "./pages/MainPage/mainPageController";
 
 const ErrorComponent = ({ status }) => {
@@ -79,9 +79,7 @@ export const Router = () => {
       <main id="main">
         <div className="app-content">
           <Switch>
-            <Route exact path="/">
-              <Redirect to="/admin" />
-            </Route>
+            <Route exact path="/" component={MainPageController} />
             <Route exact path="/admin" component={EventsController} />
             <Route path="/admin/add-event" component={AddEventController} />
             <Route path="/admin/users" component={UsersController} />
