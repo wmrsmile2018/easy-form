@@ -21,11 +21,8 @@ export const Router = () => (
   <>
     <div className="app-navigation">
       <div className="app-navigation-wrapper">
-        <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/">
-          Главная
-        </NavLink>
         <NavLink exact className="app__nav-link" activeClassName="activeRoute" to="/admin">
-          Активные
+          Главная
         </NavLink>
         <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/basket">
           Корзина
@@ -52,7 +49,6 @@ export const Router = () => (
     <main id="main">
       <div className="app-content">
         <Switch>
-          <Route exact path="/" component={MainPageController} />
           <Route exact path="/admin" component={EventsController} />
           <Route path="/admin/add-event" component={AddEventController} />
           <Route path="/admin/users" component={UsersController} />
@@ -84,7 +80,7 @@ function App() {
           path="/sign-in"
           render={() => (token ? <Redirect to="/" /> : <SignInController />)}
         />
-        <Route path="/" component={Router} />
+        <Route exact path="/" component={MainPageController} />
       </Switch>
     </div>
   );
