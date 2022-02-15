@@ -65,11 +65,17 @@ export const Router = () => (
 );
 
 function App() {
+  const token = useSelector((state) => state.auth.token);
+
   return (
     <div className="App">
       <Switch>
-        <Route path="/admin/sign-in" component={SignInController} />
         <Route exact path="/" component={MainPageController} />
+        <Route path="/admin/sign-in" component={SignInController} />
+        <Route
+          path="/admin"
+          render={() => (token ? <Router /> : <Redirect to="/admin/sign-in" />)}
+        />
       </Switch>
     </div>
   );
