@@ -51,7 +51,7 @@ export const Router = () => {
           <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/users">
             Администрирование
           </NavLink>
-          <NavLink className="app__nav-link" activeClassName="activeRoute" to="/sign-in">
+          <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/sign-in">
             <p onClick={handleOnLogout}>Выйти</p>
           </NavLink>
         </div>
