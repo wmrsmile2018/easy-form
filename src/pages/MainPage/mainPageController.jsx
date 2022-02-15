@@ -1,5 +1,6 @@
 import { useCallback, useState } from "react";
 import { MainPage } from "./mainPage";
+import { Helmet } from "react-helmet";
 
 export const MainPageController = () => {
   const [state, setState] = useState("");
@@ -10,5 +11,12 @@ export const MainPageController = () => {
   const handleOnSubmit = useCallback(() => {
     window.open(`https://qrga.me/${state}`, "_blank");
   }, [state]);
-  return <MainPage state={state} onChange={handleOnChange} onSubmit={handleOnSubmit} />;
+  return (
+    <>
+      <Helmet>
+        <meta name="viewport" content="width=device-width, initial-scale=1"></meta>
+      </Helmet>
+      <MainPage state={state} onChange={handleOnChange} onSubmit={handleOnSubmit} />;
+    </>
+  );
 };
