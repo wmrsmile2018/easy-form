@@ -1,8 +1,9 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { sagaEventCallBegan } from "../../model/saga";
 import { authorisation, userFetchError } from "../../model/auth/reducer";
 import { SignIn } from "./signIn";
+import { useHistory } from "react-router-dom";
 
 // const isDev = process.env.NODE_ENV === "development";
 
@@ -15,6 +16,8 @@ import { SignIn } from "./signIn";
 
 export const SignInController = () => {
   const dispatch = useDispatch();
+  const history = useHistory();
+  const token = useSelector((state) => state.auth.token);
   const [state, setState] = useState({
     login: "",
     password: "",
@@ -56,6 +59,13 @@ export const SignInController = () => {
       });
     }
   };
+  useEffect(() => {
+    if (!token) {
+      history.push("/admin/sign-in");
+    } else {
+      history.push("/admin/");
+    }
+  }, [token]);
 
   return (
     <SignIn
