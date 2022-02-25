@@ -69,5 +69,5 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
       });
     }
   }, [debouncedSearchTerm, token]);
-  return <InfoBlock isValid={isValid} {...rest} />;
+  return <InfoBlock suffix={suffix} isValid={isValid} {...rest} />;
 };

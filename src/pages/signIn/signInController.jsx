@@ -63,7 +63,7 @@ export const SignInController = () => {
     if (!token) {
       history.push("/admin/sign-in");
     } else {
-      history.push("/admin/");
+      history.push("/admin");
     }
   }, [token]);
 

@@ -23,13 +23,6 @@ const personalAccessFields = [
   { name: "personal_access_count", title: "Количество паролей" },
 ];
 
-// group_access,
-// group_password,
-// personal_access,
-// personal_access_template,
-// personal_access_length,
-// personal_access_quantity,
-// personal_access_count,
 export const InfoBlock = ({
   className,
   onChangeSuffix,
@@ -59,7 +52,7 @@ export const InfoBlock = ({
               type="text"
               name="qr_suffix"
               onChange={onChangeSuffix}
-              value={suffix}
+              value={suffix || ""}
             />
             {!isValid && (
               <p className="invalid-info">
@@ -134,7 +127,7 @@ export const InfoBlock = ({
             type="text"
             name="default_resource"
             onChange={onChangeDefRsrc}
-            value={defRsrc}
+            value={defRsrc || ""}
             style={{ width: 380 }}
           />
           <i>Оставь пустым если дефолтного внешнего ресурса не будет</i>
@@ -152,12 +145,13 @@ export const InfoBlock = ({
             <p className="info-block__number">№</p>
             <p className="info-block__url">Внешний ресурс</p>
             <p className="info-block__count">Количество человек</p>
+            <p className="info-block__name">Название страницы</p>
           </div>
           <MarginGroup isColumn className="info-block__sources" gap={10}>
-            {resources.map((el, i) => (
+            {resources.map((el) => (
               <div key={key(el)} className="info-block-source">
                 <div>
-                  <p className="info-block__number">{i + 1}</p>
+                  <p className="info-block__number">{el.number}</p>
                   <a
                     href={el.url}
                     target="_blank"
@@ -167,6 +161,7 @@ export const InfoBlock = ({
                     {decodeURI(el.url)}
                   </a>
                   <p className="info-block__count">{el.people_count}</p>
+                  <p className="info-block__name">{el.name}</p>
                 </div>
                 <MarginGroup gap={20}>
                   <Edit onClick={() => onEditResource(el.id)} />

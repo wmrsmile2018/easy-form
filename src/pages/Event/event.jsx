@@ -27,18 +27,7 @@ const inputFields = [
 ];
 
 export const Event = React.memo(
-  ({
-    className,
-    onSend,
-    state,
-    // access,
-    // onUpdateAccess,
-    // onUpdateAccessFields,
-    onUpdateState,
-    status,
-    title,
-    teamName,
-  }) => {
+  ({ className, onSend, state, onUpdateState, status, title, teamName }) => {
     const ref = useRef(null);
 
     // const history = useHistory();
@@ -49,6 +38,7 @@ export const Event = React.memo(
       showPopup: false,
       status: "add",
       isExist: false,
+      size: 0,
       state: {},
     });
 
@@ -84,11 +74,15 @@ export const Event = React.memo(
     }, [state, onUpdateState, status]);
 
     const handleOnShowModal = (curSuffix) => {
+      const Qr = state.qrs.find((el) => el.id === curSuffix);
+      // const tmpResourse = Qr.resources.find((el) => el.id === curRes);
       setPopup({
         curSuffix,
         showPopup: true,
         status: "add",
-        state: {},
+        state: {
+          number: Qr.resources.length + 1,
+        },
       });
     };
 

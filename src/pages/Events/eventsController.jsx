@@ -36,6 +36,19 @@ const parametres = {
   status: "active",
 };
 
+const sortByDate = (state) => {
+  const events = [...state.event.events];
+
+  return events.sort((event1, event2) => {
+    const [date1, date2] = [event1.date.split("-"), event2.date.split("-")];
+    const [tmpDate1, tmpDate2] = [
+      `${date1[2]}-${date1[1]}-${date1[0]}`,
+      `${date2[2]}-${date2[1]}-${date2[0]}`,
+    ];
+    return dayjs(tmpDate2).unix() - dayjs(tmpDate1).unix();
+  });
+};
+
 export const EventsController = () => {
   const dispatch = useDispatch();
   const history = useHistory();
@@ -49,7 +62,7 @@ export const EventsController = () => {
     date: "",
     deleted: false,
   });
-  const events = useSelector((state) => state.event.events);
+  const events = useSelector(sortByDate);
   const event = useSelector((state) => state.event.event);
   const isDeletedActive = useSelector((state) => state.event.isDeletedActive);
   const token = useSelector((state) => state.auth.token);
@@ -57,7 +70,9 @@ export const EventsController = () => {
   const handleOnAddNew = () => {
     history.push("/admin/add-event");
   };
-  console.log(filters);
+
+  window.dayjs = dayjs;
+  window.events = events;
 
   const handleOnChange = useCallback(
     ({ target }) => {

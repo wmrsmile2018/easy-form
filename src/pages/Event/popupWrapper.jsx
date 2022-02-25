@@ -27,8 +27,12 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
     url: "",
     people_count: "",
     id: "",
+    number: 0,
+    name: "",
     ...data,
   });
+
+  console.log("data", data);
   // const [activeBtn, setActiveBtn] = useState(true);
   // const debouncedSearchTerm = useDebounce(state.url, 1000);
   const label = useMemo(
@@ -38,15 +42,33 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   // const isUrlExist = useSelector((state) => state.event.isUrlExist);
 
   const handleOnAdd = useCallback(() => {
-    const { url, people_count } = state;
-    if (status === "add") {
-      onAdd({ url, people_count, id: `tmpId-${Date.now().toString()}` });
-      setState({ url: "", people_count: "", id: "" });
-    }
-    if (status === "edit") onEdit(state);
+    const { url, people_count, number, name } = state;
+    //лень рефакторить
 
+    if (status === "add") {
+      if (state.url.includes("https")) {
+        onAdd({ url, people_count, name, number, id: `tmpId-${Date.now().toString()}` });
+      } else {
+        let isWithoutSsl = confirm("Уверены, что без ssl сертификата ?");
+        if (isWithoutSsl) {
+          onAdd({ url, people_count, name, number, id: `tmpId-${Date.now().toString()}` });
+        }
+      }
+      setState({ url: "", people_count: "", id: "", number: 0, name: "" });
+    }
+
+    if (status === "edit") {
+      if (state.url.includes("https")) {
+        onEdit(state);
+      } else {
+        let isWithoutSsl = confirm("Уверены, что без ssl сертификата ?");
+        if (isWithoutSsl) {
+          onEdit(state);
+        }
+      }
+    }
     if (isExist) {
-      setState({ url: "", people_count: "", id: "" });
+      setState({ url: "", people_count: "", id: "", number: 0, name: "" });
     }
   }, [state, onAdd, onEdit, status, isExist]);
 

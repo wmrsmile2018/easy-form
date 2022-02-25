@@ -82,10 +82,24 @@ export const EditEventController = React.memo(() => {
   }, [dispatch, location, event, token]);
 
   useEffect(() => {
+    const qrs = [...state.qrs, ...event.qrs].map((qr) => {
+      return {
+        ...qr,
+        resources: qr.resources
+          .map((rsrc, i) => {
+            return {
+              ...rsrc,
+              number: i + 1,
+            };
+          })
+          .sort((a, b) => a.number - b.number),
+      };
+    });
     if (event.name) {
       setState({
         ...state,
         ...event,
+        qrs,
         date_picker: new Date(event.unixtime * 1000),
       });
     }
