@@ -39,9 +39,11 @@ export const InfoBlock = ({
   onEditResource,
   onChangePassword,
   onChangeCheckedPassword,
+  handleOnChangeResources,
   ...rest
 }) => {
   const classes = clsx("info-block", className);
+  console.log();
   return (
     <div className={classes}>
       <MarginGroup isColumn gap={20}>
@@ -143,32 +145,48 @@ export const InfoBlock = ({
         <div className="info-block-content">
           <div className="info-block-content-title">
             <p className="info-block__number">№</p>
+            <p className="info-block__type">Командный</p>
             <p className="info-block__url">Внешний ресурс</p>
             <p className="info-block__count">Количество человек</p>
             <p className="info-block__name">Название страницы</p>
           </div>
           <MarginGroup isColumn className="info-block__sources" gap={10}>
-            {resources.map((el) => (
-              <div key={key(el)} className="info-block-source">
-                <div>
-                  <p className="info-block__number">{el.number}</p>
-                  <a
-                    href={el.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="info-block__url"
-                  >
-                    {decodeURI(el.url)}
-                  </a>
-                  <p className="info-block__count">{el.people_count}</p>
-                  <p className="info-block__name">{el.name}</p>
-                </div>
-                <MarginGroup gap={20}>
-                  <Edit onClick={() => onEditResource(el.id)} />
-                  <Delete onClick={() => onDeleteResource(el.id)} />
+            {resources.map((el) => {
+              return (
+                <MarginGroup gap={15} key={el.id} className="info-block-source-wrapper">
+                  <div className="info-block-source">
+                    <div>
+                      <p className="info-block__number">{el.number}</p>
+                      <p className="info-block__type">{checked && "да"}</p>
+                      <a
+                        href={el.url}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="info-block__url"
+                      >
+                        {decodeURI(el.url)}
+                      </a>
+                      <p className="info-block__count">{el.people_count}</p>
+                      <p className="info-block__name">{el.name}</p>
+                    </div>
+                    <MarginGroup gap={20}>
+                      <Edit onClick={() => onEditResource(el.id)} />
+                      <Delete onClick={() => onDeleteResource(el.id)} />
+                    </MarginGroup>
+                  </div>
+                  {decodeURI(el.url).includes("qrga.me/p/") && (
+                    <Input
+                      name="additional_text"
+                      type="text"
+                      name="default_resource"
+                      onChange={(e) => handleOnChangeResources(el.id, e)}
+                      style={{ width: 200 }}
+                      value={el["additional_text"]}
+                    />
+                  )}
                 </MarginGroup>
-              </div>
-            ))}
+              );
+            })}
           </MarginGroup>
         </div>
       </MarginGroup>

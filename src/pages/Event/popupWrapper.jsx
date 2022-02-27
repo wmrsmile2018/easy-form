@@ -29,10 +29,10 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
     id: "",
     number: 0,
     name: "",
+    additional_text: "",
     ...data,
   });
 
-  console.log("data", data);
   // const [activeBtn, setActiveBtn] = useState(true);
   // const debouncedSearchTerm = useDebounce(state.url, 1000);
   const label = useMemo(

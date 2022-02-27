@@ -114,12 +114,28 @@ export const Event = React.memo(
       [state, onUpdateState, popup],
     );
 
+    const handlerChangeResources = useCallback(
+      (curSuffix) => {
+        return (curId, { target }) => {
+          const nextState = produce(state, (draftState) => {
+            const Qr = draftState.qrs.find((el) => el.id === curSuffix);
+            const resource = Qr.resources.find((el) => el.id === curId);
+            resource.additional_text = target.value;
+          });
+          onUpdateState({
+            ...nextState,
+          });
+        };
+      },
+      [state, onUpdateState],
+    );
+
     const handleOnChangeSuffix = (curSuffix, { target }) => {
       const isValid = regex.test(target.value);
       if (target.value === "" || isValid) {
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-          Qr.qr_suffix = target.value;
+          Qr.default_resource = target.value;
         });
         onUpdateState({
           ...nextState,
@@ -330,6 +346,7 @@ export const Event = React.memo(
                 onChangeCheckedPassword={(e) => handleOnCheckedPassword(el.id, e)}
                 onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
                 onEditResource={(curRes) => handleOnShowEditResource(el.id, curRes)}
+                onChangeResources={handlerChangeResources(el.id)}
               />
             ))}
           </MarginGroup>

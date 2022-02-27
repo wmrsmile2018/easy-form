@@ -1,7 +1,7 @@
 @import "../../styles.scss";
 
 .info-block {
-  width: 1000px;
+  width: 1200px;
   background-color: $light-gray-v2;
   padding: 15px 50px;
   display: flex;
@@ -31,9 +31,12 @@
   }
 
   .info-block-content {
-    width: 950px;
+    width: 1200px;
     .info-block__number {
       width: 70px;
+    }
+    .info-block__type {
+      width: 100px;
     }
     .info-block__url {
       width: 400px;
@@ -52,7 +55,8 @@
       .info-block__number,
       .info-block__url,
       .info-block__count,
-      .info-block__name {
+      .info-block__name,
+      .info-block__type {
         font-weight: bold;
       }
     }

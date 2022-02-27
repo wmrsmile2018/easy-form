@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo } from "react";
+import React, { useEffect, useState, useMemo, useCallback } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
@@ -21,7 +21,7 @@ const getUrl = ({ type, state: { id, suffix } }) => {
   }
 };
 
-export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
+export const InfoBlockWrapper = ({ qrs, id, suffix, onChangeResources, ...rest }) => {
   const dispatch = useDispatch();
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
@@ -69,5 +69,13 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, ...rest }) => {
       });
     }
   }, [debouncedSearchTerm, token]);
-  return <InfoBlock suffix={suffix} isValid={isValid} {...rest} />;
+
+  return (
+    <InfoBlock
+      suffix={suffix}
+      isValid={isValid}
+      {...rest}
+      handleOnChangeResources={onChangeResources}
+    />
+  );
 };
