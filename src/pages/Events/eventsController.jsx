@@ -71,9 +71,6 @@ export const EventsController = () => {
     history.push("/admin/add-event");
   };
 
-  window.dayjs = dayjs;
-  window.events = events;
-
   const handleOnChange = useCallback(
     ({ target }) => {
       setFilters({
@@ -157,7 +154,6 @@ export const EventsController = () => {
   }, [event, id]);
 
   useEffect(() => {
-    console.log(token);
     dispatch({
       url: getUrl({
         type: getEventsFilters.type,
@@ -184,7 +180,6 @@ export const EventsController = () => {
         handleOnEdit: (e) => {
           e.stopPropagation();
           const tmpId = e.target.dataset["id"];
-          console.log(tmpId);
           setPath("edit");
           setId(tmpId);
           dispatch({
