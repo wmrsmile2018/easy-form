@@ -135,7 +135,7 @@ export const Event = React.memo(
       if (target.value === "" || isValid) {
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-          Qr.default_resource = target.value;
+          Qr.qr_suffix = target.value;
         });
         onUpdateState({
           ...nextState,
