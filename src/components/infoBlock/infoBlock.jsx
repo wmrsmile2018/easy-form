@@ -43,7 +43,6 @@ export const InfoBlock = ({
   ...rest
 }) => {
   const classes = clsx("info-block", className);
-  console.log();
   return (
     <div className={classes}>
       <MarginGroup isColumn gap={20}>

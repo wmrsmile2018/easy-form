@@ -24,6 +24,10 @@ export const Router = () => {
     history.push("/admin/sign-in");
     dispatch({ type: "CLEAR_STORE" });
   };
+
+  const handleOnRedirect = () => {
+    window.open("https://qrga.me/admin/loadCsv", "_blank");
+  };
   return (
     <>
       <div className="app-navigation">
@@ -47,6 +51,13 @@ export const Router = () => {
           </NavLink>
           <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/FAQ">
             FAQ
+          </NavLink>
+          <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/sign-in">
+            <p onClick={handleOnRedirect}>
+              Кастомные
+              <br />
+              страницы
+            </p>
           </NavLink>
           <NavLink className="app__nav-link" activeClassName="activeRoute" to="/admin/users">
             Администрирование

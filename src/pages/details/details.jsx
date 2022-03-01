@@ -48,7 +48,7 @@ const Resources = React.memo(
                 {decodeURI(el.url)}
               </a>
               <span className="row__cell row__scheduled">
-                {el.people_count !== "0" ? el.people_count : "Бесконечное"}
+                {!el.infinity ? el.people_count : "Бесконечное"}
               </span>
               <span className="row__cell row__team">{el.came_people_count}</span>
             </div>
@@ -118,9 +118,6 @@ const Row = React.memo(
         toPng(ref.current).then((dataUrl) => {
           window.saveAs(dataUrl, "someFile.png");
         });
-        // .catch((err) => {
-        //   console.log(err);
-        // });
       },
       [ref],
     );
