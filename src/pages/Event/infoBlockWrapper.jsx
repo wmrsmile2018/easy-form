@@ -21,7 +21,14 @@ const getUrl = ({ type, state: { id, suffix } }) => {
   }
 };
 
-export const InfoBlockWrapper = ({ qrs, id, suffix, onChangeResources, ...rest }) => {
+export const InfoBlockWrapper = ({
+  qrs,
+  id,
+  suffix,
+  onChangeResources,
+  onCheckCommand,
+  ...rest
+}) => {
   const dispatch = useDispatch();
   const debouncedSearchTerm = useDebounce(suffix, 1000);
   const [isValid, setIsValid] = useState(true);
@@ -76,6 +83,7 @@ export const InfoBlockWrapper = ({ qrs, id, suffix, onChangeResources, ...rest }
       isValid={isValid}
       {...rest}
       handleOnChangeResources={onChangeResources}
+      handleOnCheckCommand={onCheckCommand}
     />
   );
 };

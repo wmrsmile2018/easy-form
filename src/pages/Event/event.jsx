@@ -17,7 +17,6 @@ import "./event.scss";
 import { InfoBlockWrapper } from "./infoBlockWrapper";
 import { PopupWrapper } from "./popupWrapper";
 import { Title } from "../../components/title";
-import { CheckBox } from "../../components/checkBox";
 
 const regex = /^[a-zA-Z\d]+$/;
 const regexMainFields = /^(?:[а-яА-ЯA-Za-z0-9 ]*)$/;
@@ -86,12 +85,21 @@ export const Event = React.memo(
       });
     };
 
+    const handleOnCheckCommand = (curSuffix) => {
+      return (curId, { target }) => {
+        const nextState = produce(state, (draftState) => {
+          const Qr = draftState.qrs.find((el) => el.id === curSuffix);
+          const resource = Qr.resources.find((el) => el.id === curId);
+          resource.isCommand = target.checked;
+        });
+        onUpdateState({
+          ...nextState,
+        });
+      };
+    };
+
     const handleOnHideModal = useCallback(
       (data) => {
-        // const tmpAllRes = state.qrs.reduce((acc, cur) => {
-        //   const tmp = cur.resources.map((el) => el.url);
-        //   return [...acc, ...tmp];
-        // }, []);
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
           Qr.resources = [...Qr.resources, data];
@@ -103,13 +111,6 @@ export const Event = React.memo(
           curSuffix: 0,
           showPopup: false,
         });
-        // if (!tmpAllRes.find((el) => el === data.url)) {
-        // } else {
-        //   setPopup({
-        //     ...popup,
-        //     isExist: true,
-        //   });
-        // }
       },
       [state, onUpdateState, popup],
     );
@@ -177,6 +178,12 @@ export const Event = React.memo(
       const nextState = produce(state, (draftState) => {
         const Qr = draftState.qrs.find((el) => el.id === curSuffix);
         Qr[teamName] = target.checked ? true : false;
+        Qr.resources = Qr.resources.map((rsrc) => {
+          return {
+            ...rsrc,
+            isCommand: target.checked ? true : false,
+          };
+        });
       });
 
       onUpdateState(nextState);
@@ -347,6 +354,7 @@ export const Event = React.memo(
                 onDeleteResource={(curRes) => handleOnRemoveResource(el.id, curRes)}
                 onEditResource={(curRes) => handleOnShowEditResource(el.id, curRes)}
                 onChangeResources={handlerChangeResources(el.id)}
+                onCheckCommand={handleOnCheckCommand(el.id)}
               />
             ))}
           </MarginGroup>

@@ -40,6 +40,7 @@ export const InfoBlock = ({
   onChangePassword,
   onChangeCheckedPassword,
   handleOnChangeResources,
+  handleOnCheckCommand,
   ...rest
 }) => {
   const classes = clsx("info-block", className);
@@ -156,7 +157,12 @@ export const InfoBlock = ({
                   <div className="info-block-source">
                     <div>
                       <p className="info-block__number">{el.number}</p>
-                      <p className="info-block__type">{checked && "да"}</p>
+                      <CheckBox
+                        className={"info-block__type"}
+                        name={"isCommand"}
+                        onChange={(e) => handleOnCheckCommand(el.id, e)}
+                        checked={!!el.isCommand}
+                      />
                       <a
                         href={el.url}
                         target="_blank"

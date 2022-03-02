@@ -24,6 +24,7 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
   // const dispatch = useDispatch();
   // const [isValid, setValid] = useState(true);
   const [state, setState] = useState({
+    isCommand: false,
     url: "",
     people_count: "",
     id: "",
