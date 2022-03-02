@@ -179,7 +179,7 @@ export const InfoBlock = ({
                       <Delete onClick={() => onDeleteResource(el.id)} />
                     </MarginGroup>
                   </div>
-                  {decodeURI(el.url).includes("qrga.me/p/") && (
+                  {decodeURI(el.url).includes("qrga.me/b/") && (
                     <Input
                       name="additional_text"
                       type="text"
@@ -187,6 +187,7 @@ export const InfoBlock = ({
                       onChange={(e) => handleOnChangeResources(el.id, e)}
                       style={{ width: 200 }}
                       value={el["additional_text"]}
+                      title={"Сообщение"}
                     />
                   )}
                 </MarginGroup>

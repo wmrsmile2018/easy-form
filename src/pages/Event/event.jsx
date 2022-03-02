@@ -103,7 +103,6 @@ export const Event = React.memo(
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
           const index = data.number - 1;
-          console.log(index, data);
           Qr.resources.splice(index, 0, data);
           Qr.resources = Qr.resources.map((rsrc, i) => ({ ...rsrc, number: i + 1 }));
         });
@@ -134,7 +133,6 @@ export const Event = React.memo(
 
             const index = data.number - 1;
             Qr.resources = Qr.resources.filter((rsrc) => rsrc.id !== data.id);
-            // Qr.resources.splice(index, 0, )
             resource.url = data.url;
             resource.people_count = data.people_count;
             Qr.resources.splice(index, 0, data);
