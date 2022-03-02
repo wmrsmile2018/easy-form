@@ -180,15 +180,18 @@ export const InfoBlock = ({
                     </MarginGroup>
                   </div>
                   {decodeURI(el.url).includes("qrga.me/b/") && (
-                    <Input
-                      name="additional_text"
-                      type="text"
-                      name="default_resource"
-                      onChange={(e) => handleOnChangeResources(el.id, e)}
-                      style={{ width: 200 }}
-                      value={el["additional_text"]}
-                      title={"Сообщение"}
-                    />
+                    <MarginGroup className="info-block_additional_text">
+                      <Input
+                        name="additional_text"
+                        type="text"
+                        name="default_resource"
+                        onChange={(e) => handleOnChangeResources(el.id, e)}
+                        style={{ width: 200 }}
+                        value={el["additional_text"]}
+                        title={"Сообщение"}
+                      />
+                      <Button style={{ height: 35, width: 35 }}>+</Button>
+                    </MarginGroup>
                   )}
                 </MarginGroup>
               );

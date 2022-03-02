@@ -60,7 +60,9 @@
         font-weight: bold;
       }
     }
-
+    .info-block_additional_text {
+      align-items: flex-end;
+    }
     .info-block__sources {
       .info-block-source {
         justify-content: space-between;
