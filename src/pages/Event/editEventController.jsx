@@ -85,7 +85,6 @@ export const EditEventController = React.memo(() => {
     const [day, months, years] = event.date.split("-");
     const date = `${months}-${day}-${years}`;
     const qrs = [...state.qrs, ...event.qrs].map((qr) => {
-      console.log(qr);
       return {
         ...qr,
         resources: qr.resources

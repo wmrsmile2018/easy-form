@@ -102,7 +102,10 @@ export const Event = React.memo(
       (data) => {
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
-          Qr.resources = [...Qr.resources, data];
+          const index = data.number - 1;
+          console.log(index, data);
+          Qr.resources.splice(index, 0, data);
+          Qr.resources = Qr.resources.map((rsrc, i) => ({ ...rsrc, number: i + 1 }));
         });
 
         onUpdateState(nextState);
@@ -113,6 +116,44 @@ export const Event = React.memo(
         });
       },
       [state, onUpdateState, popup],
+    );
+
+    const handleOnEditResource = useCallback(
+      (data) => {
+        const tmpAllRes = state.qrs.reduce((acc, cur) => {
+          const tmp = cur.resources.map((el) => el.url);
+          return [...acc, ...tmp];
+        }, []);
+        const curQr = state.qrs.find((el) => el.id === popup.curSuffix);
+        const curRes = curQr.resources.find((el) => el.id === data.id);
+
+        if (curRes.url === data.url || !tmpAllRes.find((el) => el === data.url)) {
+          const nextState = produce(state, (draftState) => {
+            const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
+            const resource = Qr.resources.find((el) => el.id === data.id);
+
+            const index = data.number - 1;
+            Qr.resources = Qr.resources.filter((rsrc) => rsrc.id !== data.id);
+            // Qr.resources.splice(index, 0, )
+            resource.url = data.url;
+            resource.people_count = data.people_count;
+            Qr.resources.splice(index, 0, data);
+            Qr.resources = Qr.resources.map((rsrc, i) => ({ ...rsrc, number: i + 1 }));
+          });
+
+          onUpdateState(nextState);
+          setPopup({
+            curSuffix: 0,
+            showPopup: false,
+          });
+        } else {
+          setPopup({
+            ...popup,
+            isExist: true,
+          });
+        }
+      },
+      [popup, state, onUpdateState],
     );
 
     const handlerChangeResources = useCallback(
@@ -228,38 +269,6 @@ export const Event = React.memo(
         state: tmpResourse,
       });
     };
-
-    const handleOnEditResource = useCallback(
-      (data) => {
-        const tmpAllRes = state.qrs.reduce((acc, cur) => {
-          const tmp = cur.resources.map((el) => el.url);
-          return [...acc, ...tmp];
-        }, []);
-        const curQr = state.qrs.find((el) => el.id === popup.curSuffix);
-        const curRes = curQr.resources.find((el) => el.id === data.id);
-
-        if (curRes.url === data.url || !tmpAllRes.find((el) => el === data.url)) {
-          const nextState = produce(state, (draftState) => {
-            const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
-            const resource = Qr.resources.find((el) => el.id === data.id);
-            resource.url = data.url;
-            resource.people_count = data.people_count;
-          });
-
-          onUpdateState(nextState);
-          setPopup({
-            curSuffix: 0,
-            showPopup: false,
-          });
-        } else {
-          setPopup({
-            ...popup,
-            isExist: true,
-          });
-        }
-      },
-      [popup, state, onUpdateState],
-    );
 
     const handleOnDatePicked = useCallback(
       (data) => {
