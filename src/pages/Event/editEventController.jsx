@@ -119,7 +119,7 @@ export const EditEventController = React.memo(() => {
             return {
               ...rsrc,
               number: i + 1,
-              isCommand: qr.isCommand,
+              isCommand: qr.team || qr.isCommand,
             };
           })
           .sort((a, b) => a.number - b.number),
