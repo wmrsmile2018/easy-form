@@ -21,8 +21,6 @@ import { Popup } from "../../components/popup/popup";
 // };
 
 export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) => {
-  // const dispatch = useDispatch();
-  // const [isValid, setValid] = useState(true);
   const [state, setState] = useState({
     isCommand: false,
     url: "",
@@ -30,12 +28,10 @@ export const PopupWrapper = ({ status, data, onAdd, onEdit, isExist, ...rest }) 
     id: "",
     number: 0,
     name: "",
-    additional_text: "",
+    msg: "",
     ...data,
   });
 
-  // const [activeBtn, setActiveBtn] = useState(true);
-  // const debouncedSearchTerm = useDebounce(state.url, 1000);
   const label = useMemo(
     () => (status === "edit" ? "Изменить внешний ресурс" : "Добавить внешний ресурс"),
     [status],

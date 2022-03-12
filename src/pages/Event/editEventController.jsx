@@ -6,6 +6,8 @@ import produce from "immer";
 import { Event } from "./event";
 import { sagaEventCallBegan } from "../../model/saga";
 import { editEvent, fetchError, getInfoById } from "../../model/event/reducer";
+import { clearMessage, fetchMessageError, getMessages } from "../../model/messages/reducer";
+import { isEmpty } from "lodash";
 
 const parametres = {
   status: "edit",
@@ -20,6 +22,8 @@ const getUrl = ({ type, id }) => {
       return isDev ? "/events" : `/admin/editEvent`;
     case getInfoById.type:
       return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
+    case getMessages.type:
+      return isDev ? "/messages" : " /admin/gms?suffix=${id}";
   }
 };
 
@@ -30,6 +34,7 @@ export const EditEventController = React.memo(() => {
   const isUpdated = useSelector((state) => state.event.isUpdated);
   const event = useSelector((state) => state.event.event);
   const token = useSelector((state) => state.auth.token);
+  const messages = useSelector((state) => state.messages.messages);
 
   const [state, setState] = useState({
     name: "",
@@ -82,6 +87,28 @@ export const EditEventController = React.memo(() => {
   }, [dispatch, location, event, token]);
 
   useEffect(() => {
+    if (!isEmpty(messages)) {
+      const newEvent = produce(event, (draftEvent) => {
+        for (let qr of draftEvent.qrs) {
+          for (let rsrc of qr.resources) {
+            if (decodeURI(rsrc.url).includes("qrga.me/b/")) {
+              for (let msg in messages) {
+                if (rsrc.url.includes(msg)) {
+                  rsrc.msg = messages[msg];
+                }
+              }
+            }
+          }
+        }
+      });
+      setState({
+        ...state,
+        ...newEvent,
+      });
+    }
+  }, [messages, event]);
+
+  useEffect(() => {
     const [day, months, years] = event.date.split("-");
     const date = `${months}-${day}-${years}`;
     const qrs = [...state.qrs, ...event.qrs].map((qr) => {
@@ -106,6 +133,16 @@ export const EditEventController = React.memo(() => {
         date_picker: new Date(date),
       });
     }
+    for (let qr of event.qrs) {
+      dispatch({
+        url: getUrl({ type: getMessages.type, id: qr.qr_suffix }),
+        type: sagaEventCallBegan.type,
+        method: "get",
+        onSuccess: getMessages.type,
+        onError: fetchMessageError.type,
+        token,
+      });
+    }
   }, [event]);
 
   useEffect(() => {
@@ -113,6 +150,14 @@ export const EditEventController = React.memo(() => {
       history.push("/admin");
     }
   }, [isUpdated]);
+
+  useEffect(() => {
+    return () => {
+      dispatch({
+        type: clearMessage.type,
+      });
+    };
+  }, []);
 
   return (
     <Event

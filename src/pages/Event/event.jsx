@@ -160,7 +160,7 @@ export const Event = React.memo(
           const nextState = produce(state, (draftState) => {
             const Qr = draftState.qrs.find((el) => el.id === curSuffix);
             const resource = Qr.resources.find((el) => el.id === curId);
-            resource.additional_text = target.value;
+            resource.msg = target.value;
           });
           onUpdateState({
             ...nextState,

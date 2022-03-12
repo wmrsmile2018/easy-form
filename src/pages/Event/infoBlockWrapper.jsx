@@ -5,6 +5,7 @@ import { InfoBlock } from "../../components/infoBlock/infoBlock";
 import { useDebounce } from "../../utils/useHooks";
 import { sagaEventCallBegan } from "../../model/saga";
 import { checkSuffix, fetchError } from "../../model/event/reducer";
+import { fetchMessageError, setMessage } from "../../model/messages/reducer";
 
 const isDev = process.env.NODE_ENV !== "development";
 
@@ -18,6 +19,8 @@ const getUrl = ({ type, state: { id, suffix } }) => {
   switch (type) {
     case checkSuffix.type:
       return isDev ? "/existSuffix" : `/admin/searchSuffixInDB?id=${id}&&suffix=${suffix}`;
+    case setMessage.type:
+      return isDev ? "/setMessage" : "/edit/msg";
   }
 };
 
@@ -77,6 +80,23 @@ export const InfoBlockWrapper = ({
     }
   }, [debouncedSearchTerm, token]);
 
+  const onEditMessage = (id, url, msg) => {
+    console.log(id, msg, url);
+    const page_url = url.slice(url.indexOf("/b/"));
+    dispatch({
+      url: getUrl({ type: setMessage.type, state: { id: tmpId, suffix } }),
+      type: sagaEventCallBegan.type,
+      method: "post",
+      onSuccess: setMessage.type,
+      onError: fetchMessageError.type,
+      payload: {
+        msg,
+        page_url,
+      },
+      token,
+    });
+  };
+
   return (
     <InfoBlock
       suffix={suffix}
@@ -84,6 +104,7 @@ export const InfoBlockWrapper = ({
       {...rest}
       handleOnChangeResources={onChangeResources}
       handleOnCheckCommand={onCheckCommand}
+      handleEditMessage={onEditMessage}
     />
   );
 };

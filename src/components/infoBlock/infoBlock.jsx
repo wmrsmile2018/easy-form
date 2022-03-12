@@ -41,6 +41,7 @@ export const InfoBlock = ({
   onChangeCheckedPassword,
   handleOnChangeResources,
   handleOnCheckCommand,
+  handleEditMessage,
   ...rest
 }) => {
   const classes = clsx("info-block", className);
@@ -180,17 +181,22 @@ export const InfoBlock = ({
                     </MarginGroup>
                   </div>
                   {decodeURI(el.url).includes("qrga.me/b/") && (
-                    <MarginGroup className="info-block_additional_text">
+                    <MarginGroup className="info-block_msg">
                       <Input
-                        name="additional_text"
+                        name="msg"
                         type="text"
                         name="default_resource"
                         onChange={(e) => handleOnChangeResources(el.id, e)}
                         style={{ width: 200 }}
-                        value={el["additional_text"]}
+                        value={el["msg"]}
                         title={"Сообщение"}
                       />
-                      <Button style={{ height: 35, width: 35 }}>+</Button>
+                      <Button
+                        style={{ height: 35, width: 35 }}
+                        onClick={() => handleEditMessage(el.id, el.url, el["msg"])}
+                      >
+                        +
+                      </Button>
                     </MarginGroup>
                   )}
                 </MarginGroup>
