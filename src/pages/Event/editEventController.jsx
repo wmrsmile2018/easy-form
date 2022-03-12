@@ -23,7 +23,7 @@ const getUrl = ({ type, id }) => {
     case getInfoById.type:
       return isDev ? `/event` : `/admin/getInfoByEventId?id=${id}`;
     case getMessages.type:
-      return isDev ? "/messages" : " /admin/gms?suffix=${id}";
+      return isDev ? "/messages" : `/admin/gms?suffix=${id}`;
   }
 };
 
