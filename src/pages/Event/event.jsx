@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useRef } from "react";
+import React, { useState, useRef } from "react";
 import { useHistory } from "react-router-dom";
 import clsx from "clsx";
 import key from "weak-key";
@@ -48,7 +48,7 @@ export const Event = React.memo(
       });
     });
 
-    const handleOnAddSuffix = useCallback(() => {
+    const handleOnAddSuffix = () => {
       onUpdateState({
         ...state,
         qrs: [
@@ -70,7 +70,7 @@ export const Event = React.memo(
           },
         ],
       });
-    }, [state, onUpdateState, status]);
+    };
 
     const handleOnShowModal = (curSuffix) => {
       const Qr = state.qrs.find((el) => el.id === curSuffix);
@@ -98,77 +98,67 @@ export const Event = React.memo(
       };
     };
 
-    const handleOnHideModal = useCallback(
-      (data) => {
+    const handleOnHideModal = (data) => {
+      const nextState = produce(state, (draftState) => {
+        const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
+        const index = data.number - 1;
+        Qr.resources.splice(index, 0, data);
+        Qr.resources = Qr.resources.map((rsrc, i) => ({ ...rsrc, number: i + 1 }));
+      });
+
+      onUpdateState(nextState);
+
+      setPopup({
+        curSuffix: 0,
+        showPopup: false,
+      });
+    };
+    const handleOnEditResource = (data) => {
+      const tmpAllRes = state.qrs.reduce((acc, cur) => {
+        const tmp = cur.resources.map((el) => el.url);
+        return [...acc, ...tmp];
+      }, []);
+      const curQr = state.qrs.find((el) => el.id === popup.curSuffix);
+      const curRes = curQr.resources.find((el) => el.id === data.id);
+
+      if (curRes.url === data.url || !tmpAllRes.find((el) => el === data.url)) {
         const nextState = produce(state, (draftState) => {
           const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
+          const resource = Qr.resources.find((el) => el.id === data.id);
+
           const index = data.number - 1;
+          Qr.resources = Qr.resources.filter((rsrc) => rsrc.id !== data.id);
+          resource.url = data.url;
+          resource.people_count = data.people_count;
           Qr.resources.splice(index, 0, data);
           Qr.resources = Qr.resources.map((rsrc, i) => ({ ...rsrc, number: i + 1 }));
         });
 
         onUpdateState(nextState);
-
         setPopup({
           curSuffix: 0,
           showPopup: false,
         });
-      },
-      [state, onUpdateState, popup],
-    );
+      } else {
+        setPopup({
+          ...popup,
+          isExist: true,
+        });
+      }
+    };
 
-    const handleOnEditResource = useCallback(
-      (data) => {
-        const tmpAllRes = state.qrs.reduce((acc, cur) => {
-          const tmp = cur.resources.map((el) => el.url);
-          return [...acc, ...tmp];
-        }, []);
-        const curQr = state.qrs.find((el) => el.id === popup.curSuffix);
-        const curRes = curQr.resources.find((el) => el.id === data.id);
-
-        if (curRes.url === data.url || !tmpAllRes.find((el) => el === data.url)) {
-          const nextState = produce(state, (draftState) => {
-            const Qr = draftState.qrs.find((el) => el.id === popup.curSuffix);
-            const resource = Qr.resources.find((el) => el.id === data.id);
-
-            const index = data.number - 1;
-            Qr.resources = Qr.resources.filter((rsrc) => rsrc.id !== data.id);
-            resource.url = data.url;
-            resource.people_count = data.people_count;
-            Qr.resources.splice(index, 0, data);
-            Qr.resources = Qr.resources.map((rsrc, i) => ({ ...rsrc, number: i + 1 }));
-          });
-
-          onUpdateState(nextState);
-          setPopup({
-            curSuffix: 0,
-            showPopup: false,
-          });
-        } else {
-          setPopup({
-            ...popup,
-            isExist: true,
-          });
-        }
-      },
-      [popup, state, onUpdateState],
-    );
-
-    const handlerChangeResources = useCallback(
-      (curSuffix) => {
-        return (curId, { target }) => {
-          const nextState = produce(state, (draftState) => {
-            const Qr = draftState.qrs.find((el) => el.id === curSuffix);
-            const resource = Qr.resources.find((el) => el.id === curId);
-            resource.msg = target.value;
-          });
-          onUpdateState({
-            ...nextState,
-          });
-        };
-      },
-      [state, onUpdateState],
-    );
+    const handlerChangeResources = (curSuffix) => {
+      return (curId, { target }) => {
+        const nextState = produce(state, (draftState) => {
+          const Qr = draftState.qrs.find((el) => el.id === curSuffix);
+          const resource = Qr.resources.find((el) => el.id === curId);
+          resource.msg = target.value;
+        });
+        onUpdateState({
+          ...nextState,
+        });
+      };
+    };
 
     const handleOnChangeSuffix = (curSuffix, { target }) => {
       const isValid = regex.test(target.value);
@@ -228,18 +218,15 @@ export const Event = React.memo(
       onUpdateState(nextState);
     };
 
-    const handleOnChange = useCallback(
-      ({ target }) => {
-        const isValid = regexMainFields.test(target.value);
-        if (isValid) {
-          onUpdateState({
-            ...state,
-            [target.name]: target.value,
-          });
-        }
-      },
-      [state, onUpdateState],
-    );
+    const handleOnChange = ({ target }) => {
+      const isValid = regexMainFields.test(target.value);
+      if (isValid) {
+        onUpdateState({
+          ...state,
+          [target.name]: target.value,
+        });
+      }
+    };
 
     const handleOnRemoveSuffix = (curSuffix) => {
       onUpdateState({
@@ -268,16 +255,13 @@ export const Event = React.memo(
       });
     };
 
-    const handleOnDatePicked = useCallback(
-      (data) => {
-        onUpdateState({
-          ...state,
-          [data.name]: dayjs(data.value).format("DD-MM-YYYY"),
-          [`${data.name}_picker`]: data.value,
-        });
-      },
-      [state, onUpdateState],
-    );
+    const handleOnDatePicked = (data) => {
+      onUpdateState({
+        ...state,
+        [data.name]: dayjs(data.value).format("DD-MM-YYYY"),
+        [`${data.name}_picker`]: data.value,
+      });
+    };
 
     return (
       <div className={classes}>

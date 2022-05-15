@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useMemo, useCallback } from "react";
+import React, { useEffect, useState, useMemo, memo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { InfoBlock } from "../../components/infoBlock/infoBlock";
@@ -24,87 +24,82 @@ const getUrl = ({ type, state: { id, suffix } }) => {
   }
 };
 
-export const InfoBlockWrapper = ({
-  qrs,
-  id,
-  suffix,
-  onChangeResources,
-  onCheckCommand,
-  ...rest
-}) => {
-  const dispatch = useDispatch();
-  const debouncedSearchTerm = useDebounce(suffix, 1000);
-  const [isValid, setIsValid] = useState(true);
-  const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
-  const token = useSelector((state) => state.auth.token);
+export const InfoBlockWrapper = memo(
+  ({ qrs, id, suffix, onChangeResources, onCheckCommand, ...rest }) => {
+    const dispatch = useDispatch();
+    const debouncedSearchTerm = useDebounce(suffix, 1000);
+    const [isValid, setIsValid] = useState(true);
+    const isSuffixExist = useSelector((state) => state.event.isSuffixExist);
+    const token = useSelector((state) => state.auth.token);
 
-  const count = useMemo(
-    () =>
-      qrs.reduce((acc, cur) => {
-        if (cur.qr_suffix === suffix) return acc + 1;
-        return acc;
-      }, 0),
-    [qrs, suffix],
-  );
+    const count = useMemo(
+      () =>
+        qrs.reduce((acc, cur) => {
+          if (cur.qr_suffix === suffix) return acc + 1;
+          return acc;
+        }, 0),
+      [qrs, suffix],
+    );
 
-  useEffect(() => {
-    if (isValid) {
-      setIsValid(!isSuffixExist[suffix]);
-    } else {
-      setIsValid(false);
-    }
-  }, [isSuffixExist, isValid, suffix]);
+    useEffect(() => {
+      if (isValid) {
+        setIsValid(!isSuffixExist[suffix]);
+      } else {
+        setIsValid(false);
+      }
+    }, [isSuffixExist, isValid, suffix]);
 
-  useEffect(() => {
-    if (count > 1) {
-      setIsValid(false);
-    } else if (count <= 1) {
-      const cond = isSuffixExist[suffix] ? false : true;
-      setIsValid(cond);
-    } else if (!isSuffixExist[suffix]) {
-      setIsValid(true);
-    }
-  }, [isSuffixExist, suffix, count]);
+    useEffect(() => {
+      if (count > 1) {
+        setIsValid(false);
+      } else if (count <= 1) {
+        const cond = isSuffixExist[suffix] ? false : true;
+        setIsValid(cond);
+      } else if (!isSuffixExist[suffix]) {
+        setIsValid(true);
+      }
+    }, [isSuffixExist, suffix, count]);
 
-  useEffect(() => {
-    if (debouncedSearchTerm) {
-      const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
+    useEffect(() => {
+      if (debouncedSearchTerm) {
+        const tmpId = id.split("-")[0] === "tmpId" ? "" : id;
+        dispatch({
+          url: getUrl({ type: checkSuffix.type, state: { id: tmpId, suffix } }),
+          type: sagaEventCallBegan.type,
+          method: "get",
+          onSuccess: checkSuffix.type,
+          onError: fetchError.type,
+          token,
+        });
+      }
+    }, [debouncedSearchTerm, token]);
+
+    const onEditMessage = (id, url, msg) => {
+      console.log(id, msg, url);
+      const page_url = url.slice(url.indexOf("/b/"));
       dispatch({
-        url: getUrl({ type: checkSuffix.type, state: { id: tmpId, suffix } }),
+        url: getUrl({ type: setMessage.type, state: { id: tmpId, suffix } }),
         type: sagaEventCallBegan.type,
-        method: "get",
-        onSuccess: checkSuffix.type,
-        onError: fetchError.type,
+        method: "post",
+        onSuccess: setMessage.type,
+        onError: fetchMessageError.type,
+        payload: {
+          msg,
+          page_url,
+        },
         token,
       });
-    }
-  }, [debouncedSearchTerm, token]);
+    };
 
-  const onEditMessage = (id, url, msg) => {
-    console.log(id, msg, url);
-    const page_url = url.slice(url.indexOf("/b/"));
-    dispatch({
-      url: getUrl({ type: setMessage.type, state: { id: tmpId, suffix } }),
-      type: sagaEventCallBegan.type,
-      method: "post",
-      onSuccess: setMessage.type,
-      onError: fetchMessageError.type,
-      payload: {
-        msg,
-        page_url,
-      },
-      token,
-    });
-  };
-
-  return (
-    <InfoBlock
-      suffix={suffix}
-      isValid={isValid}
-      {...rest}
-      handleOnChangeResources={onChangeResources}
-      handleOnCheckCommand={onCheckCommand}
-      handleEditMessage={onEditMessage}
-    />
-  );
-};
+    return (
+      <InfoBlock
+        suffix={suffix}
+        isValid={isValid}
+        {...rest}
+        handleOnChangeResources={onChangeResources}
+        handleOnCheckCommand={onCheckCommand}
+        handleEditMessage={onEditMessage}
+      />
+    );
+  },
+);
